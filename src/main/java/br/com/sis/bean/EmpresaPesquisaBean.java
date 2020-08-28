@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.com.sis.entity.Empresa;
 import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
@@ -40,7 +41,10 @@ public class EmpresaPesquisaBean implements Serializable {
 	}
 	
 	public void excluir() {
-		empresaRepository.remover(this.empresaSelecionada);
+		if (empresaRepository.remover(this.empresaSelecionada)) {
+			FacesUtil.addInfoMessage("Empresa excluída com sucesso");
+			empresas = empresaRepository.listAll();
+		}
 	}
 
 }

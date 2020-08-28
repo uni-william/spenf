@@ -14,11 +14,11 @@
 		</f:metadata>
 		<h1 class="aw-page-title">Empresas</h1>
 		<h:form id="frm">
-			<p:growl showDetail="true" />
+			<p:growl />
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup align="right">
-						<p:button value="Nova Empresa" outcome="/empresas/CadastroEmpresa" >
+						<p:button value="Nova Empresa" outcome="/empresas/CadastroEmpresa">
 						</p:button>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -34,8 +34,8 @@
 						<h:outputText value="#{empresa.razaoSocial}" />
 					</p:column>
 					<p:column width="8%" exportable="false">
-						<p:button icon="ui-icon-pencil"
-							style="width: 30px" outcome="/empresas/CadastroEmpresa">
+						<p:button icon="ui-icon-pencil" style="width: 30px"
+							outcome="/empresas/CadastroEmpresa">
 							<f:param name="empresa" value="#{empresa.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
