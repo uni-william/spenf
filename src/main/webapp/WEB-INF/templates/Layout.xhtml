@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+	<h:outputStylesheet library="css" name="layout.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+	<h:outputStylesheet library="css" name="components.css" />
+</h:head>
+<title><ui:insert name="titulo">Sistema</ui:insert></title>
+<body>
+	<p:ajaxStatus styleClass="ajax-status">
+		<f:facet name="start">
+			<h:graphicImage library="images" name="loading_big.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputLabel value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	<header class="aw-topbar">
+		<div>
+			<h:link outcome="/Home">
+				<h:graphicImage library="images" name="order.jpeg" styleClass="logo" />
+			</h:link>
+		</div>
+		<p:link styleClass="aw-exit" href="/logout" title="Logoff">
+			<i class="fa fa-sign-out"></i>
+		</p:link>
+
+		<a class="aw-function"></a> <a href="#" class="aw-toggle js-toggle"
+			title="Menu"><i class="fa fa-bars"></i></a>
+			
+		<p:link styleClass="aw-exit" outcome="/TrocaSenha"
+			title="Trocar senha">
+			<i class="fa fa-key"></i>
+		</p:link>			
+			
+		<a class="aw-user"> Usuário: </a>
+
+	</header>
+
+	<aside class="aw-sidebar js-sidebar">
+		<h:form>
+			<p:panelMenu>
+				<p:submenu label="Cadastro">
+					<p:menuitem value="Empresa" outcome="/empresas/PesquisaEmpresa" >
+						
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="Operações">
+					<p:menuitem value="Pedidos">
+					
+					</p:menuitem>
+				</p:submenu>
+
+			</p:panelMenu>
+		</h:form>
+
+	</aside>
+
+	<section class="aw-content js-content">
+		<ui:insert name="content" />
+	</section>
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="javascripts" name="app.js" />
+</body>
+
+</html>
