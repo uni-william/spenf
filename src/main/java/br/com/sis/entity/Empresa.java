@@ -53,6 +53,10 @@ public class Empresa implements Serializable {
 	@NotEmpty
 	@Column(length = 30, nullable = false)
 	private String inscricaoEstadual;
+	
+	@NotEmpty
+	@Column(length = 30, nullable = false)
+	private String inscricaoMunicipal;
 
 	@Embedded
 	private Endereco endereco = new Endereco();
