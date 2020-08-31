@@ -5,27 +5,29 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="titulo">Cadastro empresa</ui:define>
+	<ui:define name="titulo">Cadastro mantenedora</ui:define>
 
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewAction action="#{empresaCadastroBean.inicializar()}" />
-			<f:viewParam name="empresa" value="#{empresaCadastroBean.empresa}" />
+			<f:viewAction action="#{mantenedoraCadastroBean.inicializar()}" />
+			<f:viewParam name="empresa"
+				value="#{mantenedoraCadastroBean.empresa}" />
 		</f:metadata>
 
-		<h1 class="aw-page-title">#{empresaCadastroBean.editando ?
-			'Edição de empresa' : 'Nova empresa'}</h1>
+		<h1 class="aw-page-title">#{mantenedoraCadastroBean.editando ?
+			'Edição de mantenedora' : 'Nova mantenedora'}</h1>
 		<br />
 		<h:form id="frm">
 			<p:focus context="frm" />
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar"
-						action="#{empresaCadastroBean.salvar}" update="@form" />
+						action="#{mantenedoraCadastroBean.salvar}" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Nova" outcome="/empresas/CadastroEmpresa" />
-					<p:button value="Pesquisa" outcome="/empresas/PesquisaEmpresa" />
+					<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora" />
+					<p:button value="Pesquisa"
+						outcome="/mantenedoras/PesquisaMantenedora" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -38,29 +40,35 @@
 							styleClass="panelgrid-noborder" style="margin-top: 10px;">
 							<p:outputLabel value="CNPJ" />
 							<p:inputMask mask="99.999.999/9999-99" id="cnpj"
-								value="#{empresaCadastroBean.empresa.cnpj}" />
+								value="#{mantenedoraCadastroBean.empresa.cnpj}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-10"
 							styleClass="panelgrid-noborder">
 							<p:outputLabel value="Razão social" />
 							<p:inputText id="razaoSocial"
-								value="#{empresaCadastroBean.empresa.razaoSocial}" />
+								value="#{mantenedoraCadastroBean.empresa.razaoSocial}" />
 							<p:outputLabel value="Nome fantasia" />
 							<p:inputText id="nomeFantasia"
-								value="#{empresaCadastroBean.empresa.nomeFantasia}" />
+								value="#{mantenedoraCadastroBean.empresa.nomeFantasia}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-2"
 							styleClass="panelgrid-noborder">
 							<p:outputLabel value="CRT" />
-							<p:inputText id="crt" value="#{empresaCadastroBean.empresa.crt}" />
+							<p:selectOneMenu id="crt"
+								value="#{mantenedoraCadastroBean.empresa.crt}">
+								<f:selectItems value="#{mantenedoraCadastroBean.tipoRegimes}"
+									var="crt" itemValue="#{crt}"
+									itemLabel="#{crt.descricao}" />
+							</p:selectOneMenu>
+
 							<p:outputLabel value="Insc. Estadual" />
 							<p:inputText id="ie"
-								value="#{empresaCadastroBean.empresa.inscricaoEstadual}" />
+								value="#{mantenedoraCadastroBean.empresa.inscricaoEstadual}" />
 							<p:outputLabel value="Insc. Municipal" />
 							<p:inputText id="im"
-								value="#{empresaCadastroBean.empresa.inscricaoMunicipal}" />
+								value="#{mantenedoraCadastroBean.empresa.inscricaoMunicipal}" />
 						</p:panelGrid>
 					</p:tab>
 					<p:tab title="Endereço" id="tbend">
@@ -73,9 +81,9 @@
 								styleClass="panelgrid-noborder">
 								<p:outputLabel value="CEP" />
 								<p:inputMask mask="99.999-999" id="cep"
-									value="#{empresaCadastroBean.empresa.endereco.cep}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.cep}" />
 								<p:commandButton value="Carregar"
-									action="#{empresaCadastroBean.carregarDadosCep()}"
+									action="#{mantenedoraCadastroBean.carregarDadosCep()}"
 									process="cep @this" update="painel" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
@@ -83,50 +91,67 @@
 								styleClass="panelgrid-noborder">
 								<p:outputLabel value="Logradouro" />
 								<p:inputText id="logradouro"
-									value="#{empresaCadastroBean.empresa.endereco.logradouro}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.logradouro}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-6"
 								styleClass="panelgrid-noborder">
 								<p:outputLabel value="Número" />
 								<p:inputText id="numero"
-									value="#{empresaCadastroBean.empresa.endereco.numero}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.numero}" />
 								<p:outputLabel value="Complemento" />
 								<p:inputText id="complemento"
-									value="#{empresaCadastroBean.empresa.endereco.complemento}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.complemento}" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-4"
 								styleClass="panelgrid-noborder">
 								<p:outputLabel value="Bairro" />
 								<p:inputText id="bairro"
-									value="#{empresaCadastroBean.empresa.endereco.bairro}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.bairro}" />
+
+							</p:panelGrid>
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Telefone" />
+								<p:inputMask id="telefone" mask="(99)9999-9999"
+									value="#{mantenedoraCadastroBean.empresa.telefone}" />
+							</p:panelGrid>
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-10"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="E-mail" />
+								<p:inputText id="email"
+									value="#{mantenedoraCadastroBean.empresa.email}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
 								<p:outputLabel value="Cidade" />
 								<p:inputText id="cidade"
-									value="#{empresaCadastroBean.empresa.endereco.nomeCidade}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.nomeCidade}" />
 								<p:outputLabel value="IBGE Cidade" />
 								<p:inputText id="ibgeCidade"
-									value="#{empresaCadastroBean.empresa.endereco.codigoIbegeCidade}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegeCidade}" />
 								<p:outputLabel value="Estado" />
 								<p:selectOneMenu id="estado"
-									value="#{empresaCadastroBean.empresa.endereco.estado}">
-									<f:selectItems value="#{empresaCadastroBean.estados}"
+									value="#{mantenedoraCadastroBean.empresa.endereco.estado}">
+									<f:selectItems value="#{mantenedoraCadastroBean.estados}"
 										var="estado" itemValue="#{estado}"
 										itemLabel="#{estado.descricao}" />
 								</p:selectOneMenu>
 								<p:outputLabel value="IBGE UF" />
 								<p:inputText id="ibgeEstado"
-									value="#{empresaCadastroBean.empresa.endereco.codigoIbegeEstado}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegeEstado}" />
 								<p:outputLabel value="País" />
 								<p:inputText id="pais"
-									value="#{empresaCadastroBean.empresa.endereco.pais}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.pais}" />
 								<p:outputLabel value="IBGE País" />
 								<p:inputText id="ibgepais"
-									value="#{empresaCadastroBean.empresa.endereco.codigoIbegePais}" />
+									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegePais}" />
 							</p:panelGrid>
 						</p:panelGrid>
 					</p:tab>

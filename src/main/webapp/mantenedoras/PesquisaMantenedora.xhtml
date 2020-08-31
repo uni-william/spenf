@@ -7,10 +7,10 @@
 	<head>
 <meta charset="UTF-8" />
 	</head>
-	<ui:define name="titulo">Empresas</ui:define>
+	<ui:define name="titulo">Mantenedora</ui:define>
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewAction action="#{empresaPesquisaBean.inicializar()}" />
+			<f:viewAction action="#{mantenedoraPesquisaBean.inicializar()}" />
 		</f:metadata>
 		<h1 class="aw-page-title">Empresas</h1>
 		<h:form id="frm">
@@ -18,13 +18,13 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup align="right">
-						<p:button value="Nova Empresa" outcome="/empresas/CadastroEmpresa">
+						<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora">
 						</p:button>
 					</p:toolbarGroup>
 				</p:toolbar>
 
 				<p:growl id="msg" />
-				<p:dataTable value="#{empresaPesquisaBean.empresas}" var="empresa"
+				<p:dataTable value="#{mantenedoraPesquisaBean.empresas}" var="empresa"
 					style="margin-top: 20px" reflow="true"
 					emptyMessage="Nenhuma empresa cadastrada" id="table">
 					<p:column headerText="Cnpj" width="15%">
@@ -35,14 +35,14 @@
 					</p:column>
 					<p:column width="8%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/empresas/CadastroEmpresa">
+							outcome="/mantenedoras/CadastroMantenedora">
 							<f:param name="empresa" value="#{empresa.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px">
 							<f:setPropertyActionListener value="#{empresa}"
-								target="#{empresaPesquisaBean.empresaSelecionada}" />
+								target="#{mantenedoraPesquisaBean.empresaSelecionada}" />
 						</p:commandButton>
 					</p:column>
 
@@ -50,13 +50,13 @@
 
 			</div>
 			<p:confirmDialog header="Excluão de Registro"
-				message="Tem certeza que deseja excluir o  #{empresaPesquisaBean.empresaSelecionada.razaoSocial}?"
+				message="Tem certeza que deseja excluir o  #{mantenedoraPesquisaBean.empresaSelecionada.razaoSocial}?"
 				widgetVar="confirmacao" id="conf">
 				<p:button value="Não"
 					onclick="PF('confirmacao').hide(); return false;" />
 				<p:commandButton value="Sim" update="@form"
 					oncomplete="PF('confirmacao').hide()" process="@this"
-					action="#{empresaPesquisaBean.excluir}" />
+					action="#{mantenedoraPesquisaBean.excluir}" />
 			</p:confirmDialog>
 		</h:form>
 
