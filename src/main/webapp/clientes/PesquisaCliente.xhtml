@@ -1,0 +1,106 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Cliente</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{clientePesquisaBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Clientes</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:button value="Novo" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Pesquisar"
+							action="#{clientePesquisaBean.pesquisar}" update="@form" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Mantenedora" />
+					<p:selectOneMenu id="mantenedora"
+						value="#{clientePesquisaBean.filter.mantenedora}">
+						<f:selectItems value="#{clientePesquisaBean.mantenedoras}"
+							var="mantenedora" itemValue="#{mantenedora}"
+							itemLabel="#{mantenedora.razaoSocial}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="CNPJ" />
+					<p:inputMask mask="99.999.999/9999-99" id="cnpj"
+						value="#{clientePesquisaBean.filter.cnpj}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Razão Social" />
+					<p:inputText value="#{clientePesquisaBean.filter.razaoSocial}" />
+					<p:outputLabel value="Nome Fantasia" />
+					<p:inputText value="#{clientePesquisaBean.filter.nomeFantasia}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Inscrição Estadual" />
+					<p:inputText
+						value="#{clientePesquisaBean.filter.inscricaoEstadual}" />
+					<p:outputLabel value="Inscrição Municipal" />
+					<p:inputText
+						value="#{clientePesquisaBean.filter.inscricaoMunicipal}" />
+
+				</p:panelGrid>
+
+				<p:dataTable value="#{clientePesquisaBean.empresas}" var="empresa"
+					style="margin-top: 20px" reflow="true"
+					emptyMessage="Nenhuma empresa cadastrada" id="table">
+					<p:column headerText="Cnpj" width="15%">
+						<h:outputText value="#{empresa.cnpj}" />
+					</p:column>
+					<p:column headerText="Razão Social">
+						<h:outputText value="#{empresa.razaoSocial}" />
+					</p:column>
+					<p:column width="8%" exportable="false">
+						<p:button icon="ui-icon-pencil" style="width: 30px">
+							<f:param name="empresa" value="#{empresa.id}" />
+						</p:button>
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
+							oncomplete="PF('confirmacao').show(); return false;"
+							process="@this" update=":frm:conf" style="width: 30px">
+							<f:setPropertyActionListener value="#{empresa}"
+								target="#{clientePesquisaBean.empresaSelecionada}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</div>
+			<p:confirmDialog header="Excluão de Registro"
+				message="Tem certeza que deseja excluir o  #{clientePesquisaBean.empresaSelecionada.razaoSocial}?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{clientePesquisaBean.excluir}" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

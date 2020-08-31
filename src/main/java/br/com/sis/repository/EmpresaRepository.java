@@ -32,7 +32,7 @@ public class EmpresaRepository implements Serializable {
 		return manager.find(Empresa.class, id);
 	}
 
-	public List<Empresa> listMantenedorasAll(EmpresaFilter filter) {
+	public List<Empresa> listAll(EmpresaFilter filter) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Empresa> criteriaQuery = builder.createQuery(Empresa.class);
 		Root<Empresa> root = criteriaQuery.from(Empresa.class);
@@ -40,7 +40,6 @@ public class EmpresaRepository implements Serializable {
 		criteriaQuery.where(criarRestricoes(filter, builder, root));
 		TypedQuery<Empresa> query = manager.createQuery(criteriaQuery);
 		return query.getResultList();
-
 	}
 
 	public Empresa salvar(Empresa empresa) {

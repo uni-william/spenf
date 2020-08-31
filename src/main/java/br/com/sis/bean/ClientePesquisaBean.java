@@ -15,7 +15,7 @@ import br.com.sis.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class MantenedoraPesquisaBean implements Serializable {
+public class ClientePesquisaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,9 @@ public class MantenedoraPesquisaBean implements Serializable {
 	private List<Empresa> empresas;
 
 	private Empresa empresaSelecionada;
-	
+
+	private List<Empresa> mantenedoras;
+
 	private EmpresaFilter filter;
 
 	public List<Empresa> getEmpresas() {
@@ -40,12 +42,31 @@ public class MantenedoraPesquisaBean implements Serializable {
 		this.empresaSelecionada = empresaSelecionada;
 	}
 
+	public List<Empresa> getMantenedoras() {
+		return mantenedoras;
+	}
+
+	public EmpresaFilter getFilter() {
+		return filter;
+	}
+
+	public void setFilter(EmpresaFilter filter) {
+		this.filter = filter;
+	}
+
 	public void inicializar() {
+		EmpresaFilter filterMantenedora = new EmpresaFilter();
+		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
+		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new EmpresaFilter();
-		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
-		empresas = empresaRepository.listAll(filter);
+		filter.setTipoEmpresa(TipoEmpresa.CLIENTE);
+		pesquisar();
 	}
 	
+	public void pesquisar() {
+		empresas = empresaRepository.listAll(filter);
+	}
+
 	public void excluir() {
 		if (empresaRepository.remover(this.empresaSelecionada)) {
 			FacesUtil.addInfoMessage("Empresa excluída com sucesso");
