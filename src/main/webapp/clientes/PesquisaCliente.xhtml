@@ -18,7 +18,7 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" />
+						<p:button value="Novo" outcome="/clientes/CadastroCliente" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
@@ -34,7 +34,7 @@
 						value="#{clientePesquisaBean.filter.mantenedora}">
 						<f:selectItems value="#{clientePesquisaBean.mantenedoras}"
 							var="mantenedora" itemValue="#{mantenedora}"
-							itemLabel="#{mantenedora.razaoSocial}" />
+							itemLabel="#{mantenedora.nomeFantasia}" />
 					</p:selectOneMenu>
 				</p:panelGrid>
 
@@ -76,7 +76,8 @@
 						<h:outputText value="#{empresa.razaoSocial}" />
 					</p:column>
 					<p:column width="8%" exportable="false">
-						<p:button icon="ui-icon-pencil" style="width: 30px">
+						<p:button icon="ui-icon-pencil" style="width: 30px"
+							outcome="/clientes/CadastroCliente">
 							<f:param name="empresa" value="#{empresa.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"

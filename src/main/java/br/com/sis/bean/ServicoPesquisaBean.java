@@ -8,53 +8,58 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.sis.entity.Empresa;
+import br.com.sis.entity.Servico;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.repository.filter.ServicoFilter;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 @Named
 @ViewScoped
-public class ClientePesquisaBean implements Serializable {
+public class ServicoPesquisaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private EmpresaRepository empresaRepository;	
 
 	@Inject
-	private EmpresaRepository empresaRepository;
+	private ServicoRepository servicoRepository;
 
 	@Getter
-	private List<Empresa> empresas;
+	private List<Servico> servicos;
 
 	@Getter
 	@Setter
-	private Empresa empresaSelecionada;
-
+	private Servico servicoSelecionado;
+	
 	@Getter
 	private List<Empresa> mantenedoras;
 
 	@Getter
 	@Setter
-	private EmpresaFilter filter;
+	private ServicoFilter filter;
 
 	public void inicializar() {
 		EmpresaFilter filterMantenedora = new EmpresaFilter();
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
-		filter = new EmpresaFilter();
-		filter.setTipoEmpresa(TipoEmpresa.CLIENTE);
+		filter = new ServicoFilter();
 		pesquisar();
 	}
 	
 	public void pesquisar() {
-		empresas = empresaRepository.listAll(filter);
+		servicos = servicoRepository.listAll(filter);
 	}
 
 	public void excluir() {
-		if (empresaRepository.remover(this.empresaSelecionada)) {
-			FacesUtil.addInfoMessage("Empresa excluída com sucesso");
-			empresas = empresaRepository.listAll(filter);
+		if (servicoRepository.remover(this.servicoSelecionado)) {
+			FacesUtil.addInfoMessage("Servico excluída com sucesso");
+			servicos = servicoRepository.listAll(filter);
 		}
 	}
 

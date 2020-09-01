@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,6 +21,8 @@ import br.com.sis.entity.dto.CepVO;
 import br.com.sis.enuns.Estado;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.enuns.TipoRegime;
+import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.repository.filter.EmpresaFilter;
 import br.com.sis.service.EmpresaService;
 import br.com.sis.util.Utils;
 import br.com.sis.util.jsf.FacesUtil;
@@ -28,7 +31,7 @@ import lombok.Setter;
 
 @Named
 @ViewScoped
-public class MantenedoraCadastroBean implements Serializable {
+public class ClienteCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,25 +42,33 @@ public class MantenedoraCadastroBean implements Serializable {
 	@Setter
 	private Empresa empresa;
 
+	@Getter
+	private List<Empresa> mantenedoras;
+
 	@Inject
 	private EmpresaService empresaService;
 
+	@Inject
+	private EmpresaRepository empresaRepository;
+
 	public void inicializar() {
+		EmpresaFilter filter = new EmpresaFilter();
+		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
+		this.mantenedoras = empresaRepository.listAll(filter);
 		if (empresa == null) {
 			empresa = new Empresa();
 			empresa.getEndereco().setEstado(Estado.AM);
 			empresa.getEndereco().setCodigoIbegeEstado("13");
 			empresa.getEndereco().setCodigoIbegePais("1058");
-			empresa.getEndereco().setPais("Brasil");			
-			empresa.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
-			empresa.setCrt(TipoRegime.SIMPLES_NACIONAL);
-		
+			empresa.getEndereco().setPais("Brasil");
+			empresa.setTipoEmpresa(TipoEmpresa.CLIENTE);
+			empresa.setCrt(TipoRegime.CLIENTE);
 		}
 	}
 
 	public void salvar() {
 		empresa = empresaService.salvar(empresa);
-		FacesUtil.addInfoMessage("Empresa salva com sucesso!");
+		FacesUtil.addInfoMessage("Cliente salvo com sucesso!");
 	}
 
 	public boolean isEditando() {
@@ -67,10 +78,11 @@ public class MantenedoraCadastroBean implements Serializable {
 	public Estado[] getEstados() {
 		return Estado.values();
 	}
-	
+
 	public TipoRegime[] getTipoRegimes() {
 		return TipoRegime.values();
 	}
+
 	public void carregarDadosCep() {
 		String cep = Utils.removerCaracter(Utils.removerCaracter(this.getEmpresa().getEndereco().getCep(), "."), "-");
 		String url = URL_VIA_CEP + cep + FORMATO;

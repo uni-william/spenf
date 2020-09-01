@@ -1,0 +1,166 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro cliente</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{clienteCadastroBean.inicializar()}" />
+			<f:viewParam name="empresa" value="#{clienteCadastroBean.empresa}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{clienteCadastroBean.editando ?
+			'Edição de cliente' : 'Novo cliente'}</h1>
+		<br />
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{clienteCadastroBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/clientes/CadastroCliente" />
+					<p:button value="Pesquisa"
+						outcome="/clientes/PesquisaCliente" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:tabView id="tab">
+					<p:tab title="Dados cadastrais" id="tbdados">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-6"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+							<p:outputLabel value="Mantenedora" />
+							<p:selectOneMenu id="mantenedora"
+								value="#{clienteCadastroBean.empresa.mantenedora}">
+								<f:selectItems value="#{clienteCadastroBean.mantenedoras}"
+									var="mantenedora" itemValue="#{mantenedora}"
+									itemLabel="#{mantenedora.nomeFantasia}" />
+							</p:selectOneMenu>
+						</p:panelGrid>
+						<p:separator />
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-3"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="CNPJ" />
+							<p:inputMask mask="99.999.999/9999-99" id="cnpj"
+								value="#{clienteCadastroBean.empresa.cnpj}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-10"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Razão social" />
+							<p:inputText id="razaoSocial"
+								value="#{clienteCadastroBean.empresa.razaoSocial}" />
+							<p:outputLabel value="Nome fantasia" />
+							<p:inputText id="nomeFantasia"
+								value="#{clienteCadastroBean.empresa.nomeFantasia}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-2"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Insc. Estadual" />
+							<p:inputText id="ie"
+								value="#{clienteCadastroBean.empresa.inscricaoEstadual}" />
+							<p:outputLabel value="Insc. Municipal" />
+							<p:inputText id="im"
+								value="#{clienteCadastroBean.empresa.inscricaoMunicipal}" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Endereço" id="tbend">
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-12" styleClass="panelgrid-noborder"
+							id="painel" style="margin-top: 10px;">
+
+							<p:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="CEP" />
+								<p:inputMask mask="99.999-999" id="cep"
+									value="#{clienteCadastroBean.empresa.endereco.cep}" />
+								<p:commandButton value="Carregar"
+									action="#{clienteCadastroBean.carregarDadosCep()}"
+									process="cep @this" update="painel" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-10"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Logradouro" />
+								<p:inputText id="logradouro"
+									value="#{clienteCadastroBean.empresa.endereco.logradouro}" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-6"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Número" />
+								<p:inputText id="numero"
+									value="#{clienteCadastroBean.empresa.endereco.numero}" />
+								<p:outputLabel value="Complemento" />
+								<p:inputText id="complemento"
+									value="#{clienteCadastroBean.empresa.endereco.complemento}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-4"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Bairro" />
+								<p:inputText id="bairro"
+									value="#{clienteCadastroBean.empresa.endereco.bairro}" />
+
+							</p:panelGrid>
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Telefone" />
+								<p:inputMask id="telefone" mask="(99)9999-9999"
+									value="#{clienteCadastroBean.empresa.telefone}" />
+							</p:panelGrid>
+
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-10"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="E-mail" />
+								<p:inputText id="email"
+									value="#{clienteCadastroBean.empresa.email}" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Cidade" />
+								<p:inputText id="cidade"
+									value="#{clienteCadastroBean.empresa.endereco.nomeCidade}" />
+								<p:outputLabel value="IBGE Cidade" />
+								<p:inputText id="ibgeCidade"
+									value="#{clienteCadastroBean.empresa.endereco.codigoIbegeCidade}" />
+								<p:outputLabel value="Estado" />
+								<p:selectOneMenu id="estado"
+									value="#{clienteCadastroBean.empresa.endereco.estado}">
+									<f:selectItems value="#{clienteCadastroBean.estados}"
+										var="estado" itemValue="#{estado}"
+										itemLabel="#{estado.descricao}" />
+								</p:selectOneMenu>
+								<p:outputLabel value="IBGE UF" />
+								<p:inputText id="ibgeEstado"
+									value="#{clienteCadastroBean.empresa.endereco.codigoIbegeEstado}" />
+								<p:outputLabel value="País" />
+								<p:inputText id="pais"
+									value="#{clienteCadastroBean.empresa.endereco.pais}" />
+								<p:outputLabel value="IBGE País" />
+								<p:inputText id="ibgepais"
+									value="#{clienteCadastroBean.empresa.endereco.codigoIbegePais}" />
+							</p:panelGrid>
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

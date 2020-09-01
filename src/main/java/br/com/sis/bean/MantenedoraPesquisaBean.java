@@ -12,6 +12,8 @@ import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
 import br.com.sis.util.jsf.FacesUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @ViewScoped
@@ -22,23 +24,16 @@ public class MantenedoraPesquisaBean implements Serializable {
 	@Inject
 	private EmpresaRepository empresaRepository;
 
+	@Getter
 	private List<Empresa> empresas;
 
+	@Getter
+	@Setter
 	private Empresa empresaSelecionada;
 	
+	@Getter
+	@Setter
 	private EmpresaFilter filter;
-
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
-
-	public Empresa getEmpresaSelecionada() {
-		return empresaSelecionada;
-	}
-
-	public void setEmpresaSelecionada(Empresa empresaSelecionada) {
-		this.empresaSelecionada = empresaSelecionada;
-	}
 
 	public void inicializar() {
 		filter = new EmpresaFilter();

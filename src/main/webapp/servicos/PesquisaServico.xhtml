@@ -1,0 +1,92 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Serviço</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{servicoPesquisaBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Serviços</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:button value="Novo" outcome="/servicos/CadastroServico" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Pesquisar"
+							action="#{servicoPesquisaBean.pesquisar}" update="@form" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Mantenedora" />
+					<p:selectOneMenu id="mantenedora"
+						value="#{servicoPesquisaBean.filter.mantenedora}">
+						<f:selectItems value="#{servicoPesquisaBean.mantenedoras}"
+							var="mantenedora" itemValue="#{mantenedora}"
+							itemLabel="#{mantenedora.nomeFantasia}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Descrição" />
+					<p:inputText value="#{servicoPesquisaBean.filter.descricao}" />
+				</p:panelGrid>
+
+				<p:dataTable value="#{servicoPesquisaBean.servicos}" var="servico"
+					style="margin-top: 20px" reflow="true"
+					emptyMessage="Nenhuma serviço cadastrado" id="table">
+					<p:column headerText="Código" width="8%">
+						<h:outputText value="#{servico.id}" />
+					</p:column>					
+					<p:column headerText="Descrição">
+						<h:outputText value="#{servico.descricao}" />
+					</p:column>
+					<p:column headerText="Valor" width="15%">
+						<h:outputText value="#{servico.valor}">
+							<f:convertNumber type="currency"/>
+						</h:outputText>
+					</p:column>
+					<p:column width="8%" exportable="false">
+						<p:button icon="ui-icon-pencil" style="width: 30px"
+							outcome="/servicos/CadastroServico">
+							<f:param name="servico" value="#{servico.id}" />
+						</p:button>
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
+							oncomplete="PF('confirmacao').show(); return false;"
+							process="@this" update=":frm:conf" style="width: 30px">
+							<f:setPropertyActionListener value="#{servico}"
+								target="#{servicoPesquisaBean.servicoSelecionado}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</div>
+			<p:confirmDialog header="Excluão de Registro"
+				message="Tem certeza que deseja excluir o  #{servicoPesquisaBean.servicoSelecionado.descricao}?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{servicoPesquisaBean.excluir}" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

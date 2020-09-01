@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro serviço</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{servicoCadastroBean.inicializar()}" />
+			<f:viewParam name="servico" value="#{servicoCadastroBean.servico}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{servicoCadastroBean.editando ?
+			'Edição de serviço' : 'Novo serviço'}</h1>
+		<br />
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{servicoCadastroBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/servicos/CadastroServico" />
+					<p:button value="Pesquisa" outcome="/servicos/PesquisaServico" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-6"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Mantenedora" />
+					<p:selectOneMenu id="mantenedora"
+						value="#{servicoCadastroBean.servico.mantenedora}">
+						<f:selectItems value="#{servicoCadastroBean.mantenedoras}"
+							var="mantenedora" itemValue="#{mantenedora}"
+							itemLabel="#{mantenedora.nomeFantasia}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:separator />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Descricao" for="descricao" />
+					<p:inputTextarea id="descricao"
+						value="#{servicoCadastroBean.servico.descricao}" rows="5" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel value="Valor" for="valor" />
+					<p:inputNumber id="valor"
+						value="#{servicoCadastroBean.servico.valor}" symbol="R$ "
+						symbolPosition="p" decimalSeparator="," thousandSeparator="." />
+				</p:panelGrid>
+
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
