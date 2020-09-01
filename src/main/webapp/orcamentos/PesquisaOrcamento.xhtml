@@ -1,0 +1,101 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Serviço</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{orcamentoPesquisaBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Orçamentos</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:button value="Novo" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Pesquisar"
+							action="#{orcamentoPesquisaBean.pesquisar}" update="@form" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Mantenedora" />
+					<p:selectOneMenu id="mantenedora"
+						value="#{orcamentoPesquisaBean.filter.mantenedora}">
+						<f:selectItems value="#{orcamentoPesquisaBean.mantenedoras}"
+							var="mantenedora" itemValue="#{mantenedora}"
+							itemLabel="#{mantenedora.nomeFantasia}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Cliente" />
+					<p:selectOneMenu id="cliente"
+						value="#{orcamentoPesquisaBean.filter.cliente}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItems value="#{orcamentoPesquisaBean.clientes}"
+							var="cliente" itemValue="#{cliente}"
+							itemLabel="#{cliente.nomeFantasia}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Data início" />
+					<p:datePicker
+						value="#{orcamentoPesquisaBean.filter.dataCricaoInicio}"
+						showIcon="true" pattern="dd/MM/yyyy" />
+					<p:outputLabel value="Data fim" />
+					<p:datePicker value="#{orcamentoPesquisaBean.filter.dataCricaoFim}"
+						showIcon="true" pattern="dd/MM/yyyy" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Pedido" />
+					<p:inputText value="#{orcamentoPesquisaBean.filter.pedido}" />
+				</p:panelGrid>
+
+				<p:dataTable value="#{orcamentoPesquisaBean.orcamentos}"
+					var="orcamento" style="margin-top: 20px" reflow="true"
+					emptyMessage="Sem registro de dados" id="table">
+					<p:column headerText="Número" width="8%">
+						<h:outputText value="#{orcamento.id}" />
+					</p:column>
+					<p:column headerText="Pedido" width="8%">
+						<h:outputText value="#{orcamento.pedidoCliente}" />
+					</p:column>					
+					<p:column headerText="Cliente">
+						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
+					</p:column>
+					<p:column headerText="Total" width="12%">
+						<h:outputText value="#{orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data orçamento" width="12%">
+						<h:outputText value="#{orcamento.dataOrcamento}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>					
+					<p:column width="4%" exportable="false">
+						<p:button icon="ui-icon-pencil" style="width: 30px">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

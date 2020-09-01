@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -68,9 +69,11 @@ public class Orcamento implements Serializable {
 	
 	private LocalDate diaEntrega;
 	
-	private LocalDate diaPagamento;	
+	private LocalDate diaPagamento;
 	
-	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY)
+	private boolean cancelado = false;
+	
+	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
 
 }
