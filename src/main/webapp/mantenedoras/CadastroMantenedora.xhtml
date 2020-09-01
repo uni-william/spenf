@@ -59,8 +59,7 @@
 							<p:selectOneMenu id="crt"
 								value="#{mantenedoraCadastroBean.empresa.crt}">
 								<f:selectItems value="#{mantenedoraCadastroBean.tipoRegimes}"
-									var="crt" itemValue="#{crt}"
-									itemLabel="#{crt.descricao}" />
+									var="crt" itemValue="#{crt}" itemLabel="#{crt.descricao}" />
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Insc. Estadual" />
@@ -153,6 +152,52 @@
 								<p:inputText id="ibgepais"
 									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegePais}" />
 							</p:panelGrid>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Configurações" id="tbConfig">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-8"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+							<p:outputLabel value="Usuário de envio de e-mail" />
+							<p:inputText
+								value="#{mantenedoraCadastroBean.empresa.usuarioEnviaEmail}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-10"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="E-mail de envio" />
+							<p:inputText
+								value="#{mantenedoraCadastroBean.empresa.emailEnvio}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-4"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Senha e-mail envio" />
+							<p:password
+								value="#{mantenedoraCadastroBean.empresa.senhaUsuarioEmail}" redisplay="true" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-6"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Host de envio de e-mail" />
+							<p:inputText value="#{mantenedoraCadastroBean.empresa.host}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-1"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Porta" />
+							<p:inputNumber value="#{mantenedoraCadastroBean.empresa.porta}"
+								decimalPlaces="0" thousandSeparator="" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-1"
+							styleClass="panelgrid-noborder">
+							<p:outputLabel value="Usa SSL" />
+							<p:selectBooleanCheckbox
+								value="#{mantenedoraCadastroBean.empresa.sslOnConection}" />
+							<p:outputLabel value="TLS Requerido" />
+							<p:selectBooleanCheckbox
+								value="#{mantenedoraCadastroBean.empresa.tlsRequired}" />
 						</p:panelGrid>
 					</p:tab>
 				</p:tabView>

@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.com.sis.entity.Empresa;
 import br.com.sis.entity.Servico;
 import br.com.sis.repository.filter.ServicoFilter;
 import br.com.sis.util.jpa.Transactional;
@@ -40,6 +41,18 @@ public class ServicoRepository implements Serializable {
 		TypedQuery<Servico> query = manager.createQuery(criteriaQuery);
 		return query.getResultList();
 	}
+	
+	public List<Servico> toAutoComplete(Empresa mantenedora, String descricao) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Servico> criteriaQuery = builder.createQuery(Servico.class);
+		Root<Servico> root = criteriaQuery.from(Servico.class);
+		criteriaQuery.select(root);
+		criteriaQuery.where(builder.equal(root.get("mantenedora"), mantenedora),
+				builder.like(builder.lower(root.get("descricao")), descricao.toLowerCase() + "%"));
+		TypedQuery<Servico> query = manager.createQuery(criteriaQuery);
+		return query.getResultList();
+	}
+	
 
 	public Servico salvar(Servico servico) {
 		return manager.merge(servico);

@@ -25,8 +25,7 @@
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Novo" outcome="/clientes/CadastroCliente" />
-					<p:button value="Pesquisa"
-						outcome="/clientes/PesquisaCliente" />
+					<p:button value="Pesquisa" outcome="/clientes/PesquisaCliente" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -157,6 +156,25 @@
 									value="#{clienteCadastroBean.empresa.endereco.codigoIbegePais}" />
 							</p:panelGrid>
 						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Informações adicionais" id="tbAdicionais">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-1"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+							<p:outputLabel value="Prazo de Pagamento" for="pagamento" />
+							<p:inputNumber id="pagamento"
+								value="#{clienteCadastroBean.empresa.prazoPagamento}"
+								decimalPlaces="0" thousandSeparator="" />
+							<p:outputLabel value="Prazo de Entrega" for="entrega" />
+							<p:inputNumber id="entrega"
+								value="#{clienteCadastroBean.empresa.prazoEntrega}"
+								decimalPlaces="0" thousandSeparator="" />
+							<p:outputLabel value="Prazo de Validade" for="validade" />
+							<p:inputNumber id="validade"
+								value="#{clienteCadastroBean.empresa.validadeProposta}"
+								decimalPlaces="0" thousandSeparator="" />
+						</p:panelGrid>
+
 					</p:tab>
 				</p:tabView>
 			</div>

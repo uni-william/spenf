@@ -83,5 +83,21 @@ public class Empresa implements Serializable {
 
 	@Embedded
 	private Endereco endereco = new Endereco();
+	
+	private Integer prazoPagamento;
+	private Integer prazoEntrega;
+	private Integer validadeProposta;
+	
+	@Column(length = 50)
+	private String usuarioEnviaEmail;
+	@Column(length = 100)
+	private String senhaUsuarioEmail;
+	@Column(length = 50)
+	private String emailEnvio;
+	@Column(length = 50)
+	private String host;
+	private Integer porta;
+	private boolean sslOnConection;
+	private boolean tlsRequired;	
 
 }
