@@ -1,0 +1,61 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro orcamento</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{orcamentoCadastroBean.inicializar()}" />
+			<f:viewParam name="orcamento"
+				value="#{orcamentoCadastroBean.orcamento}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{orcamentoCadastroBean.editando ?
+			'Orçamento ' + orcamentoCadastroBean.orcamento.id : 'Orçamento -
+			Novo'}</h1>
+		<br />
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{orcamentoCadastroBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
+					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-4"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Orçamento:" styleClass="textoNegrito" />
+					<p:outputLabel value="#{orcamentoCadastroBean.orcamento.id}" styleClass="textoNegrito" />
+				</p:panelGrid>
+				<p:separator />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Cliente" />
+					<p:selectOneMenu id="cliente"
+						value="#{orcamentoCadastroBean.orcamento.cliente}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItems value="#{orcamentoCadastroBean.clientes}"
+							var="cliente" itemValue="#{cliente}"
+							itemLabel="#{cliente.nomeFantasia}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

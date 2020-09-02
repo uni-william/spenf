@@ -21,7 +21,7 @@
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar"
-						action="#{servicoCadastroBean.salvar}" update="@form" />
+						action="#{servicoCadastroBean.salvar}" update="@form" disabled="#{!servicoCadastroBean.podeSalvar}" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Novo" outcome="/servicos/CadastroServico" />
@@ -32,20 +32,8 @@
 			<p:growl />
 			<div class="ui-fluid">
 				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-6"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Mantenedora" />
-					<p:selectOneMenu id="mantenedora"
-						value="#{servicoCadastroBean.servico.mantenedora}">
-						<f:selectItems value="#{servicoCadastroBean.mantenedoras}"
-							var="mantenedora" itemValue="#{mantenedora}"
-							itemLabel="#{mantenedora.nomeFantasia}" />
-					</p:selectOneMenu>
-				</p:panelGrid>
-				<p:separator />
-				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-10"
-					styleClass="panelgrid-noborder">
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Descricao" for="descricao" />
 					<p:inputTextarea id="descricao"
 						value="#{servicoCadastroBean.servico.descricao}" rows="5" />

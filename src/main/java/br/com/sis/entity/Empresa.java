@@ -1,8 +1,11 @@
 package br.com.sis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -98,6 +101,12 @@ public class Empresa implements Serializable {
 	private String host;
 	private Integer porta;
 	private boolean sslOnConection;
-	private boolean tlsRequired;	
-
+	private boolean tlsRequired;
+	
+	@ElementCollection
+	@CollectionTable(name = "emails_cliente",
+	joinColumns = @JoinColumn(name = "cliente_id"))
+	@Column(name = "email")
+	private List<String> emails;
+	
 }

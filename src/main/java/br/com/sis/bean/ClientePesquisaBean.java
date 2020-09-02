@@ -44,6 +44,8 @@ public class ClientePesquisaBean implements Serializable {
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new EmpresaFilter();
 		filter.setTipoEmpresa(TipoEmpresa.CLIENTE);
+		if (mantenedoras.size() > 0)
+			filter.setMantenedora(mantenedoras.get(0));
 		pesquisar();
 	}
 	

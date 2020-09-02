@@ -49,6 +49,8 @@ public class ServicoPesquisaBean implements Serializable {
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new ServicoFilter();
+		if (mantenedoras.size() > 0)
+			filter.setMantenedora(mantenedoras.get(0));
 		pesquisar();
 	}
 	

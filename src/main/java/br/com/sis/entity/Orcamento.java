@@ -73,6 +73,8 @@ public class Orcamento implements Serializable {
 	
 	private boolean cancelado = false;
 	
+	private Long numeroNfse;
+	
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
 

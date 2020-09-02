@@ -18,7 +18,7 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" />
+						<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
@@ -29,13 +29,6 @@
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-8"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Mantenedora" />
-					<p:selectOneMenu id="mantenedora"
-						value="#{orcamentoPesquisaBean.filter.mantenedora}">
-						<f:selectItems value="#{orcamentoPesquisaBean.mantenedoras}"
-							var="mantenedora" itemValue="#{mantenedora}"
-							itemLabel="#{mantenedora.nomeFantasia}" />
-					</p:selectOneMenu>
 					<p:outputLabel value="Cliente" />
 					<p:selectOneMenu id="cliente"
 						value="#{orcamentoPesquisaBean.filter.cliente}">
@@ -73,7 +66,7 @@
 					</p:column>
 					<p:column headerText="Pedido" width="8%">
 						<h:outputText value="#{orcamento.pedidoCliente}" />
-					</p:column>					
+					</p:column>
 					<p:column headerText="Cliente">
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
@@ -84,9 +77,9 @@
 					</p:column>
 					<p:column headerText="Data orçamento" width="12%">
 						<h:outputText value="#{orcamento.dataOrcamento}">
-							<f:convertDateTime pattern="dd/MM/yyyy"/>
+							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
-					</p:column>					
+					</p:column>
 					<p:column width="4%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px">
 							<f:param name="orcamento" value="#{orcamento.id}" />

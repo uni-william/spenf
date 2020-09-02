@@ -27,18 +27,6 @@
 				</p:toolbar>
 				<p:growl id="msg" />
 				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-8"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Mantenedora" />
-					<p:selectOneMenu id="mantenedora"
-						value="#{clientePesquisaBean.filter.mantenedora}">
-						<f:selectItems value="#{clientePesquisaBean.mantenedoras}"
-							var="mantenedora" itemValue="#{mantenedora}"
-							itemLabel="#{mantenedora.nomeFantasia}" />
-					</p:selectOneMenu>
-				</p:panelGrid>
-
-				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder">
 					<p:outputLabel value="CNPJ" />

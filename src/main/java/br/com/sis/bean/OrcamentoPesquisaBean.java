@@ -14,6 +14,7 @@ import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.OrcamentoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
 import br.com.sis.repository.filter.OrcamentoFilter;
+import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +23,9 @@ import lombok.Setter;
 public class OrcamentoPesquisaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
-	private EmpresaRepository empresaRepository;	
+	private EmpresaRepository empresaRepository;
 
 	@Inject
 	private OrcamentoRepository orcamentoRepository;
@@ -35,13 +36,12 @@ public class OrcamentoPesquisaBean implements Serializable {
 	@Getter
 	@Setter
 	private Orcamento orcamentoSelecionado;
-	
+
 	@Getter
 	private List<Empresa> mantenedoras;
-	
+
 	@Getter
 	private List<Empresa> clientes;
-	
 
 	@Getter
 	@Setter
@@ -52,19 +52,27 @@ public class OrcamentoPesquisaBean implements Serializable {
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new OrcamentoFilter();
-		aoSelelecionarMantenedora();
-		pesquisar();
+		if (mantenedoras.size() > 0) {
+			filter.setMantenedora(mantenedoras.get(0));
+			aoSelelecionarMantenedora();
+			pesquisar();
+		} else {
+			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
+		}
 	}
-	
+
 	public void aoSelelecionarMantenedora() {
 		EmpresaFilter filterCliente = new EmpresaFilter();
 		filterCliente.setTipoEmpresa(TipoEmpresa.CLIENTE);
 		filterCliente.setMantenedora(filter.getMantenedora());
 		clientes = empresaRepository.listAll(filterCliente);
 	}
-	
+
 	public void pesquisar() {
-		orcamentos = orcamentoRepository.listAll(filter);
+		if (mantenedoras.size() > 0)
+			orcamentos = orcamentoRepository.listAll(filter);
+		else
+			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
 	}
 
 }

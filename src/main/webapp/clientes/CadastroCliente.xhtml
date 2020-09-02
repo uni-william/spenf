@@ -21,7 +21,7 @@
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar"
-						action="#{clienteCadastroBean.salvar}" update="@form" />
+						action="#{clienteCadastroBean.salvar}" update="@form" disabled="#{!clienteCadastroBean.podeSalvar}" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Novo" outcome="/clientes/CadastroCliente" />
@@ -34,20 +34,8 @@
 				<p:tabView id="tab">
 					<p:tab title="Dados cadastrais" id="tbdados">
 						<p:panelGrid columns="2" layout="grid"
-							columnClasses="ui-grid-col-2, ui-grid-col-6"
-							styleClass="panelgrid-noborder" style="margin-top: 10px;">
-							<p:outputLabel value="Mantenedora" />
-							<p:selectOneMenu id="mantenedora"
-								value="#{clienteCadastroBean.empresa.mantenedora}">
-								<f:selectItems value="#{clienteCadastroBean.mantenedoras}"
-									var="mantenedora" itemValue="#{mantenedora}"
-									itemLabel="#{mantenedora.nomeFantasia}" />
-							</p:selectOneMenu>
-						</p:panelGrid>
-						<p:separator />
-						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-3"
-							styleClass="panelgrid-noborder">
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
 							<p:outputLabel value="CNPJ" />
 							<p:inputMask mask="99.999.999/9999-99" id="cnpj"
 								value="#{clienteCadastroBean.empresa.cnpj}" />
@@ -174,6 +162,33 @@
 								value="#{clienteCadastroBean.empresa.validadeProposta}"
 								decimalPlaces="0" thousandSeparator="" />
 						</p:panelGrid>
+
+					</p:tab>
+
+					<p:tab title="E-mails para contato" id="tbContatos">
+						<p:panelGrid columns="3" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-8, ui-grid-col-2"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+							<p:outputLabel value="E-mail" />
+							<p:inputText value="#{clienteCadastroBean.email}"
+								id="emailContato" />
+							<p:commandButton value="Adicionar" process="emailContato @this"
+								update="emailContato table"
+								action="#{clienteCadastroBean.adicionarEmailLista()}" />
+						</p:panelGrid>
+						<p:dataTable value="#{clienteCadastroBean.empresa.emails}"
+							var="email" style="margin-top: 20px" reflow="true"
+							emptyMessage="Nenhum e-mail cadastrado" id="table">
+							<p:column headerText="E-mail">
+								<h:outputText value="#{email}" />
+							</p:column>
+							<p:column width="4%" exportable="false">
+								<p:commandButton icon="ui-icon-trash" title="Excluir"
+									process="@this" update="table" style="width: 30px"
+									action="#{clienteCadastroBean.removerEmailLista(email)}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
 
 					</p:tab>
 				</p:tabView>

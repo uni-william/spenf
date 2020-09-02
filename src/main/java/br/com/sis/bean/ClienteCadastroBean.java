@@ -51,18 +51,32 @@ public class ClienteCadastroBean implements Serializable {
 	@Inject
 	private EmpresaRepository empresaRepository;
 
+	@Getter
+	@Setter
+	private String email;
+
+	@Getter
+	private boolean podeSalvar;
+
 	public void inicializar() {
 		EmpresaFilter filter = new EmpresaFilter();
 		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		this.mantenedoras = empresaRepository.listAll(filter);
-		if (empresa == null) {
-			empresa = new Empresa();
-			empresa.getEndereco().setEstado(Estado.AM);
-			empresa.getEndereco().setCodigoIbegeEstado("13");
-			empresa.getEndereco().setCodigoIbegePais("1058");
-			empresa.getEndereco().setPais("Brasil");
-			empresa.setTipoEmpresa(TipoEmpresa.CLIENTE);
-			empresa.setCrt(TipoRegime.CLIENTE);
+		if (this.mantenedoras.size() > 0) {
+			if (empresa == null) {
+				empresa = new Empresa();
+				empresa.getEndereco().setEstado(Estado.AM);
+				empresa.getEndereco().setCodigoIbegeEstado("13");
+				empresa.getEndereco().setCodigoIbegePais("1058");
+				empresa.getEndereco().setPais("Brasil");
+				empresa.setTipoEmpresa(TipoEmpresa.CLIENTE);
+				empresa.setCrt(TipoRegime.CLIENTE);
+				empresa.setMantenedora(this.mantenedoras.get(0));
+			}
+			podeSalvar = true;
+		} else {
+			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
+			podeSalvar = false;
 		}
 	}
 
@@ -115,6 +129,17 @@ public class ClienteCadastroBean implements Serializable {
 			}
 		}
 
+	}
+
+	public void adicionarEmailLista() {
+		if (!this.empresa.getEmails().contains(this.email) && !StringUtils.isEmpty(this.email)) {
+			this.empresa.getEmails().add(this.email);
+		}
+		this.email = "";
+	}
+
+	public void removerEmailLista(String email) {
+		this.empresa.getEmails().remove(email);
 	}
 
 }
