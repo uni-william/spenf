@@ -28,7 +28,7 @@ public class ServicoConverter implements Converter<Object>, Serializable {
 	public Servico getAsObject(FacesContext context, UIComponent component, String value) {
 		Servico servico = null;
 		if (StringUtils.isNotBlank(value)) {
-			Long id = new Long(value);
+			Long id = Long.parseLong(value);
 			servico = servicoRepository.findById(id);
 		}
 		return servico;

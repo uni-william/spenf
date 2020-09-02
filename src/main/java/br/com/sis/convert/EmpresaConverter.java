@@ -28,7 +28,7 @@ public class EmpresaConverter implements Converter<Object>, Serializable {
 	public Empresa getAsObject(FacesContext context, UIComponent component, String value) {
 		Empresa empresa = null;
 		if (StringUtils.isNotBlank(value)) {
-			Long id = new Long(value);
+			Long id = Long.parseLong(value);
 			empresa = empresaRepository.findById(id);
 		}
 		return empresa;
