@@ -46,7 +46,6 @@
 					<p:outputLabel value="Cliente" />
 					<p:selectOneMenu id="cliente"
 						value="#{orcamentoCadastroBean.orcamento.cliente}">
-						<f:selectItem itemLabel="Selecione..." />
 						<f:selectItems value="#{orcamentoCadastroBean.clientes}"
 							var="cliente" itemValue="#{cliente}"
 							itemLabel="#{cliente.nomeFantasia}" />
