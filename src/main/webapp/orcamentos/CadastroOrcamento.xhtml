@@ -13,11 +13,9 @@
 			<f:viewParam name="orcamento"
 				value="#{orcamentoCadastroBean.orcamento}" />
 		</f:metadata>
-
 		<h1 class="aw-page-title">#{orcamentoCadastroBean.editando ?
 			'Orçamento ' + orcamentoCadastroBean.orcamento.id : 'Orçamento -
 			Novo'}</h1>
-		<br />
 		<h:form id="frm">
 			<p:focus context="frm" />
 			<p:toolbar>
@@ -31,13 +29,14 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<p:growl />
+			<p:growl id="msg" />
 			<div class="ui-fluid">
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-4"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Orçamento:" styleClass="textoNegrito" />
-					<p:outputLabel value="#{orcamentoCadastroBean.orcamento.id}" styleClass="textoNegrito" />
+					<p:outputLabel value="#{orcamentoCadastroBean.orcamento.id}"
+						styleClass="textoNegrito" />
 				</p:panelGrid>
 				<p:separator />
 				<p:panelGrid columns="2" layout="grid"
@@ -51,8 +50,128 @@
 							itemLabel="#{cliente.nomeFantasia}" />
 					</p:selectOneMenu>
 				</p:panelGrid>
+				<p:panel header="Dados orçamento">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Data" />
+						<p:datePicker
+							value="#{orcamentoCadastroBean.orcamento.dataOrcamento}"
+							showIcon="true" pattern="dd/MM/yyyy" />
+					</p:panelGrid>
+					<p:panelGrid columns="4" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Solicitante" />
+						<p:inputText
+							value="#{orcamentoCadastroBean.orcamento.solicitante}" />
+						<p:outputLabel value="Responsável" />
+						<p:inputText
+							value="#{orcamentoCadastroBean.orcamento.responsavel}" />
 
+					</p:panelGrid>
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-4"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="E-mail contato" for="emailContato" />
+						<p:selectOneMenu id="emailContato"
+							value="#{orcamentoCadastroBean.orcamento.emailAviso}"
+							editable="true">
+							<f:selectItems
+								value="#{orcamentoCadastroBean.orcamento.cliente.emails}"
+								var="email" itemValue="#{email}" itemLabel="#{email}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</p:panel>
+				<p:panel header="Dados pedido">
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Pedido cliente" />
+						<p:inputText
+							value="#{orcamentoCadastroBean.orcamento.pedidoCliente}" />
+						<p:outputLabel value="" />
+						<p:outputLabel value="" />
+						<p:outputLabel value="Número NFS-e" />
+						<p:inputNumber
+							value="#{orcamentoCadastroBean.orcamento.numeroNfse}"
+							decimalPlaces="0" thousandSeparator="" />
+					</p:panelGrid>
+					<p:panelGrid columns="6" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Prazo entrega" />
+						<p:datePicker
+							value="#{orcamentoCadastroBean.orcamento.prazoEntrega}"
+							showIcon="true" pattern="dd/MM/yyyy" />
+						<p:outputLabel value="Prazo pagamento" />
+						<p:datePicker
+							value="#{orcamentoCadastroBean.orcamento.prazoPagamento}"
+							showIcon="true" pattern="dd/MM/yyyy" />
+						<p:outputLabel value="Validade" />
+						<p:datePicker
+							value="#{orcamentoCadastroBean.orcamento.validadeOrcamento}"
+							showIcon="true" pattern="dd/MM/yyyy" />
+					</p:panelGrid>
+					<p:separator />
+					<p:panelGrid columns="4" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Data efetiva entrega" />
+						<h:outputText
+							value="#{orcamentoCadastroBean.orcamento.diaEntrega}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+						<p:outputLabel value="Data efetiva pagamento" />
+						<h:outputText
+							value="#{orcamentoCadastroBean.orcamento.diaPagamento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 
+					</p:panelGrid>
+				</p:panel>
+				<p:panel header="Dados itens pedido">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-1, ui-grid-col-10"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Serviço" for="itemOrc" />
+						<p:autoComplete id="itemOrc" dropdown="true" forceSelection="true"
+							var="item" itemLabel="#{item.descricao}" itemValue="#{item}"
+							converter="#{orcamentoCadastroBean.itemOrcamentoConverter}"
+							value="#{orcamentoCadastroBean.itemOrcamento.servico}"
+							completeMethod="#{orcamentoCadastroBean.completeServico}">
+							<p:ajax event="itemSelect"
+								listener="#{orcamentoCadastroBean.onItemSelect}" process="@this"
+								update="table itemOrc" />
+						</p:autoComplete>
+					</p:panelGrid>
+					<p:dataTable value="#{orcamentoCadastroBean.itensOrcamento}"
+						var="item" style="margin-top: 5px" reflow="true"
+						emptyMessage="Itens do orçamento" id="table">
+						<p:column headerText="Serviço">
+							<p:inputTextarea value="#{item.descricao}" rows="2" />
+						</p:column>
+						<p:column headerText="Qtd" width="60">
+							<p:inputNumber value="#{item.quantidade}" decimalPlaces="0"
+								thousandSeparator="">
+								<p:ajax event="blur" update="table :frm:msg" process="@this" />
+							</p:inputNumber>
+						</p:column>
+						<p:column headerText="Valor" width="130">
+							<p:inputNumber value="#{item.valor}" decimalPlaces="2"
+								symbol="R$ " symbolPosition="p" thousandSeparator="."
+								decimalSeparator=",">
+								<p:ajax event="blur" update="table :frm:msg" process="@this" />
+							</p:inputNumber>
+						</p:column>
+						<p:column headerText="Total" width="100">
+							<h:outputText value="#{item.valortotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
 			</div>
 		</h:form>
 	</ui:define>

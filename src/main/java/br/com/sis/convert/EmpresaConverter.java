@@ -6,6 +6,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,6 +14,7 @@ import br.com.sis.entity.Empresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.util.cdi.CDIServiceLocator;
 
+@Named
 @FacesConverter(forClass = Empresa.class)
 public class EmpresaConverter implements Converter<Object>, Serializable {
 

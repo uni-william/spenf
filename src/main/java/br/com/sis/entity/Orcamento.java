@@ -56,10 +56,9 @@ public class Orcamento implements Serializable {
 	private String responsavel;
 	
 	private LocalDate dataOrcamento;
-	
 	private LocalDate prazoEntrega;
-	
 	private LocalDate prazoPagamento;
+	private LocalDate validadeOrcamento;
 	
 	@Column(length = 20)
 	private String pedidoCliente;
@@ -74,6 +73,8 @@ public class Orcamento implements Serializable {
 	private boolean cancelado = false;
 	
 	private Long numeroNfse;
+	
+	private String emailAviso;
 	
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();

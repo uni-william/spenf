@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -45,6 +47,8 @@ public class ItemOrcamento implements Serializable {
 	@Column(length = 256)
 	private String descricao;
 
+	@NotNull(message = "Informe a quantidade")
+	@Min(value = 1, message = "Valor inválido")
 	@Column(precision = 10, scale = 0)
 	private BigDecimal quantidade = BigDecimal.ONE;
 	@Column(precision = 10, scale = 2)
