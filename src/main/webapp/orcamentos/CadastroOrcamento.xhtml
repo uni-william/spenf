@@ -75,8 +75,8 @@
 							value="#{orcamentoCadastroBean.orcamento.responsavel}" />
 
 					</p:panelGrid>
-					<p:panelGrid columns="2" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-4"
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-4"
 						styleClass="panelgrid-noborder">
 						<p:outputLabel value="E-mail contato" for="emailContato" />
 						<p:selectOneMenu id="emailContato"
@@ -86,6 +86,7 @@
 								value="#{orcamentoCadastroBean.orcamento.cliente.emails}"
 								var="email" itemValue="#{email}" itemLabel="#{email}" />
 						</p:selectOneMenu>
+						<p:selectBooleanCheckbox itemLabel="Adicionar a contatos" value="#{orcamentoCadastroBean.adicionarAContatos}" />
 					</p:panelGrid>
 				</p:panel>
 				<p:panel header="Dados pedido">

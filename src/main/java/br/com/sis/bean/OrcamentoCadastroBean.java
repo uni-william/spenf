@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.SelectEvent;
 
 import br.com.sis.convert.ItemOrcamentoConverter;
@@ -21,6 +22,7 @@ import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.service.EmpresaService;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -45,6 +47,9 @@ public class OrcamentoCadastroBean implements Serializable {
 	@Inject
 	private ServicoRepository servicoRepository;
 	
+	@Inject
+	private EmpresaService empresaService;
+	
 	@Getter
 	private ItemOrcamentoConverter itemOrcamentoConverter;
 	
@@ -62,6 +67,10 @@ public class OrcamentoCadastroBean implements Serializable {
 	@Setter	
 	private List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
 	
+	@Getter
+	@Setter	
+	private boolean adicionarAContatos;
+	
 
 	public void inicializar() {
 		EmpresaFilter filter = new EmpresaFilter();
@@ -71,6 +80,7 @@ public class OrcamentoCadastroBean implements Serializable {
 			orcamento = new Orcamento();
 			orcamento.setMantenedora(mantenedoras.get(0));
 			orcamento.setDataOrcamento(LocalDate.now());
+			this.adicionarAContatos = false;
 		} else {
 			this.itensOrcamento = orcamento.getItensOrcamento();
 		}
@@ -89,7 +99,19 @@ public class OrcamentoCadastroBean implements Serializable {
 		orcamento.setItensOrcamento(this.itensOrcamento);
 		orcamento.setValorOrcamento(this.getTotalItens());
 		orcamento = orcamentoService.salvar(orcamento);
+		adicionarAContatos();
+		this.adicionarAContatos = false;
 		FacesUtil.addInfoMessage("Orçamento salvo com sucesso!");
+	}
+	
+	public void adicionarAContatos() {
+		if (this.isAdicionarAContatos() && !StringUtils.isEmpty(this.orcamento.getEmailAviso())) {
+			Empresa clienteContato = empresaRepository.findById(orcamento.getCliente().getId());
+			if (!clienteContato.getEmails().contains(this.orcamento.getEmailAviso())) {
+				clienteContato.getEmails().add(this.orcamento.getEmailAviso());
+				empresaService.salvar(clienteContato);
+			}
+		}
 	}
 	
 	public void aoSelelecionarMantenedora() {
