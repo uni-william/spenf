@@ -7,7 +7,7 @@
 	<head>
 <meta charset="UTF-8" />
 	</head>
-	<ui:define name="titulo">Serviço</ui:define>
+	<ui:define name="titulo">Orçamentos</ui:define>
 	<ui:define name="content">
 		<f:metadata>
 			<f:viewAction action="#{orcamentoPesquisaBean.inicializar()}" />
@@ -70,18 +70,18 @@
 					<p:column headerText="Cliente">
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
+					<p:column headerText="Data" width="8%">
+						<h:outputText value="#{orcamento.dataOrcamento}" converter="localDateConverter">
+						</h:outputText>
+					</p:column>					
 					<p:column headerText="Total" width="12%">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Data orçamento" width="12%">
-						<h:outputText value="#{orcamento.dataOrcamento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
+
 					<p:column width="4%" exportable="false">
-						<p:button icon="ui-icon-pencil" style="width: 30px">
+						<p:button icon="ui-icon-pencil" style="width: 30px" outcome="/orcamentos/CadastroOrcamento">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 					</p:column>

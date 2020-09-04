@@ -1,6 +1,7 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,8 @@ public class OrcamentoCadastroBean implements Serializable {
 			orcamento = new Orcamento();
 			orcamento.setMantenedora(mantenedoras.get(0));
 			orcamento.setDataOrcamento(LocalDate.now());
+		} else {
+			this.itensOrcamento = orcamento.getItensOrcamento();
 		}
 		aoSelelecionarMantenedora();
 		orcamento.setPrazoEntrega(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoEntrega()));
@@ -82,7 +85,9 @@ public class OrcamentoCadastroBean implements Serializable {
 		return  lista;
 	}
 
-	public void salvar() {
+	public void salvar() {		
+		orcamento.setItensOrcamento(this.itensOrcamento);
+		orcamento.setValorOrcamento(this.getTotalItens());
 		orcamento = orcamentoService.salvar(orcamento);
 		FacesUtil.addInfoMessage("Orçamento salvo com sucesso!");
 	}
@@ -99,12 +104,34 @@ public class OrcamentoCadastroBean implements Serializable {
 	public void onItemSelect(SelectEvent<String> event) {
 		this.itemOrcamento.setDescricao(this.itemOrcamento.getServico().getDescricao());
 		this.itemOrcamento.setValor(this.itemOrcamento.getServico().getValor());
-		this.itensOrcamento.add(this.itemOrcamento);
+		this.itemOrcamento.setOrcamento(this.orcamento);
+		if (isPodeInserir())
+			this.itensOrcamento.add(this.itemOrcamento);
 		this.itemOrcamento = new ItemOrcamento();
-    }	
+    }
+	
+	public boolean isPodeInserir() {
+		for (ItemOrcamento it : itensOrcamento) {
+			if (it.getServico().getId().equals(itemOrcamento.getServico().getId()))
+				return false;
+		}
+		return true;
+	}
+	
+	public void removerItem(ItemOrcamento item) {
+		itensOrcamento.remove(item);
+	}
 
 	public boolean isEditando() {
 		return this.orcamento.getId() != null;
+	}
+	
+	public BigDecimal getTotalItens() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (ItemOrcamento it : this.itensOrcamento) {
+			total = total.add(it.getValortotal());
+		};
+		return total;
 	}
 
 }

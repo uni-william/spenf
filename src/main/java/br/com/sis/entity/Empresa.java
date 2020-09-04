@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -103,7 +104,7 @@ public class Empresa implements Serializable {
 	private boolean sslOnConection;
 	private boolean tlsRequired;
 	
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "emails_cliente",
 	joinColumns = @JoinColumn(name = "cliente_id"))
 	@Column(name = "email")

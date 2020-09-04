@@ -78,5 +78,11 @@ public class Orcamento implements Serializable {
 	
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
+	
+	public String getIdFormatted() {
+		if (this.getId() != null)
+			return String.format("%06d", this.getId());
+		return null;
+	}
 
 }
