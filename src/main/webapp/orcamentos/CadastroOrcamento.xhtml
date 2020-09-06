@@ -23,8 +23,7 @@
 						action="#{orcamentoCadastroBean.salvar}" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
-					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" />
+					<p:commandButton value="Enviar E-mail" action="#{orcamentoCadastroBean.sendEmail}" update="@form" />
 				</p:toolbarGroup>
 			</p:toolbar>
 

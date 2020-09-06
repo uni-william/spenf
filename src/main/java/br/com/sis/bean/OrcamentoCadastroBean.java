@@ -22,6 +22,7 @@ import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.service.EmailService;
 import br.com.sis.service.EmpresaService;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
@@ -49,6 +50,9 @@ public class OrcamentoCadastroBean implements Serializable {
 	
 	@Inject
 	private EmpresaService empresaService;
+	
+	@Inject
+	private EmailService emailService;
 	
 	@Getter
 	private ItemOrcamentoConverter itemOrcamentoConverter;
@@ -154,6 +158,13 @@ public class OrcamentoCadastroBean implements Serializable {
 			total = total.add(it.getValortotal());
 		};
 		return total;
+	}
+	
+	public void sendEmail() {
+		Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
+		emailService.sendSimpleEmail(mantenedora, mantenedora.getEmailEnvio(),
+				"Email de teste", "Este é um email de teste", this.getOrcamento().getEmailAviso());
+		FacesUtil.addInfoMessage("E-mail enviado com sucesso");
 	}
 
 }
