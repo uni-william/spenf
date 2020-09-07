@@ -155,15 +155,14 @@ public class OrcamentoCadastroBean implements Serializable {
 	public BigDecimal getTotalItens() {
 		BigDecimal total = BigDecimal.ZERO;
 		for (ItemOrcamento it : this.itensOrcamento) {
-			total = total.add(it.getValortotal());
+			total = total.add(it.getValorTotal());
 		};
 		return total;
 	}
 	
 	public void sendEmail() {
 		Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
-		emailService.sendSimpleEmail(mantenedora, mantenedora.getEmailEnvio(),
-				"Email de teste", "Este é um email de teste", this.getOrcamento().getEmailAviso());
+		emailService.sendHtmlEmail(mantenedora, orcamento);
 		FacesUtil.addInfoMessage("E-mail enviado com sucesso");
 	}
 

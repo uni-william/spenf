@@ -3,6 +3,7 @@ package br.com.sis.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +83,15 @@ public class Orcamento implements Serializable {
 	public String getIdFormatted() {
 		if (this.getId() != null)
 			return String.format("%06d", this.getId());
+		return null;
+	}
+	
+	public String getDataOrcamentoFormatted() {
+		if (this.getDataOrcamento() != null) {
+			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			 return this.getDataOrcamento().format(formatter);
+		}
+			
 		return null;
 	}
 

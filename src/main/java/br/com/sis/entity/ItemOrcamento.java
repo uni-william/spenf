@@ -54,7 +54,7 @@ public class ItemOrcamento implements Serializable {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal valor;
 	
-	public BigDecimal getValortotal() {
+	public BigDecimal getValorTotal() {
 		return quantidade != null && valor != null ? quantidade.multiply(valor) : null;
 	}
 

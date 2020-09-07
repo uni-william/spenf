@@ -1,0 +1,65 @@
+<html>
+    <body>
+        <table>
+            <tr>
+                <td style="width: 100px">Número:</td>
+                <td>$orcamento.idFormatted</td>
+            </tr>
+            <tr>
+                <td>Cliente:</td>
+                <td>$orcamento.cliente.razaoSocial</td>
+            </tr>
+            <tr>
+                <td>Valor total:</td>
+                <td>$numberTool.format("¤ #0.00", $orcamento.valorOrcamento, $locale)</td>
+            </tr>
+            <tr>
+                <td>Solicitante:</td>
+                <td>$orcamento.solicitante</td>
+            </tr>
+            <tr>
+                <td>Responsável:</td>
+                <td>$orcamento.responsavel</td>
+            </tr>
+            <tr>
+                <td>Data:</td>
+                <td>$orcamento.dataOrcamentoFormatted</td>
+            </tr>
+        </table>
+        
+        <br/>
+        <table border="1" cellspacing="0" cellpadding="3">
+            <tr>
+                <th>Serviço</th>
+                <th>Valor unitário</th>
+                <th>Quantidade</th>
+                <th>Valor total</th>
+            </tr>
+            #foreach ($item in $orcamento.itensOrcamento)
+	            <tr>
+	                <td>$item.descricao</td>
+	                <td>$numberTool.format("¤ #0.00", $item.valor, $locale)</td>
+	                <td>$item.quantidade</td>
+	                <td>$numberTool.format("¤ #0.00", $item.valorTotal, $locale)</td>
+	            </tr>
+            #end
+        </table>
+        
+       	<br/>
+       	
+        <table>
+            <tr>
+                <td style="width: 150px">Prazo de pagamento:</td>
+                <td>$orcamento.cliente.prazoPagamento</td>
+            </tr>
+            <tr>
+                <td>Prazo de entrega:</td>
+                <td>$orcamento.cliente.prazoEntrega</td>
+            </tr>
+            <tr>
+                <td>Prazo da proposta:</td>
+                <td>$orcamento.cliente.validadeProposta</td>
+            </tr>
+        </table>
+    </body>
+</html>
