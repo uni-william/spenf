@@ -1,6 +1,7 @@
 package br.com.sis.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -108,6 +109,6 @@ public class Empresa implements Serializable {
 	@CollectionTable(name = "emails_cliente",
 	joinColumns = @JoinColumn(name = "cliente_id"))
 	@Column(name = "email")
-	private List<String> emails;
+	private List<String> emails = new ArrayList<String>();
 	
 }

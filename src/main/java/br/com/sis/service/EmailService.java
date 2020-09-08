@@ -45,7 +45,7 @@ public class EmailService implements Serializable {
 
 	}
 
-	public void sendHtmlEmail(Empresa mantenedora, Orcamento orcamento) {
+	public boolean sendHtmlEmail(Empresa mantenedora, Orcamento orcamento) {
 		HtmlEmail email = new HtmlEmail();
 		email.setHostName(mantenedora.getHost());
 		email.setSmtpPort(mantenedora.getPorta());
@@ -59,8 +59,10 @@ public class EmailService implements Serializable {
 			email.setHtmlMsg(htmlMsg(orcamento));
 			email.setTextMsg("Não carregou HTML");
 			email.send();
+			return true;
 		} catch (EmailException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
 
 	}

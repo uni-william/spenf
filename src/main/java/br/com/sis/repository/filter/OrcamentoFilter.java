@@ -19,5 +19,6 @@ public class OrcamentoFilter {
 	private LocalDate dataCricaoInicio;
 	private LocalDate dataCricaoFim;
 	private String pedido;
+	private boolean somenteComPedido = false;
 
 }

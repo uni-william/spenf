@@ -20,6 +20,7 @@ import br.com.sis.entity.Orcamento;
 import br.com.sis.entity.Servico;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.repository.OrcamentoRepository;
 import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
 import br.com.sis.service.EmailService;
@@ -41,6 +42,9 @@ public class OrcamentoCadastroBean implements Serializable {
 
 	@Inject
 	private OrcamentoService orcamentoService;
+	
+	@Inject
+	private OrcamentoRepository orcamentoRepository;
 	
 	@Inject
 	private EmpresaRepository empresaRepository;
@@ -81,10 +85,7 @@ public class OrcamentoCadastroBean implements Serializable {
 		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		this.mantenedoras = empresaRepository.listAll(filter);
 		if (orcamento == null) {
-			orcamento = new Orcamento();
-			orcamento.setMantenedora(mantenedoras.get(0));
-			orcamento.setDataOrcamento(LocalDate.now());
-			this.adicionarAContatos = false;
+			novoOrcamento();
 		} else {
 			this.itensOrcamento = orcamento.getItensOrcamento();
 		}
@@ -92,6 +93,13 @@ public class OrcamentoCadastroBean implements Serializable {
 		orcamento.setPrazoEntrega(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoEntrega()));
 		orcamento.setPrazoPagamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoPagamento()));
 		orcamento.setValidadeOrcamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getValidadeProposta()));
+	}
+
+	private void novoOrcamento() {
+		orcamento = new Orcamento();
+		orcamento.setMantenedora(mantenedoras.get(0));
+		orcamento.setDataOrcamento(LocalDate.now());
+		this.adicionarAContatos = false;
 	}
 	
 	public List<Servico> completeServico(String descricao) {
@@ -101,10 +109,11 @@ public class OrcamentoCadastroBean implements Serializable {
 
 	public void salvar() {		
 		orcamento.setItensOrcamento(this.itensOrcamento);
-		orcamento.setValorOrcamento(this.getTotalItens());
+		orcamento.setValorOrcamento(this.getTotalItens());		
+		if (StringUtils.isEmpty(orcamento.getPedidoCliente()))
+			orcamento.setPedidoCliente(null);
 		orcamento = orcamentoService.salvar(orcamento);
-		adicionarAContatos();
-		this.adicionarAContatos = false;
+		this.itensOrcamento = orcamento.getItensOrcamento();
 		FacesUtil.addInfoMessage("Orçamento salvo com sucesso!");
 	}
 	
@@ -162,8 +171,32 @@ public class OrcamentoCadastroBean implements Serializable {
 	
 	public void sendEmail() {
 		Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
-		emailService.sendHtmlEmail(mantenedora, orcamento);
-		FacesUtil.addInfoMessage("E-mail enviado com sucesso");
+		if (emailService.sendHtmlEmail(mantenedora, orcamento))
+			FacesUtil.addInfoMessage("E-mail enviado com sucesso");
+		else
+			FacesUtil.addErroMessage("Erro ao enviar e-mail");
 	}
+	
+	public void cancelarOrcamento() {
+		Orcamento orcamentoSalvo = orcamentoRepository.findById(orcamento.getId());
+		orcamentoSalvo.setCancelado(true);
+		orcamento = orcamentoService.salvar(orcamentoSalvo);
+	}
+	
+	public boolean isDisableEnviarEmail() {
+		return this.orcamento.isCancelado() || !this.isEditando();
+	}
+	
+	public boolean isDisableSalvar() {
+		return this.orcamento.isCancelado();
+	}	
+	
+	public boolean isDisableCancelar() {
+		return this.orcamento.isCancelado() || !this.isEditando();
+	}	
+	
+	public boolean isCancelado() {
+		return this.orcamento.isCancelado();
+	}	
 
 }

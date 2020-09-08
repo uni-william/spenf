@@ -19,22 +19,40 @@
 			<p:focus context="frm" />
 			<p:toolbar>
 				<p:toolbarGroup>
+					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
 					<p:commandButton value="Salvar"
-						action="#{orcamentoCadastroBean.salvar}" update="@form" />
+						action="#{orcamentoCadastroBean.salvar}" update="@form"
+						disabled="#{orcamentoCadastroBean.disableSalvar}" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:commandButton value="Enviar E-mail" action="#{orcamentoCadastroBean.sendEmail}" update="@form" />
+					<p:commandButton value="Cancelar" icon="ui-icon-cancel"
+						oncomplete="PF('confirmacao').show(); return false;"
+						process="@this" update="conf"
+						disabled="#{orcamentoCadastroBean.disableCancelar}" />
+					<p:commandButton value="Enviar E-mail"
+						action="#{orcamentoCadastroBean.sendEmail}" update="@form"
+						disabled="#{orcamentoCadastroBean.disableEnviarEmail}" />
+					<p:separator />
+					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
 			<p:growl id="msg" />
 			<div class="ui-fluid">
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2"
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
-					<p:outputLabel value="#{orcamentoCadastroBean.orcamento.idFormatted}"
+					<p:outputLabel
+						value="#{orcamentoCadastroBean.orcamento.idFormatted}"
 						styleClass="textoNegrito" />
+					<p:outputLabel value="CANCELADO"
+						style="color: red; font-weight: bold;"
+						rendered="#{orcamentoCadastroBean.cancelado}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder">
 					<p:outputLabel value="Valor Total" styleClass="textoNegrito" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.valorOrcamento}"
@@ -49,12 +67,13 @@
 					<p:outputLabel value="Cliente" />
 					<p:selectOneMenu id="cliente"
 						value="#{orcamentoCadastroBean.orcamento.cliente}">
+						<p:ajax update="pnDadosOrcamento" />
 						<f:selectItems value="#{orcamentoCadastroBean.clientes}"
 							var="cliente" itemValue="#{cliente}"
 							itemLabel="#{cliente.nomeFantasia}" />
 					</p:selectOneMenu>
 				</p:panelGrid>
-				<p:panel header="Dados orçamento">
+				<p:panel header="Dados orçamento" id="pnDadosOrcamento">
 					<p:panelGrid columns="2" layout="grid"
 						columnClasses="ui-grid-col-2, ui-grid-col-3"
 						styleClass="panelgrid-noborder">
@@ -85,7 +104,8 @@
 								value="#{orcamentoCadastroBean.orcamento.cliente.emails}"
 								var="email" itemValue="#{email}" itemLabel="#{email}" />
 						</p:selectOneMenu>
-						<p:selectBooleanCheckbox itemLabel="Adicionar a contatos" value="#{orcamentoCadastroBean.adicionarAContatos}" />
+						<p:selectBooleanCheckbox itemLabel="Adicionar a contatos"
+							value="#{orcamentoCadastroBean.adicionarAContatos}" />
 					</p:panelGrid>
 				</p:panel>
 				<p:panel header="Dados pedido">
@@ -184,7 +204,8 @@
 									style="text-align: right" />
 								<p:column style="text-align: right">
 									<f:facet name="footer">
-										<h:outputText value="#{orcamentoCadastroBean.totalItens}" id="sub">
+										<h:outputText value="#{orcamentoCadastroBean.totalItens}"
+											id="sub">
 											<f:convertNumber type="currency" />
 										</h:outputText>
 									</f:facet>
@@ -195,6 +216,15 @@
 					</p:dataTable>
 				</p:panel>
 			</div>
+			<p:confirmDialog header="Cancelamento de Orçamento"
+				message="Confirma cancelamento deste orçamento?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{orcamentoCadastroBean.cancelarOrcamento}" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 
