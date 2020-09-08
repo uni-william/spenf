@@ -2,7 +2,6 @@ package br.com.sis.bean;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -22,7 +21,7 @@ import lombok.Setter;
 
 @Named
 @ViewScoped
-public class PedidoPesquisaBean implements Serializable {
+public class PedidoEmAbertoPesquisaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,13 +53,13 @@ public class PedidoPesquisaBean implements Serializable {
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new OrcamentoFilter();
-		LocalDate date = LocalDate.now();
 		if (mantenedoras.size() > 0) {
+			LocalDate date = LocalDate.now();
 			filter.setMantenedora(mantenedoras.get(0));
 			aoSelelecionarMantenedora();
-			filter.setDataCricaoInicio(date.with(TemporalAdjusters.firstDayOfMonth()));
-			filter.setDataCricaoFim(date.with(TemporalAdjusters.lastDayOfMonth()));
 			filter.setSomenteComPedido(true);
+			filter.setEmAbertos(true);
+			filter.setDataPrevisaoPagamentoFim(date);
 			pesquisar();
 		} else {
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");

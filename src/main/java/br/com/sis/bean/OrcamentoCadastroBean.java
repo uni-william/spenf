@@ -86,13 +86,14 @@ public class OrcamentoCadastroBean implements Serializable {
 		this.mantenedoras = empresaRepository.listAll(filter);
 		if (orcamento == null) {
 			novoOrcamento();
+			aoSelelecionarMantenedora();
+			orcamento.setPrazoEntrega(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoEntrega()));
+			orcamento.setPrazoPagamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoPagamento()));
+			orcamento.setValidadeOrcamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getValidadeProposta()));
+			
 		} else {
 			this.itensOrcamento = orcamento.getItensOrcamento();
 		}
-		aoSelelecionarMantenedora();
-		orcamento.setPrazoEntrega(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoEntrega()));
-		orcamento.setPrazoPagamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoPagamento()));
-		orcamento.setValidadeOrcamento(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getValidadeProposta()));
 	}
 
 	private void novoOrcamento() {
