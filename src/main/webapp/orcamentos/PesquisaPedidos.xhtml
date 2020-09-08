@@ -40,8 +40,7 @@
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Data início" />
-					<p:datePicker
-						value="#{pedidoPesquisaBean.filter.dataCricaoInicio}"
+					<p:datePicker value="#{pedidoPesquisaBean.filter.dataCricaoInicio}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
 					<p:datePicker value="#{pedidoPesquisaBean.filter.dataCricaoFim}"
@@ -56,30 +55,41 @@
 				</p:panelGrid>
 
 				<p:dataTable value="#{pedidoPesquisaBean.orcamentos}"
-					var="orcamento" style="margin-top: 20px" reflow="true"
-					emptyMessage="Sem registro de dados" id="table">
-					<p:column headerText="Número" width="8%">
-						<h:outputText value="#{orcamento.id}" />
-					</p:column>
+					var="orcamento" style="margin-top: 20px" reflow="true" rows="10" paginatorAlwaysVisible="false"
+					emptyMessage="Sem registro de dados" id="table" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					rowsPerPageTemplate="5,10,20">
 					<p:column headerText="Pedido" width="8%">
 						<h:outputText value="#{orcamento.pedidoCliente}" />
 					</p:column>
-					<p:column headerText="Cliente">
-						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
-					</p:column>
-					<p:column headerText="Data" width="8%">
+					<p:column headerText="Data do pedido" width="8%">
 						<h:outputText value="#{orcamento.dataOrcamento}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Status" width="8%">
-						<h:outputText value="Cancelado" style="color:red;"
-							rendered="#{orcamento.cancelado}" />
+					<p:column headerText="Data previsão entrega" width="8%">
+						<h:outputText value="#{orcamento.prazoEntrega}"
+							converter="localDateConverter">
+						</h:outputText>
 					</p:column>
-					<p:column headerText="Total" width="12%">
+
+					<p:column headerText="Data efetiva entrega" width="8%">
+						<h:outputText value="#{orcamento.diaEntrega}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Total" width="8%">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
+					</p:column>
+					<p:column headerText="Entrega realizada" width="8%">
+						<h:outputText value="SIM" rendered="#{orcamento.jaEntregue}" />
+					</p:column>
+
+					<p:column headerText="NFS-e " width="5%">
+						<h:outputText value="#{orcamento.numeroNfse}" />
 					</p:column>
 
 					<p:column width="4%" exportable="false">

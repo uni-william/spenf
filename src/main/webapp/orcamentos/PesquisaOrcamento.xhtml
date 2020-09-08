@@ -60,7 +60,11 @@
 
 				<p:dataTable value="#{orcamentoPesquisaBean.orcamentos}"
 					var="orcamento" style="margin-top: 20px" reflow="true"
-					emptyMessage="Sem registro de dados" id="table">
+					emptyMessage="Sem registro de dados" id="table" rows="10"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false">
 					<p:column headerText="Número" width="8%">
 						<h:outputText value="#{orcamento.id}" />
 					</p:column>

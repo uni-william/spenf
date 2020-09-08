@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -86,6 +87,7 @@ public class Orcamento implements Serializable {
 		return null;
 	}
 	
+	@Transient
 	public String getDataOrcamentoFormatted() {
 		if (this.getDataOrcamento() != null) {
 			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -93,6 +95,11 @@ public class Orcamento implements Serializable {
 		}
 			
 		return null;
+	}
+	
+	@Transient
+	public boolean isJaEntregue() {
+		return this.getDiaEntrega() != null;
 	}
 
 }

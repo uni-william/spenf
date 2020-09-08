@@ -1,6 +1,9 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -52,9 +55,12 @@ public class PedidoPesquisaBean implements Serializable {
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
 		filter = new OrcamentoFilter();
+		LocalDate date = LocalDate.now();
 		if (mantenedoras.size() > 0) {
 			filter.setMantenedora(mantenedoras.get(0));
 			aoSelelecionarMantenedora();
+			filter.setDataCricaoInicio(date.with(TemporalAdjusters.firstDayOfMonth()));
+			filter.setDataCricaoFim(date.with(TemporalAdjusters.lastDayOfMonth()));
 			filter.setSomenteComPedido(true);
 			pesquisar();
 		} else {

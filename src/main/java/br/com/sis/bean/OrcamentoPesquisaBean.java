@@ -55,7 +55,6 @@ public class OrcamentoPesquisaBean implements Serializable {
 		if (mantenedoras.size() > 0) {
 			filter.setMantenedora(mantenedoras.get(0));
 			aoSelelecionarMantenedora();
-			pesquisar();
 		} else {
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
 		}
