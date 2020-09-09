@@ -2,16 +2,16 @@
 
 <body>
 
-    <table border="1" cellspacing="0" cellpadding="3" style="width: 800px;">
+    <table border="1" cellspacing="0" cellpadding="3" style="width: 900px;">
         <tr style="text-align: center;">
-            <td style="line-height: 0.5; padding: 15px;">
-                <p><b>$mantenedora.nomeFantasia</b></p>
-                <p><b>Razão social: $mantenedora.razaoSocial</b></p>
-                <p>Telefone: $mantenedora.telefone</p>
-                <p>E-mail: $mantenedora.email</p>
-                <p>$mantenedora.endereco.logradouro, Nº $mantenedora.endereco.numero, $mantenedora.endereco.bairro</p>
-                <p>CEP: $mantenedora.endereco.cep, $mantenedora.endereco.nomeCidade / $mantenedora.endereco.estado</p>
-                <p>CNPJ: $mantenedora.cnpj Ins. Est. $mantenedora.inscricaoEstadual Ins. Mun. $mantenedora.inscricaoMunicipal</p>
+            <td style="padding: 2px;">
+                <b>$orcamento.mantenedora.nomeFantasia</b></p>
+                <b>Razão social: $orcamento.mantenedora.razaoSocial</b></p>
+                Telefone: $orcamento.mantenedora.telefone</p>
+                E-mail: $orcamento.mantenedora.email</p>
+                $orcamento.mantenedora.endereco.logradouro, Nº $orcamento.mantenedora.endereco.numero, $orcamento.mantenedora.endereco.bairro</p>
+                CEP: $orcamento.mantenedora.endereco.cep, $orcamento.mantenedora.endereco.nomeCidade / $orcamento.mantenedora.endereco.estado</p>
+                CNPJ: $orcamento.mantenedora.cnpj Ins. Est. $orcamento.mantenedora.inscricaoEstadual Ins. Mun. $orcamento.mantenedora.inscricaoMunicipal</p>
             </td>
         </tr>
     </table>
@@ -46,11 +46,11 @@
     </table>
 
     <br />
-    <table border="1" cellspacing="0" cellpadding="3" style="width: 800px;">
+    <table border="1" cellspacing="0" cellpadding="3" style="width: 900px;">
         <tr>
             <th>Serviço</th>
             <th>Valor unitário</th>
-            <th>Quantidade</th>
+            <th>Qtde</th>
             <th>Valor total</th>
         </tr>
         #foreach ($item in $orcamento.itensOrcamento)
