@@ -7,56 +7,47 @@
 	<head>
 <meta charset="UTF-8" />
 	</head>
-	<ui:define name="titulo">Serviço</ui:define>
+	<ui:define name="titulo">Perfis</ui:define>
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewAction action="#{servicoPesquisaBean.inicializar()}" />
+			<f:viewAction action="#{perfilPesquisaBean.inicializar()}" />
 		</f:metadata>
-		<h1 class="aw-page-title">Serviços</h1>
+		<h1 class="aw-page-title">Perfis</h1>
 		<h:form id="frm">
 			<p:growl />
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" outcome="/servicos/CadastroServico" />
+						<p:button value="Novo" outcome="/perfis/CadastroPerfil" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
-							action="#{servicoPesquisaBean.pesquisar}" update="@form" />
+							action="#{perfilPesquisaBean.pesquisar}" update="@form" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-10"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Descrição" />
-					<p:inputText value="#{servicoPesquisaBean.filter.descricao}" />
-				</p:panelGrid>
 
-				<p:dataTable value="#{servicoPesquisaBean.servicos}" var="servico"
+				<p:dataTable value="#{perfilPesquisaBean.perfis}" var="perfil"
 					style="margin-top: 20px" reflow="true"
-					emptyMessage="Nenhuma serviço cadastrado" id="table">
-					<p:column headerText="Código" width="8%">
-						<h:outputText value="#{servico.id}" />
-					</p:column>					
+					emptyMessage="Nenhum perfil cadastrado" id="table"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					rowsPerPageTemplate="5,10,20"
+					rows="10" paginatorAlwaysVisible="false">
 					<p:column headerText="Descrição">
-						<h:outputText value="#{servico.descricao}" />
-					</p:column>
-					<p:column headerText="Valor" width="15%">
-						<h:outputText value="#{servico.valor}">
-							<f:convertNumber type="currency"/>
-						</h:outputText>
+						<h:outputText value="#{perfil.descricao}" />
 					</p:column>
 					<p:column width="8%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/servicos/CadastroServico">
-							<f:param name="servico" value="#{servico.id}" />
+							outcome="/perfis/CadastroPerfil">
+							<f:param name="perfil" value="#{perfil.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px">
-							<f:setPropertyActionListener value="#{servico}"
-								target="#{servicoPesquisaBean.servicoSelecionado}" />
+							<f:setPropertyActionListener value="#{empresa}"
+								target="#{perfilPesquisaBean.perfilSelecionado}" />
 						</p:commandButton>
 					</p:column>
 
@@ -64,13 +55,13 @@
 
 			</div>
 			<p:confirmDialog header="Exclusão de Registro"
-				message="Tem certeza que deseja excluir o  #{servicoPesquisaBean.servicoSelecionado.descricao}?"
+				message="Tem certeza que deseja excluir o perfil  #{perfilPesquisaBean.perfilSelecionado.descricao}?"
 				widgetVar="confirmacao" id="conf">
 				<p:button value="Não"
 					onclick="PF('confirmacao').hide(); return false;" />
 				<p:commandButton value="Sim" update="@form"
 					oncomplete="PF('confirmacao').hide()" process="@this"
-					action="#{servicoPesquisaBean.excluir}" />
+					action="#{perfilPesquisaBean.excluir}" />
 			</p:confirmDialog>
 		</h:form>
 

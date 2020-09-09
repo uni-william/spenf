@@ -63,33 +63,25 @@
 					<p:column headerText="Pedido" width="8%">
 						<h:outputText value="#{orcamento.pedidoCliente}" />
 					</p:column>
-					<p:column headerText="Data do pedido" width="8%">
+					<p:column headerText="Cliente">
+						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
+					</p:column>
+					
+					<p:column headerText="Data pedido" width="8%">
 						<h:outputText value="#{orcamento.dataOrcamento}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Data previsão entrega" width="8%">
-						<h:outputText value="#{orcamento.prazoEntrega}"
+					<p:column headerText="Previsão pagto" width="8%">
+						<h:outputText value="#{orcamento.prazoPagamento}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Data efetiva entrega" width="8%">
-						<h:outputText value="#{orcamento.diaEntrega}"
-							converter="localDateConverter">
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Total" width="8%">
+					<p:column headerText="Total" width="10%" styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
-					</p:column>
-					<p:column headerText="Entrega realizada" width="8%">
-						<h:outputText value="SIM" rendered="#{orcamento.jaEntregue}" />
-					</p:column>
-
-					<p:column headerText="NFS-e " width="5%">
-						<h:outputText value="#{orcamento.numeroNfse}" />
 					</p:column>
 
 					<p:column width="4%" exportable="false">

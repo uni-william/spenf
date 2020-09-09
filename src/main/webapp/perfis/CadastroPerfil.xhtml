@@ -1,0 +1,58 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro perfil</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{perfilCadastroBean.inicializar()}" />
+			<f:viewParam name="perfil" value="#{perfilCadastroBean.perfil}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{perfilCadastroBean.editando ? 'Edição
+			de perfil' : 'Novo perfil'}</h1>
+		<br />
+		<h:form id="frm" prependId="false">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{perfilCadastroBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/perfis/CadastroPerfil" />
+					<p:button value="Pesquisa" outcome="/perfis/PesquisaPerfil" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Descrição" />
+					<p:inputText id="descricao"
+						value="#{perfilCadastroBean.perfil.descricao}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+
+					<p:outputLabel value="Perfis" />
+					<p:pickList id="pickList"
+						value="#{perfilCadastroBean.funcionalidades}"
+						converter="funcionalidadeConverter" var="func"
+						itemLabel="#{func.descricao}" itemValue="#{func}" responsive="true">
+						<f:facet name="sourceCaption">Disponível</f:facet>
+						<f:facet name="targetCaption">Selecionado</f:facet>
+					</p:pickList>
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

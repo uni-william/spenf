@@ -29,6 +29,10 @@
 	overflow-y: auto;
 }
 
+.colunaAlinhadaEsquerda {
+	text-align: left;
+}
+
 .aw-sidebar.is-toggled {
 	margin-left: 0px;
 }
@@ -40,6 +44,10 @@
 	.aw-sidebar.is-toggled {
 		margin-left: -211px;
 	}
+	
+	.colunaAlinhadaEsquerda {
+	text-align: right;
+}
 }
 
 /* CONTENT */

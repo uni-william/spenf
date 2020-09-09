@@ -17,7 +17,7 @@
 		<h1 class="aw-page-title">#{mantenedoraCadastroBean.editando ?
 			'Edição de mantenedora' : 'Nova mantenedora'}</h1>
 		<br />
-		<h:form id="frm">
+		<h:form id="frm" prependId="false">
 			<p:focus context="frm" />
 			<p:toolbar>
 				<p:toolbarGroup>
@@ -33,7 +33,7 @@
 
 			<p:growl />
 			<div class="ui-fluid">
-				<p:tabView id="tab">
+				<p:tabView id="tab" prependId="false">
 					<p:tab title="Dados cadastrais" id="tbdados">
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-3"
