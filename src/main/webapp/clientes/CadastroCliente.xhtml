@@ -36,27 +36,27 @@
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-3"
 							styleClass="panelgrid-noborder" style="margin-top: 10px;">
-							<p:outputLabel value="CNPJ" />
+							<p:outputLabel value="CNPJ" for="cnpj" />
 							<p:inputMask mask="99.999.999/9999-99" id="cnpj"
 								value="#{clienteCadastroBean.empresa.cnpj}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-10"
 							styleClass="panelgrid-noborder">
-							<p:outputLabel value="Razão social" />
+							<p:outputLabel value="Razão social" for="razaoSocial" />
 							<p:inputText id="razaoSocial"
 								value="#{clienteCadastroBean.empresa.razaoSocial}" />
-							<p:outputLabel value="Nome fantasia" />
+							<p:outputLabel value="Nome fantasia" for="nomeFantasia" />
 							<p:inputText id="nomeFantasia"
 								value="#{clienteCadastroBean.empresa.nomeFantasia}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-2"
 							styleClass="panelgrid-noborder">
-							<p:outputLabel value="Insc. Estadual" />
+							<p:outputLabel value="Insc. Estadual" for="ie" />
 							<p:inputText id="ie"
 								value="#{clienteCadastroBean.empresa.inscricaoEstadual}" />
-							<p:outputLabel value="Insc. Municipal" />
+							<p:outputLabel value="Insc. Municipal" for="im" />
 							<p:inputText id="im"
 								value="#{clienteCadastroBean.empresa.inscricaoMunicipal}" />
 						</p:panelGrid>
@@ -69,7 +69,7 @@
 							<p:panelGrid columns="3" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="CEP" />
+								<p:outputLabel value="CEP" for="cep" />
 								<p:inputMask mask="99.999-999" id="cep"
 									value="#{clienteCadastroBean.empresa.endereco.cep}" />
 								<p:commandButton value="Carregar"
@@ -79,24 +79,24 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-10"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Logradouro" />
+								<p:outputLabel value="Logradouro" for="logradouro" />
 								<p:inputText id="logradouro"
 									value="#{clienteCadastroBean.empresa.endereco.logradouro}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-6"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Número" />
+								<p:outputLabel value="Número" for="numero" />
 								<p:inputText id="numero"
 									value="#{clienteCadastroBean.empresa.endereco.numero}" />
-								<p:outputLabel value="Complemento" />
+								<p:outputLabel value="Complemento" for="complemento" />
 								<p:inputText id="complemento"
 									value="#{clienteCadastroBean.empresa.endereco.complemento}" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-4"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Bairro" />
+								<p:outputLabel value="Bairro" for="bairro" />
 								<p:inputText id="bairro"
 									value="#{clienteCadastroBean.empresa.endereco.bairro}" />
 
@@ -105,7 +105,7 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Telefone" />
+								<p:outputLabel value="Telefone" for="telefone" />
 								<p:inputMask id="telefone" mask="(99)9999-9999"
 									value="#{clienteCadastroBean.empresa.telefone}" />
 							</p:panelGrid>
@@ -113,33 +113,33 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-10"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="E-mail" />
+								<p:outputLabel value="E-mail" for="email" />
 								<p:inputText id="email"
 									value="#{clienteCadastroBean.empresa.email}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Cidade" />
+								<p:outputLabel value="Cidade" for="cidade" />
 								<p:inputText id="cidade"
 									value="#{clienteCadastroBean.empresa.endereco.nomeCidade}" />
-								<p:outputLabel value="IBGE Cidade" />
+								<p:outputLabel value="IBGE Cidade" for="ibgeCidade" />
 								<p:inputText id="ibgeCidade"
 									value="#{clienteCadastroBean.empresa.endereco.codigoIbegeCidade}" />
-								<p:outputLabel value="Estado" />
+								<p:outputLabel value="Estado" for="estado" />
 								<p:selectOneMenu id="estado"
 									value="#{clienteCadastroBean.empresa.endereco.estado}">
 									<f:selectItems value="#{clienteCadastroBean.estados}"
 										var="estado" itemValue="#{estado}"
 										itemLabel="#{estado.descricao}" />
 								</p:selectOneMenu>
-								<p:outputLabel value="IBGE UF" />
+								<p:outputLabel value="IBGE UF" for="ibgeEstado" />
 								<p:inputText id="ibgeEstado"
 									value="#{clienteCadastroBean.empresa.endereco.codigoIbegeEstado}" />
-								<p:outputLabel value="País" />
+								<p:outputLabel value="País" for="pais" />
 								<p:inputText id="pais"
 									value="#{clienteCadastroBean.empresa.endereco.pais}" />
-								<p:outputLabel value="IBGE País" />
+								<p:outputLabel value="IBGE País" for="ibgepais" />
 								<p:inputText id="ibgepais"
 									value="#{clienteCadastroBean.empresa.endereco.codigoIbegePais}" />
 							</p:panelGrid>
@@ -169,7 +169,7 @@
 						<p:panelGrid columns="3" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-8, ui-grid-col-2"
 							styleClass="panelgrid-noborder" style="margin-top: 10px;">
-							<p:outputLabel value="E-mail" />
+							<p:outputLabel value="E-mail" for="emailContato" />
 							<p:inputText value="#{clienteCadastroBean.email}"
 								id="emailContato" />
 							<p:commandButton value="Adicionar" process="emailContato @this"

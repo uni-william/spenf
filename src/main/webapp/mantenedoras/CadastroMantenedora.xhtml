@@ -38,34 +38,34 @@
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-3"
 							styleClass="panelgrid-noborder" style="margin-top: 10px;">
-							<p:outputLabel value="CNPJ" />
+							<p:outputLabel value="CNPJ" for="cnpj" />
 							<p:inputMask mask="99.999.999/9999-99" id="cnpj"
 								value="#{mantenedoraCadastroBean.empresa.cnpj}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-10"
 							styleClass="panelgrid-noborder">
-							<p:outputLabel value="Razão social" />
+							<p:outputLabel value="Razão social" for="razaoSocial" />
 							<p:inputText id="razaoSocial"
 								value="#{mantenedoraCadastroBean.empresa.razaoSocial}" />
-							<p:outputLabel value="Nome fantasia" />
+							<p:outputLabel value="Nome fantasia" for="nomeFantasia" />
 							<p:inputText id="nomeFantasia"
 								value="#{mantenedoraCadastroBean.empresa.nomeFantasia}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-2"
 							styleClass="panelgrid-noborder">
-							<p:outputLabel value="CRT" />
+							<p:outputLabel value="CRT" for="crt" />
 							<p:selectOneMenu id="crt"
 								value="#{mantenedoraCadastroBean.empresa.crt}">
 								<f:selectItems value="#{mantenedoraCadastroBean.tipoRegimes}"
 									var="crt" itemValue="#{crt}" itemLabel="#{crt.descricao}" />
 							</p:selectOneMenu>
 
-							<p:outputLabel value="Insc. Estadual" />
+							<p:outputLabel value="Insc. Estadual" for="ie" />
 							<p:inputText id="ie"
 								value="#{mantenedoraCadastroBean.empresa.inscricaoEstadual}" />
-							<p:outputLabel value="Insc. Municipal" />
+							<p:outputLabel value="Insc. Municipal" for="im" />
 							<p:inputText id="im"
 								value="#{mantenedoraCadastroBean.empresa.inscricaoMunicipal}" />
 						</p:panelGrid>
@@ -78,7 +78,7 @@
 							<p:panelGrid columns="3" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="CEP" />
+								<p:outputLabel value="CEP" for="cep" />
 								<p:inputMask mask="99.999-999" id="cep"
 									value="#{mantenedoraCadastroBean.empresa.endereco.cep}" />
 								<p:commandButton value="Carregar"
@@ -88,24 +88,24 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-10"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Logradouro" />
+								<p:outputLabel value="Logradouro" for="logradouro" />
 								<p:inputText id="logradouro"
 									value="#{mantenedoraCadastroBean.empresa.endereco.logradouro}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-6"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Número" />
+								<p:outputLabel value="Número" for="numero" />
 								<p:inputText id="numero"
 									value="#{mantenedoraCadastroBean.empresa.endereco.numero}" />
-								<p:outputLabel value="Complemento" />
+								<p:outputLabel value="Complemento" for="complemento" />
 								<p:inputText id="complemento"
 									value="#{mantenedoraCadastroBean.empresa.endereco.complemento}" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-4"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Bairro" />
+								<p:outputLabel value="Bairro" for="bairro" />
 								<p:inputText id="bairro"
 									value="#{mantenedoraCadastroBean.empresa.endereco.bairro}" />
 
@@ -114,7 +114,7 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Telefone" />
+								<p:outputLabel value="Telefone" for="telefone" />
 								<p:inputMask id="telefone" mask="(99)9999-9999"
 									value="#{mantenedoraCadastroBean.empresa.telefone}" />
 							</p:panelGrid>
@@ -122,33 +122,33 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-10"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="E-mail" />
+								<p:outputLabel value="E-mail" for="email" />
 								<p:inputText id="email"
 									value="#{mantenedoraCadastroBean.empresa.email}" />
 							</p:panelGrid>
 							<p:panelGrid columns="4" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Cidade" />
+								<p:outputLabel value="Cidade" for="cidade" />
 								<p:inputText id="cidade"
 									value="#{mantenedoraCadastroBean.empresa.endereco.nomeCidade}" />
-								<p:outputLabel value="IBGE Cidade" />
+								<p:outputLabel value="IBGE Cidade" for="ibgeCidade" />
 								<p:inputText id="ibgeCidade"
 									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegeCidade}" />
-								<p:outputLabel value="Estado" />
+								<p:outputLabel value="Estado" for="estado" />
 								<p:selectOneMenu id="estado"
 									value="#{mantenedoraCadastroBean.empresa.endereco.estado}">
 									<f:selectItems value="#{mantenedoraCadastroBean.estados}"
 										var="estado" itemValue="#{estado}"
 										itemLabel="#{estado.descricao}" />
 								</p:selectOneMenu>
-								<p:outputLabel value="IBGE UF" />
+								<p:outputLabel value="IBGE UF" for="ibgeEstado" />
 								<p:inputText id="ibgeEstado"
 									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegeEstado}" />
-								<p:outputLabel value="País" />
+								<p:outputLabel value="País" for="pais" />
 								<p:inputText id="pais"
 									value="#{mantenedoraCadastroBean.empresa.endereco.pais}" />
-								<p:outputLabel value="IBGE País" />
+								<p:outputLabel value="IBGE País" for="ibgepais" />
 								<p:inputText id="ibgepais"
 									value="#{mantenedoraCadastroBean.empresa.endereco.codigoIbegePais}" />
 							</p:panelGrid>
