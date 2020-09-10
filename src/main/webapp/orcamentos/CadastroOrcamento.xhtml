@@ -188,7 +188,7 @@
 								<p:ajax event="blur" update="table :frm:msg" process="@this" />
 							</p:inputNumber>
 						</p:column>
-						<p:column headerText="Total" width="100">
+						<p:column headerText="Total" width="100" styleClass="colunaAlinhadaEsquerda">
 							<h:outputText value="#{item.valorTotal}">
 								<f:convertNumber type="currency" />
 							</h:outputText>
