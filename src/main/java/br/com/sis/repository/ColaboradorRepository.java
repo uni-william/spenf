@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.com.sis.entity.Colaborador;
 import br.com.sis.repository.filter.ColaboradorFilter;
+import br.com.sis.util.Utils;
 import br.com.sis.util.jpa.Transactional;
 import br.com.sis.util.jsf.FacesUtil;
 
@@ -60,6 +61,7 @@ public class ColaboradorRepository implements Serializable {
 	}
 
 	public Colaborador findByCpf(String cpf) {
+		cpf = Utils.removerCaracter(Utils.removerCaracter(cpf, "."), "-");
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Colaborador> criteriaQuery = builder.createQuery(Colaborador.class);
 		List<Predicate> predicates = new ArrayList<>();
@@ -96,8 +98,10 @@ public class ColaboradorRepository implements Serializable {
 		if (!StringUtils.isEmpty(filter.getNome()))
 			predicates.add(builder.like(builder.lower(root.get("nome")),
 					"%" + filter.getNome().toLowerCase() + "%"));
-		if (!StringUtils.isEmpty(filter.getCpf()))
+		if (!StringUtils.isEmpty(filter.getCpf())) {
+			filter.setCpf(Utils.removerCaracter(Utils.removerCaracter(filter.getCpf(), "."), "-"));
 			predicates.add(builder.equal(root.get("cpf"), filter.getCpf()));
+		}
 		if (filter.getMantenedora() != null)
 			predicates.add(builder.equal(root.get("mantenedora"), filter.getMantenedora()));
 		return predicates.toArray(new Predicate[predicates.size()]);

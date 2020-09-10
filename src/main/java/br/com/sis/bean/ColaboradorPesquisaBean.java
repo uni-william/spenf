@@ -59,7 +59,7 @@ public class ColaboradorPesquisaBean implements Serializable {
 
 	public void excluir() {
 		if (colaboradorRepository.remover(this.colaboradorSelecionado)) {
-			FacesUtil.addInfoMessage("Colaborador excluída com sucesso");
+			FacesUtil.addInfoMessage("Colaborador excluído com sucesso");
 			colaboradores = colaboradorRepository.listAll(filter);
 		}
 	}

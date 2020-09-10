@@ -65,7 +65,7 @@
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px">
-							<f:setPropertyActionListener value="#{empresa}"
+							<f:setPropertyActionListener value="#{colaborador}"
 								target="#{colaboradorPesquisaBean.colaboradorSelecionado}" />
 						</p:commandButton>
 					</p:column>

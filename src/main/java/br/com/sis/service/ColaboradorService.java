@@ -20,6 +20,8 @@ public class ColaboradorService implements Serializable {
 
 	@Transactional
 	public Colaborador salvar(Colaborador colaborador) {
+		colaborador.setCpf(Utils.removerCaracter(Utils.removerCaracter(colaborador.getCpf(), "."), "-"));
+		
 		Colaborador colaboradorSalvo = colaboradorRepository.findByCpf(colaborador.getCpf());
 		
 		if (colaboradorSalvo != null && !colaborador.equals(colaboradorSalvo))
@@ -31,7 +33,7 @@ public class ColaboradorService implements Serializable {
 			throw new NegocioException("Já existe um colaborador cadastrado com esse E-mail");
 		
 		if (colaborador.getId() == null) {
-			String senha = Utils.removerCaracter(Utils.removerCaracter(colaborador.getCpf(), "."), "-"); 
+			String senha = colaborador.getCpf(); 
 			colaborador.setPassword(new BCryptPasswordEncoder().encode(senha));
 		}
 		
