@@ -27,7 +27,7 @@ public class PerfilPesquisaBean implements Serializable {
 
 	@Getter
 	@Setter
-	private Perfil perfilSelecionado;
+	private Perfil perfilSelecionado = new Perfil();
 	
 	public void inicializar() {
 		pesquisar();

@@ -1,0 +1,168 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro colaborador</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{colaboradorCadastroBean.inicializar()}" />
+			<f:viewParam name="colaborador"
+				value="#{colaboradorCadastroBean.colaborador}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{colaboradorCadastroBean.editando ?
+			'Edição de colaborador' : 'Novo colaborador'}</h1>
+		<br />
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{colaboradorCadastroBean.salvar}" disabled="#{!colaboradorCadastroBean.podeSalvar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/colaboradores/CadastroColaborador" />
+					<p:button value="Pesquisa"
+						outcome="/colaboradores/PesquisaColaborador" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:tabView id="tab" prependId="false">
+					<p:tab title="Dados cadastrais" id="tbdados">
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-12" styleClass="panelgrid-noborder"
+							style="margin-top: 10px;">
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-8"
+								styleClass="panelgrid-noborder" style="margin-top: 10px;">
+								<p:outputLabel value="Nome" for="nome" />
+								<p:inputText id="nome"
+									value="#{colaboradorCadastroBean.colaborador.nome}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-3"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="CPF" for="cpf" />
+								<p:inputMask mask="999.999.999-99" id="cpf"
+									value="#{colaboradorCadastroBean.colaborador.cpf}" />
+								<p:outputLabel value="RG" for="rg" />
+								<p:inputText id="rg"
+									value="#{colaboradorCadastroBean.colaborador.rg}" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-1, ui-grid-col-3"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Celular" for="celular" />
+								<p:inputMask mask="(99)99999-9999" id="celular"
+									value="#{colaboradorCadastroBean.colaborador.celular}" />
+								<p:outputLabel value="Fone" for="fone" />
+								<p:inputMask mask="(99)9999-9999" id="fone"
+									value="#{colaboradorCadastroBean.colaborador.telefone}" />
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:panelGrid columns="1" layout="grid"
+							columnClasses="ui-grid-col-12" styleClass="panelgrid-noborder"
+							id="painel">
+
+							<p:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="CEP" for="cep" />
+								<p:inputMask mask="99.999-999" id="cep"
+									value="#{colaboradorCadastroBean.colaborador.endereco.cep}" />
+								<p:commandButton value="Carregar"
+									action="#{colaboradorCadastroBean.carregarDadosCep()}"
+									process="cep @this" update="painel" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-8"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Logradouro" for="logradouro" />
+								<p:inputText id="logradouro"
+									value="#{colaboradorCadastroBean.colaborador.endereco.logradouro}" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-4"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Número" for="numero" />
+								<p:inputText id="numero"
+									value="#{colaboradorCadastroBean.colaborador.endereco.numero}" />
+								<p:outputLabel value="Complemento" for="complemento" />
+								<p:inputText id="complemento"
+									value="#{colaboradorCadastroBean.colaborador.endereco.complemento}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-4"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Bairro" for="bairro" />
+								<p:inputText id="bairro"
+									value="#{colaboradorCadastroBean.colaborador.endereco.bairro}" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Cidade" for="cidade" />
+								<p:inputText id="cidade"
+									value="#{colaboradorCadastroBean.colaborador.endereco.nomeCidade}" />
+								<p:outputLabel value="IBGE Cidade" for="ibgeCidade" />
+								<p:inputText id="ibgeCidade"
+									value="#{colaboradorCadastroBean.colaborador.endereco.codigoIbegeCidade}" />
+								<p:outputLabel value="Estado" for="estado" />
+								<p:selectOneMenu id="estado"
+									value="#{colaboradorCadastroBean.colaborador.endereco.estado}">
+									<f:selectItems value="#{clienteCadastroBean.estados}"
+										var="estado" itemValue="#{estado}"
+										itemLabel="#{estado.descricao}" />
+								</p:selectOneMenu>
+								<p:outputLabel value="IBGE UF" for="ibgeEstado" />
+								<p:inputText id="ibgeEstado"
+									value="#{colaboradorCadastroBean.colaborador.endereco.codigoIbegeEstado}" />
+								<p:outputLabel value="País" for="pais" />
+								<p:inputText id="pais"
+									value="#{colaboradorCadastroBean.colaborador.endereco.pais}" />
+								<p:outputLabel value="IBGE País" for="ibgepais" />
+								<p:inputText id="ibgepais"
+									value="#{colaboradorCadastroBean.colaborador.endereco.codigoIbegePais}" />
+							</p:panelGrid>
+
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Perfil de acesso" id="tbperfil">
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-8"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+							<p:outputLabel value="E-mail" for="email" />
+							<p:inputText id="email"
+								title="Este E-mail será usado para acesso ao sistema"
+								value="#{colaboradorCadastroBean.colaborador.email}" />
+							<p:outputLabel value="Ativo" for="ativo" />
+							<p:selectBooleanCheckbox id="ativo"
+								value="#{colaboradorCadastroBean.colaborador.ativo}" />
+						</p:panelGrid>
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2, ui-grid-col-8"
+							styleClass="panelgrid-noborder" style="margin-top: 10px;">
+
+							<p:outputLabel value="Perfis" />
+							<p:pickList id="pickList"
+								value="#{colaboradorCadastroBean.perfis}"
+								converter="#{perfilConverter}" var="perfil"
+								itemLabel="#{perfil.descricao}" itemValue="#{perfil}"
+								responsive="true">
+								<f:facet name="sourceCaption">Disponível</f:facet>
+								<f:facet name="targetCaption">Selecionado</f:facet>
+							</p:pickList>
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

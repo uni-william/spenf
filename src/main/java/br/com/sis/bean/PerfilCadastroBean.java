@@ -54,7 +54,7 @@ public class PerfilCadastroBean implements Serializable {
 			perfil.getFuncionalidades().clear();
 			perfil.setFuncionalidades(funcionalidades.getTarget());
 			perfil = perfilService.salvar(perfil);
-			FacesUtil.addInfoMessage("Serviço salva com sucesso!");
+			FacesUtil.addInfoMessage("Perfil salvo com sucesso!");
 		} catch (NegocioException e) {
 			FacesUtil.addErroMessage(e.getMessage());
 		}

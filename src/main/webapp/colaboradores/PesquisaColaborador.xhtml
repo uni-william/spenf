@@ -7,47 +7,66 @@
 	<head>
 <meta charset="UTF-8" />
 	</head>
-	<ui:define name="titulo">Perfis</ui:define>
+	<ui:define name="titulo">Colaboradores</ui:define>
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewAction action="#{perfilPesquisaBean.inicializar()}" />
+			<f:viewAction action="#{colaboradorPesquisaBean.inicializar()}" />
 		</f:metadata>
-		<h1 class="aw-page-title">Perfis</h1>
+		<h1 class="aw-page-title">Colaboradores</h1>
 		<h:form id="frm">
 			<p:growl />
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" outcome="/perfis/CadastroPerfil" />
+						<p:button value="Novo" outcome="/colaboradores/CadastroColaborador" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
-							action="#{perfilPesquisaBean.pesquisar}" update="@form" />
+							action="#{colaboradorPesquisaBean.pesquisar}" update="@form" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					styleClass="panelgrid-noborder" style="margin-top: 20px">
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText id="nome"
+						value="#{colaboradorPesquisaBean.filter.nome}" />
+				</p:panelGrid>				
+				
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="CPF" for="cpf" />
+					<p:inputMask id="cpf" mask="999.999.999-99"
+						value="#{colaboradorPesquisaBean.filter.cpf}" />
+				</p:panelGrid>				
 
-				<p:dataTable value="#{perfilPesquisaBean.perfis}" var="perfil"
+				<p:dataTable value="#{colaboradorPesquisaBean.colaboradores}" var="colaborador"
 					style="margin-top: 20px" reflow="true"
-					emptyMessage="Nenhum perfil cadastrado" id="table"
+					emptyMessage="Nenhum colaborador cadastrado" id="table"
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
 					rowsPerPageTemplate="5,10,20"
 					rows="10" paginatorAlwaysVisible="false">
-					<p:column headerText="Descrição">
-						<h:outputText value="#{perfil.descricao}" />
+					<p:column headerText="Colaborador">
+						<h:outputText value="#{colaborador.nome}" />
 					</p:column>
+					<p:column headerText="Celular" width="10%">
+						<h:outputText value="#{colaborador.celular}" />
+					</p:column>
+					
 					<p:column width="8%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/perfis/CadastroPerfil">
-							<f:param name="perfil" value="#{perfil.id}" />
+							outcome="/colaboradores/CadastroColaborador">
+							<f:param name="colaborador" value="#{colaborador.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px">
-							<f:setPropertyActionListener value="#{perfil}"
-								target="#{perfilPesquisaBean.perfilSelecionado}" />
+							<f:setPropertyActionListener value="#{empresa}"
+								target="#{colaboradorPesquisaBean.colaboradorSelecionado}" />
 						</p:commandButton>
 					</p:column>
 
@@ -55,13 +74,13 @@
 
 			</div>
 			<p:confirmDialog header="Exclusão de Registro"
-				message="Tem certeza que deseja excluir o perfil #{perfilPesquisaBean.perfilSelecionado.descricao}?"
+				message="Tem certeza que deseja excluir o colaborador  #{colaboradorPesquisaBean.colaboradorSelecionado.nome}?"
 				widgetVar="confirmacao" id="conf">
 				<p:button value="Não"
 					onclick="PF('confirmacao').hide(); return false;" />
 				<p:commandButton value="Sim" update="@form"
 					oncomplete="PF('confirmacao').hide()" process="@this"
-					action="#{perfilPesquisaBean.excluir}" />
+					action="#{colaboradorPesquisaBean.excluir}" />
 			</p:confirmDialog>
 		</h:form>
 

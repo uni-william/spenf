@@ -42,10 +42,10 @@
 					columnClasses="ui-grid-col-2, ui-grid-col-8"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 
-					<p:outputLabel value="Perfis" />
+					<p:outputLabel value="Permissões" />
 					<p:pickList id="pickList"
 						value="#{perfilCadastroBean.funcionalidades}"
-						converter="funcionalidadeConverter" var="func"
+						converter="#{funcionalidadeConverter}" var="func"
 						itemLabel="#{func.descricao}" itemValue="#{func}" responsive="true">
 						<f:facet name="sourceCaption">Disponível</f:facet>
 						<f:facet name="targetCaption">Selecionado</f:facet>

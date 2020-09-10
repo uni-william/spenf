@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -50,5 +51,8 @@ public class Perfil implements Serializable {
 	@Column(length = 30, name = "funcionalidade")
 	@Enumerated(EnumType.STRING)
 	private List<Funcionalidade> funcionalidades = new ArrayList<Funcionalidade>();
+	
+	@ManyToMany(mappedBy = "perfis")
+	private List<Colaborador> colaboradores = new ArrayList<Colaborador>();
 
 }
