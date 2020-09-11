@@ -42,7 +42,6 @@ public class DialogAdicionarServicoBean implements Serializable{
 		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		List<Empresa> mantenedoras = empresaRepository.listAll(filter);
 		servico.setMantenedora(mantenedoras.get(0));
-		System.out.println("executou!");
 	}
 	
 

@@ -44,7 +44,9 @@
 			</p:panelGrid>
 			<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-12"
 				styleClass="panelgrid-noborder" style="margin-top: 10px;">
-				<p:commandButton value="Adicionar" update="@form"/>
+				<p:commandButton value="Adicionar"
+					action="#{dialogAdicionarServicoBean.adicionarServico}"
+					update="@form" />
 			</p:panelGrid>
 		</div>
 	</h:form>

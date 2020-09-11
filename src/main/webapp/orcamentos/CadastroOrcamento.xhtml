@@ -163,7 +163,12 @@
 								listener="#{orcamentoCadastroBean.onItemSelect}" process="@this"
 								update="table itemOrc" />
 						</p:autoComplete>
-						<p:commandButton icon="ui-icon-plus" title="Cadastrar novo Serviço" style="width: 30px" action="#{dialogAdicionarServicoBean.view}" />
+						<p:commandButton icon="ui-icon-plus"
+							title="Cadastrar novo Serviço" style="width: 30px"
+							action="#{dialogAdicionarServicoBean.view}">
+							<p:ajax event="dialogReturn"
+								listener="#{orcamentoCadastroBean.handleReturn}" update="table itemOrc" />
+						</p:commandButton>
 					</p:panelGrid>
 					<p:dataTable value="#{orcamentoCadastroBean.itensOrcamento}"
 						var="item" style="margin-top: 5px" reflow="true"

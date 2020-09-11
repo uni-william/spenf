@@ -202,5 +202,15 @@ public class OrcamentoCadastroBean implements Serializable {
 		return this.orcamento.isCancelado();
 	}
 	
+	public void handleReturn(SelectEvent event) {
+	    Servico servico = (Servico) event.getObject();
+	    this.itemOrcamento.setServico(servico);
+		this.itemOrcamento.setDescricao(this.itemOrcamento.getServico().getDescricao());
+		this.itemOrcamento.setValor(this.itemOrcamento.getServico().getValor());
+		this.itemOrcamento.setOrcamento(this.orcamento);
+		this.itensOrcamento.add(this.itemOrcamento);
+		this.itemOrcamento = new ItemOrcamento();	    
+	}	
+	
 
 }
