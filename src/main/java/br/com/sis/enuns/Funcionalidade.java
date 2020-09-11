@@ -15,7 +15,15 @@ public enum Funcionalidade {
 	ORCAMENTO_UPD("Orçamento - Atualizar"),
 	ORCAMENTO_DEL("Orçamento - Excluir"),
 	PEDIDO_CONSULTA("Consultar Situação de Pedidos"),
-	PEDIDO_EM_ABERTO("Consultar Pedidos em aberto");	
+	PEDIDO_EM_ABERTO("Consultar Pedidos em aberto"),
+	PERFIL_VIEW("Perfil de acesso - Visualizar"),
+	PERFIL_INS("Perfil de acesso - Cadastrar"),
+	PERFIL_UPD("Perfil de acesso - Atualizar"),
+	PERFIL_DEL("Perfil de acesso - Excluir"),
+	COLABORADOR_VIEW("Colaborador - Visualizar"),
+	COLABORADOR_INS("Colaborador - Cadastrar"),
+	COLABORADOR_UPD("Colaborador - Atualizar"),
+	COLABORADOR_DEL("Colaborador - Excluir");	
 	
 	private Funcionalidade(String descricao) {
 		this.descricao = descricao;

@@ -23,15 +23,18 @@
 		<h:form prependId="false">
 			<p:growl id="messages" autoUpdate="true" />
 			<div class="ui-fluid centralizado">
-				<h:panelGrid columns="1">
-					<h:graphicImage library="images" name="trevo_transparente.png" styleClass="logo" />
-					<p:inputText id="username" value="#{loginBean.email}"
-						placeholder="E-mail" size="40" autocomplete="false" />
-					<p:password id="password" placeholder="Password" size="40" />
+				<h:panelGrid columns="1" columnClasses="ui-grid-col-12">
+					<h:graphicImage library="images" name="logo_sousa.jpg"
+						styleClass="logo" />
+					<p:inputText id="username" value="#{loginBean.login}"
+						placeholder="E-mail" size="25" />
+					<p:password id="password" placeholder="Password" size="25" />
 
 					<h:panelGrid columns="2" style="margin-top: 20px">
 						<p:commandButton actionListener="#{loginBean.efetuarLogin}"
-							value="Efetuar login" ajax="false" />
+							value="Login" ajax="false" />
+						<p:button value="Esqueci senha" outcome="/EsqueciSenha"
+							style="margin-left: 10px" />
 					</h:panelGrid>
 
 				</h:panelGrid>
