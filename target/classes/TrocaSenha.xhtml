@@ -14,13 +14,16 @@
 		</f:metadata>
 
 		<br />
-		<p:messages id="msg" autoUpdate="true" closable="true" />
+		<p:growl id="msg" />
 		<div class="ui-fluid centralizado">
 			<h:form id="form">
 				<h1>Troca de senha</h1>
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-4, ui-grid-col-6"
 					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Senha atual" for="atual" />
+					<p:password id="atual" style="width: 100%"
+						value="#{trocaSenhaBean.senhaAtual}" />
 					<p:outputLabel value="Nova senha" for="nova" />
 					<p:password id="nova" style="width: 100%"
 						value="#{trocaSenhaBean.novaSenha}" match="confirma"

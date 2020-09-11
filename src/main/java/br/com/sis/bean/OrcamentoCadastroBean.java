@@ -200,6 +200,7 @@ public class OrcamentoCadastroBean implements Serializable {
 	
 	public boolean isCancelado() {
 		return this.orcamento.isCancelado();
-	}	
+	}
+	
 
 }

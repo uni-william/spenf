@@ -10,11 +10,11 @@
 	<ui:define name="titulo">Home</ui:define>
 	<ui:define name="content">
 		<f:metadata>
+			<f:viewAction action="#{homeBean.inicializar}" />
 		</f:metadata>
 		<h:form id="frm">
-			<p:messages id="msg" autoUpdate="true" closable="true" />
+			<p:growl id="msg" />
 			<div class="logoHome">
-
 				<h:graphicImage library="images" styleClass="logoHome"
 					name="logo_sousa.jpg" />
 			</div>
