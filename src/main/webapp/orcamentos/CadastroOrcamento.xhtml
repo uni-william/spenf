@@ -39,20 +39,16 @@
 
 			<p:growl id="msg" />
 			<div class="ui-fluid">
-				<p:panelGrid columns="3" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+				<p:panelGrid columns="5" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-4, ui-grid-col-1, ui-grid-col-2"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.idFormatted}"
 						styleClass="textoNegrito" />
-					<p:outputLabel value="CANCELADO"
-						style="color: red; font-weight: bold;"
-						rendered="#{orcamentoCadastroBean.cancelado}" />
-				</p:panelGrid>
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
-					styleClass="panelgrid-noborder">
+					<p:outputLabel
+						value="#{orcamentoCadastroBean.orcamento.canceladoDescription}"
+						style="color: red; font-weight: bold;" />
 					<p:outputLabel value="Valor Total" styleClass="textoNegrito" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.valorOrcamento}"
@@ -128,8 +124,7 @@
 						<p:outputLabel value="Prazo entrega" />
 						<p:datePicker
 							value="#{orcamentoCadastroBean.orcamento.prazoEntrega}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt"
-							/>
+							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 						<p:outputLabel value="Prazo pagamento" />
 						<p:datePicker
 							value="#{orcamentoCadastroBean.orcamento.prazoPagamento}"
@@ -188,7 +183,8 @@
 								<p:ajax event="blur" update="table :frm:msg" process="@this" />
 							</p:inputNumber>
 						</p:column>
-						<p:column headerText="Total" width="100" styleClass="colunaAlinhadaEsquerda">
+						<p:column headerText="Total" width="100"
+							styleClass="colunaAlinhadaEsquerda">
 							<h:outputText value="#{item.valorTotal}">
 								<f:convertNumber type="currency" />
 							</h:outputText>

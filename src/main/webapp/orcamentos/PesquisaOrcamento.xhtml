@@ -28,7 +28,7 @@
 				<p:growl id="msg" />
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-8"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					styleClass="panelgrid-noborder" style="margin-top: 2px;">
 					<p:outputLabel value="Cliente" />
 					<p:selectOneMenu id="cliente"
 						value="#{orcamentoPesquisaBean.filter.cliente}">
@@ -41,7 +41,7 @@
 
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					styleClass="panelgrid-noborder" style="margin-top: 2px;">
 					<p:outputLabel value="Data início" />
 					<p:datePicker
 						value="#{orcamentoPesquisaBean.filter.dataCricaoInicio}"
@@ -59,12 +59,13 @@
 				</p:panelGrid>
 
 				<p:dataTable value="#{orcamentoPesquisaBean.orcamentos}"
-					var="orcamento" style="margin-top: 20px" reflow="true"
+					var="orcamento" style="margin-top: 5px" reflow="true"
 					emptyMessage="Sem registro de dados" id="table" rows="10"
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false">
+					rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false"
+					paginatorPosition="bottom">
 					<p:column headerText="Número" width="8%">
 						<h:outputText value="#{orcamento.id}" />
 					</p:column>

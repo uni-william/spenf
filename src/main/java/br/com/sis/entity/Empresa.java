@@ -78,6 +78,9 @@ public class Empresa implements Serializable {
 	
 	@Column(length = 20)
 	private String telefone;	
+	
+	@Column(length = 20)
+	private String telefone2;
 
 	@Column(length = 100)
 	private String email;	

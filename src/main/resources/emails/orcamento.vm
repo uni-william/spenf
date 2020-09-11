@@ -7,7 +7,7 @@
             <td style="padding: 2px;">
                 <b>$orcamento.mantenedora.nomeFantasia</b></p>
                 <b>Razão social: $orcamento.mantenedora.razaoSocial</b></p>
-                Telefone: $orcamento.mantenedora.telefone</p>
+                Telefone: $orcamento.mantenedora.telefone / $orcamento.mantenedora.telefone2</p>
                 E-mail: $orcamento.mantenedora.email</p>
                 $orcamento.mantenedora.endereco.logradouro, Nº $orcamento.mantenedora.endereco.numero, $orcamento.mantenedora.endereco.bairro</p>
                 CEP: $orcamento.mantenedora.endereco.cep, $orcamento.mantenedora.endereco.nomeCidade / $orcamento.mantenedora.endereco.estado</p>
@@ -49,16 +49,16 @@
     <table border="1" cellspacing="0" cellpadding="3" style="width: 900px;">
         <tr>
             <th>Serviço</th>
-            <th>Valor unitário</th>
+            <th style="width: 100px;">Valor unitário</th>
             <th>Qtde</th>
-            <th>Valor total</th>
+            <th style="width: 100px;">Valor total</th>
         </tr>
         #foreach ($item in $orcamento.itensOrcamento)
         <tr>
             <td>$item.descricao</td>
-            <td>$numberTool.format("¤ #0.00", $item.valor, $locale)</td>
-            <td>$item.quantidade</td>
-            <td>$numberTool.format("¤ #0.00", $item.valorTotal, $locale)</td>
+            <td style="text-align: right;">$numberTool.format("¤ #0.00", $item.valor, $locale)</td>
+            <td style="text-align: right;">$item.quantidade</td>
+            <td style="text-align: right;">$numberTool.format("¤ #0.00", $item.valorTotal, $locale)</td>
         </tr>
         #end
     </table>

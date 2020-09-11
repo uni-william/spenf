@@ -114,9 +114,12 @@
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-2"
 								styleClass="panelgrid-noborder">
-								<p:outputLabel value="Telefone" for="telefone" />
+								<p:outputLabel value="Telefone 1" for="telefone" />
 								<p:inputMask id="telefone" mask="(99)9999-9999"
 									value="#{mantenedoraCadastroBean.empresa.telefone}" />
+								<p:outputLabel value="Telefone 2" for="telefone2" />
+								<p:inputMask id="telefone2" mask="(99)9999-9999"
+									value="#{mantenedoraCadastroBean.empresa.telefone2}" />
 							</p:panelGrid>
 
 							<p:panelGrid columns="2" layout="grid"
@@ -174,7 +177,8 @@
 							styleClass="panelgrid-noborder">
 							<p:outputLabel value="Senha e-mail envio" />
 							<p:password
-								value="#{mantenedoraCadastroBean.empresa.senhaUsuarioEmail}" redisplay="true" />
+								value="#{mantenedoraCadastroBean.empresa.senhaUsuarioEmail}"
+								redisplay="true" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-6"

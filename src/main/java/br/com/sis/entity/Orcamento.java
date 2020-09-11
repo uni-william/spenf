@@ -101,5 +101,13 @@ public class Orcamento implements Serializable {
 	public boolean isJaEntregue() {
 		return this.getDiaEntrega() != null;
 	}
+	
+	@Transient
+	public String getCanceladoDescription() {
+		if (this.cancelado)
+			return "CANCELADO";
+		else
+			return null;
+	}
 
 }
