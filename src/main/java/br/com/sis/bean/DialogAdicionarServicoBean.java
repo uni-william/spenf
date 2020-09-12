@@ -50,7 +50,7 @@ public class DialogAdicionarServicoBean implements Serializable{
 	    options.put("modal", true);
 	    options.put("draggable", false);
 	    options.put("resizable", false);
-	    options.put("contentHeight", 250);
+	    options.put("contentHeight", 320);
 	    PrimeFaces.current().dialog().openDynamic("/dialogos/DialogServico", options, null);
 	}	
 
