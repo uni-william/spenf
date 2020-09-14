@@ -68,5 +68,19 @@ public class Seguranca {
 	public boolean isColaboradorEditar() {
 		return externalContext.isUserInRole(Funcionalidade.COLABORADOR_UPD.toString());
 	}
+	
+	public boolean isMantenedoraInserir() {
+		return externalContext.isUserInRole(Funcionalidade.MANTENEDORA_INS.toString());
+	}
+
+	public boolean isMantenedoraEditar() {
+		return externalContext.isUserInRole(Funcionalidade.MANTENEDORA_UPD.toString());
+	}
+
+	public boolean isMantenedoraExcluir() {
+		return externalContext.isUserInRole(Funcionalidade.MANTENEDORA_DEL.toString());
+	}	
+	
+	
 
 }

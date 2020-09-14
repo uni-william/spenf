@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,6 +21,9 @@ import br.com.sis.entity.dto.CepVO;
 import br.com.sis.enuns.Estado;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.enuns.TipoRegime;
+import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.security.Seguranca;
 import br.com.sis.service.EmpresaService;
 import br.com.sis.util.Utils;
 import br.com.sis.util.jsf.FacesUtil;
@@ -38,9 +42,18 @@ public class MantenedoraCadastroBean implements Serializable {
 	@Getter
 	@Setter
 	private Empresa empresa;
+	
+	@Inject
+	private EmpresaRepository empresaRepository;
 
 	@Inject
 	private EmpresaService empresaService;
+	
+	@Getter
+	private boolean podeSalvar = true;
+	
+	@Inject
+	private Seguranca seguranca;
 
 	public void inicializar() {
 		if (empresa == null) {
@@ -51,7 +64,12 @@ public class MantenedoraCadastroBean implements Serializable {
 			empresa.getEndereco().setPais("Brasil");			
 			empresa.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 			empresa.setCrt(TipoRegime.SIMPLES_NACIONAL);
+			if (this.isExisteMantenedoraCadastrada())
+				podeSalvar = false;
+			podeSalvar = podeSalvar && seguranca.isMantenedoraInserir();
 		
+		} else {
+			podeSalvar = seguranca.isMantenedoraEditar();
 		}
 	}
 
@@ -103,6 +121,13 @@ public class MantenedoraCadastroBean implements Serializable {
 			}
 		}
 
+	}
+	
+	public boolean isExisteMantenedoraCadastrada() {
+		EmpresaFilter filter = new EmpresaFilter();
+		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
+		List<Empresa> lista = empresaRepository.listAll(filter);
+		return lista.size() > 0;
 	}
 
 }

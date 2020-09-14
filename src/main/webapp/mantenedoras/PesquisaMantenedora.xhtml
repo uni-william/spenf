@@ -18,7 +18,8 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup align="right">
-						<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora">
+						<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora"
+						disabled="#{mantenedoraPesquisaBean.empresas.size() > 0}">
 						</p:button>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -43,7 +44,8 @@
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
-							process="@this" update=":frm:conf" style="width: 30px">
+							process="@this" update=":frm:conf" style="width: 30px"
+							disabled="#{!seguranca.mantenedoraExcluir}">
 							<f:setPropertyActionListener value="#{empresa}"
 								target="#{mantenedoraPesquisaBean.empresaSelecionada}" />
 						</p:commandButton>
