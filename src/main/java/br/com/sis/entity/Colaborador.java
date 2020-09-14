@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -78,5 +79,10 @@ public class Colaborador implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "colaborador_perfil", joinColumns = @JoinColumn(name = "colaborador_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
 	private List<Perfil> perfis = new ArrayList<Perfil>();
+	
+	@Transient
+	public String getDescricaoStatus() {
+		return this.ativo == true ? "Ativo" : "Inativo";
+	}
 
 }

@@ -21,7 +21,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		ColaboradorRepository repository = CDIServiceLocator.getBean(ColaboradorRepository.class);
-		Colaborador usuario = repository.findByEmail(login);
+		Colaborador usuario = repository.findByEmailToAcess(login);
 		UsuarioSistema user = null;
 
 		if (usuario != null) {

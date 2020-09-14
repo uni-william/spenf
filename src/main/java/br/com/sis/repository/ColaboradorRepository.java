@@ -92,6 +92,23 @@ public class ColaboradorRepository implements Serializable {
 			return null;
 		}
 	}	
+	
+	public Colaborador findByEmailToAcess(String email) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Colaborador> criteriaQuery = builder.createQuery(Colaborador.class);
+		List<Predicate> predicates = new ArrayList<>();
+		Root<Colaborador> root = criteriaQuery.from(Colaborador.class);
+		predicates.add(builder.equal(root.get("email"), email));
+		predicates.add(builder.equal(root.get("ativo"), true));
+		criteriaQuery.select(root);
+		criteriaQuery.where(predicates.toArray(new Predicate[0]));
+		TypedQuery<Colaborador> query = manager.createQuery(criteriaQuery);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}	
 
 	private Predicate[] criarRestricoes(ColaboradorFilter filter, CriteriaBuilder builder, Root<Colaborador> root) {
 		List<Predicate> predicates = new ArrayList<>();

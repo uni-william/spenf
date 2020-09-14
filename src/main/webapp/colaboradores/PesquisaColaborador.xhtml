@@ -18,7 +18,8 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" outcome="/colaboradores/CadastroColaborador" />
+						<p:button value="Novo"
+							outcome="/colaboradores/CadastroColaborador" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
@@ -32,32 +33,36 @@
 					<p:outputLabel value="Nome" for="nome" />
 					<p:inputText id="nome"
 						value="#{colaboradorPesquisaBean.filter.nome}" />
-				</p:panelGrid>				
-				
+				</p:panelGrid>
+
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder">
 					<p:outputLabel value="CPF" for="cpf" />
 					<p:inputMask id="cpf" mask="999.999.999-99"
 						value="#{colaboradorPesquisaBean.filter.cpf}" />
-				</p:panelGrid>				
+				</p:panelGrid>
 
-				<p:dataTable value="#{colaboradorPesquisaBean.colaboradores}" var="colaborador"
-					style="margin-top: 20px" reflow="true"
+				<p:dataTable value="#{colaboradorPesquisaBean.colaboradores}"
+					var="colaborador" style="margin-top: 20px" reflow="true"
 					emptyMessage="Nenhum colaborador cadastrado" id="table"
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rowsPerPageTemplate="5,10,20"
-					rows="10" paginatorAlwaysVisible="false">
+					rowsPerPageTemplate="5,10,20" rows="10"
+					paginatorAlwaysVisible="false"
+					rowIndexVar="row">
 					<p:column headerText="Colaborador">
 						<h:outputText value="#{colaborador.nome}" />
 					</p:column>
 					<p:column headerText="Celular" width="12%">
 						<h:outputText value="#{colaborador.celular}" />
 					</p:column>
-					
-					<p:column width="8%" exportable="false">
+					<p:column headerText="Status" width="8%" >
+						<h:outputText value="#{colaborador.descricaoStatus}" style="color: #{colaborador.ativo == true ? 'blue' : 'red'}"/>
+					</p:column>
+
+					<p:column width="15%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
 							outcome="/colaboradores/CadastroColaborador">
 							<f:param name="colaborador" value="#{colaborador.id}" />
@@ -65,6 +70,13 @@
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px">
+							<f:setPropertyActionListener value="#{colaborador}"
+								target="#{colaboradorPesquisaBean.colaboradorSelecionado}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-locked" title="Ativar/Inativar"
+							process="@this" update="table" style="width: 30px"
+							action="#{colaboradorPesquisaBean.ativarInativar(row)}"
+							disabled="#{!seguranca.colaboradorEditar}">
 							<f:setPropertyActionListener value="#{colaborador}"
 								target="#{colaboradorPesquisaBean.colaboradorSelecionado}" />
 						</p:commandButton>

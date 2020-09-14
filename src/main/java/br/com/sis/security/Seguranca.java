@@ -64,5 +64,9 @@ public class Seguranca {
 	public boolean isPerfilExcluir() {
 		return externalContext.isUserInRole(Funcionalidade.PERFIL_DEL.toString());
 	}
+	
+	public boolean isColaboradorEditar() {
+		return externalContext.isUserInRole(Funcionalidade.COLABORADOR_UPD.toString());
+	}
 
 }

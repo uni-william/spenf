@@ -13,6 +13,7 @@ import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.ColaboradorRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.service.ColaboradorService;
 import br.com.sis.repository.filter.ColaboradorFilter;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -39,6 +40,9 @@ public class ColaboradorPesquisaBean implements Serializable {
 	
 	@Getter
 	private List<Empresa> mantenedoras;
+	
+	@Inject
+	private ColaboradorService colaboradorService;
 
 	@Getter
 	@Setter
@@ -62,6 +66,12 @@ public class ColaboradorPesquisaBean implements Serializable {
 			FacesUtil.addInfoMessage("Colaborador excluído com sucesso");
 			colaboradores = colaboradorRepository.listAll(filter);
 		}
+	}
+	
+	public void ativarInativar(int id) {
+		colaboradorSelecionado.setAtivo(!colaboradorSelecionado.isAtivo());
+		colaboradorSelecionado = colaboradorService.salvar(colaboradorSelecionado);
+		colaboradores.set(id, colaboradorSelecionado);
 	}
 
 }
