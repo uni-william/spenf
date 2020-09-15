@@ -215,6 +215,10 @@ public class OrcamentoCadastroBean implements Serializable {
 		return this.orcamento.isCancelado() || !this.isEditando();
 	}	
 	
+	public boolean isDisableEmitir() {
+		return this.orcamento.isCancelado() || !this.isEditando();
+	}	
+	
 	public boolean isCancelado() {
 		return this.orcamento.isCancelado();
 	}
@@ -231,6 +235,7 @@ public class OrcamentoCadastroBean implements Serializable {
 	}	
 	
 	public void emitirOrcamento() {
+		orcamento = orcamentoService.salvar(orcamento);
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("pId", orcamento.getId());
 		String nomeRel = "Orcamento_" +  numeroFormatado(orcamento.getId()) + ".pdf";
