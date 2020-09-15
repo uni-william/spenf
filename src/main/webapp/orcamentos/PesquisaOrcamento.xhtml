@@ -18,11 +18,11 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
+						<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" icon="ui-icon-plus" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
-							action="#{orcamentoPesquisaBean.pesquisar}" update="@form" />
+							action="#{orcamentoPesquisaBean.pesquisar}" update="@form" icon="ui-icon-search" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />

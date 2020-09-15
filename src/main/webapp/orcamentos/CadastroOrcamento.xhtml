@@ -19,8 +19,8 @@
 			<p:focus context="frm" />
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
-					<p:commandButton value="Salvar"
+					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" icon="ui-icon-plus" />
+					<p:commandButton value="Salvar" icon="ui-icon-check"
 						action="#{orcamentoCadastroBean.salvar}" update="@form"
 						disabled="#{orcamentoCadastroBean.disableSalvar}" />
 				</p:toolbarGroup>
@@ -29,11 +29,14 @@
 						oncomplete="PF('confirmacao').show(); return false;"
 						process="@this" update="conf"
 						disabled="#{orcamentoCadastroBean.disableCancelar}" />
-					<p:commandButton value="Enviar E-mail"
+					<p:separator />
+					<p:commandButton ajax="false" value="Imprimir" icon="ui-icon-print"
+						action="#{orcamentoCadastroBean.emitirOrcamento}" update="msg" />
+					<p:commandButton value="Enviar E-mail" icon="ui-icon-mail-closed"
 						action="#{orcamentoCadastroBean.sendEmail}" update="@form"
 						disabled="#{orcamentoCadastroBean.disableEnviarEmail}" />
 					<p:separator />
-					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" />
+					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" icon="ui-icon-search" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -167,7 +170,8 @@
 							title="Cadastrar novo Serviço" style="width: 30px"
 							action="#{dialogAdicionarServicoBean.view}">
 							<p:ajax event="dialogReturn"
-								listener="#{orcamentoCadastroBean.handleReturn}" update="table itemOrc" />
+								listener="#{orcamentoCadastroBean.handleReturn}"
+								update="table itemOrc" />
 						</p:commandButton>
 					</p:panelGrid>
 					<p:dataTable value="#{orcamentoCadastroBean.itensOrcamento}"

@@ -4,13 +4,19 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Session;
 import org.primefaces.event.SelectEvent;
 
 import br.com.sis.convert.ItemOrcamentoConverter;
@@ -19,6 +25,7 @@ import br.com.sis.entity.ItemOrcamento;
 import br.com.sis.entity.Orcamento;
 import br.com.sis.entity.Servico;
 import br.com.sis.enuns.TipoEmpresa;
+import br.com.sis.report.ExecutorRelatorio;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.OrcamentoRepository;
 import br.com.sis.repository.ServicoRepository;
@@ -78,6 +85,15 @@ public class OrcamentoCadastroBean implements Serializable {
 	@Getter
 	@Setter	
 	private boolean adicionarAContatos;
+	
+	@Inject
+	private FacesContext facesContext;	
+	
+	@Inject
+	private HttpServletResponse response;
+	
+	@Inject
+	private EntityManager manager;	
 	
 
 	public void inicializar() {
@@ -173,6 +189,7 @@ public class OrcamentoCadastroBean implements Serializable {
 	}
 	
 	public void sendEmail() {
+		orcamento = orcamentoService.salvar(orcamento);
 		Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
 		if (emailService.sendHtmlEmail(mantenedora, orcamento))
 			FacesUtil.addInfoMessage("E-mail enviado com sucesso");
@@ -202,6 +219,7 @@ public class OrcamentoCadastroBean implements Serializable {
 		return this.orcamento.isCancelado();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void handleReturn(SelectEvent event) {
 	    Servico servico = (Servico) event.getObject();
 	    this.itemOrcamento.setServico(servico);
@@ -212,5 +230,27 @@ public class OrcamentoCadastroBean implements Serializable {
 		this.itemOrcamento = new ItemOrcamento();	    
 	}	
 	
+	public void emitirOrcamento() {
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("pId", orcamento.getId());
+		String nomeRel = "Orcamento_" +  numeroFormatado(orcamento.getId()) + ".pdf";
+		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/orcamento.jasper", this.response, parametros, nomeRel);
+		
+		Session session = manager.unwrap(Session.class);
+		session.doWork(executor);
+		
+		facesContext.responseComplete();
+		
+		if (executor.isRelatorioGerado()) {
+			facesContext.responseComplete();
+		} else {
+			FacesUtil
+					.addErroMessage("A execução do relatório não retornou dados.");
+		}		
+	}		
+	
+	private String numeroFormatado(Long id) {
+		return String.format("%06d", id);
+	}	
 
 }

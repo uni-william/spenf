@@ -23,13 +23,13 @@
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar"
 						action="#{mantenedoraCadastroBean.salvar}" update="@form"
-						disabled="#{!mantenedoraCadastroBean.podeSalvar}" />
+						disabled="#{!mantenedoraCadastroBean.podeSalvar}" icon="ui-icon-check" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora"
-					disabled="#{mantenedoraCadastroBean.existeMantenedoraCadastrada}" />
+					disabled="#{mantenedoraCadastroBean.existeMantenedoraCadastrada}" icon="ui-icon-plus" />
 					<p:button value="Pesquisa"
-						outcome="/mantenedoras/PesquisaMantenedora" />
+						outcome="/mantenedoras/PesquisaMantenedora" icon="ui-icon-search" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
