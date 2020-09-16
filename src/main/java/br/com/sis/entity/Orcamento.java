@@ -76,6 +76,9 @@ public class Orcamento implements Serializable {
 	
 	private Long numeroNfse;
 	
+	@Column(length = 20)
+	private String serieNfse;
+	
 	private String emailAviso;
 	
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

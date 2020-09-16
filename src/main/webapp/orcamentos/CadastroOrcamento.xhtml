@@ -115,12 +115,14 @@
 						<p:outputLabel value="Pedido cliente" />
 						<p:inputText
 							value="#{orcamentoCadastroBean.orcamento.pedidoCliente}" />
-						<p:outputLabel value="" />
-						<p:outputLabel value="" />
 						<p:outputLabel value="Número NFS-e" />
 						<p:inputNumber
 							value="#{orcamentoCadastroBean.orcamento.numeroNfse}"
 							decimalPlaces="0" thousandSeparator="" />
+						<p:outputLabel value="Série NFS-e" />
+						<p:inputText
+							value="#{orcamentoCadastroBean.orcamento.serieNfse}" />
+							
 					</p:panelGrid>
 					<p:panelGrid columns="6" layout="grid"
 						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
