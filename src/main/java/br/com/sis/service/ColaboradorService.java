@@ -39,5 +39,17 @@ public class ColaboradorService implements Serializable {
 		
 		return colaboradorRepository.salvar(colaborador);
 	}
+	
+	@Transactional
+	public boolean redefinirSenha(String email) {
+		Colaborador colaborador = colaboradorRepository.findByEmail(email);
+		if (colaborador == null)
+			return false;
+		else {
+			colaborador.setPassword(new BCryptPasswordEncoder().encode(colaborador.getCpf()));
+			colaboradorRepository.salvar(colaborador);
+			return true;
+		}
+	}
 
 }

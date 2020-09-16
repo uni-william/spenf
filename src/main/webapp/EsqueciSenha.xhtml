@@ -23,7 +23,26 @@
 		<h:form id="frm">
 			<p:growl id="msg" />
 			<div class="ui-fluid">
-
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-4, ui-grid-col-8"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel />
+					<p:outputLabel />
+					<p:outputLabel value="E-mail" for="email" />
+					<p:inputText value="#{esqueciSenhaBean.email}" id="email" />
+					<p:outputLabel />
+					<p:outputLabel />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-6, ui-grid-col-6"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel />
+					<p:outputLabel />
+					<p:commandButton value="Redefinir senha"
+						actionListener="#{esqueciSenhaBean.redefinirSenha}" ajax="false"
+						update="@form" />
+					<p:button value="Retornar" outcome="/Login" />
+				</p:panelGrid>
 			</div>
 		</h:form>
 	</div>
