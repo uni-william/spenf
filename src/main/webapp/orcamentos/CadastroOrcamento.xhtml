@@ -19,7 +19,8 @@
 			<p:focus context="frm" />
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" icon="ui-icon-plus" />
+					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento"
+						icon="ui-icon-plus" />
 					<p:commandButton value="Salvar" icon="ui-icon-check"
 						action="#{orcamentoCadastroBean.salvar}" update="@form"
 						disabled="#{orcamentoCadastroBean.disableSalvar}" />
@@ -37,7 +38,8 @@
 						action="#{orcamentoCadastroBean.sendEmail}" update="@form"
 						disabled="#{orcamentoCadastroBean.disableEnviarEmail}" />
 					<p:separator />
-					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento" icon="ui-icon-search" />
+					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento"
+						icon="ui-icon-search" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -67,164 +69,171 @@
 					<p:outputLabel value="Cliente" for="cliente" />
 					<p:selectOneMenu id="cliente"
 						value="#{orcamentoCadastroBean.orcamento.cliente}">
-						<p:ajax update="pnDadosOrcamento" />
+						<p:ajax update=":tabView:pnDadosOrcamento" />
 						<f:selectItems value="#{orcamentoCadastroBean.clientes}"
 							var="cliente" itemValue="#{cliente}"
 							itemLabel="#{cliente.nomeFantasia}" />
 					</p:selectOneMenu>
 				</p:panelGrid>
-				<p:panel header="Dados orçamento" id="pnDadosOrcamento">
-					<p:panelGrid columns="2" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-3"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Data" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.dataOrcamento}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-					</p:panelGrid>
-					<p:panelGrid columns="4" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Solicitante" />
-						<p:inputText
-							value="#{orcamentoCadastroBean.orcamento.solicitante}" />
-						<p:outputLabel value="Responsável" />
-						<p:inputText
-							value="#{orcamentoCadastroBean.orcamento.responsavel}" />
+				<p:tabView id="tabView">
+					<p:tab title="Dados do Orçamento" id="tabOrc">
+						<p:panel header="Cabeçalho" id="pnDadosOrcamento">
+							<p:panelGrid columns="2" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-3"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Data" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.dataOrcamento}"
+									showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+							</p:panelGrid>
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Solicitante" />
+								<p:inputText
+									value="#{orcamentoCadastroBean.orcamento.solicitante}" />
+								<p:outputLabel value="Responsável" />
+								<p:inputText
+									value="#{orcamentoCadastroBean.orcamento.responsavel}" />
 
-					</p:panelGrid>
-					<p:panelGrid columns="3" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-4"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="E-mail contato" for="emailContato" />
-						<p:selectOneMenu id="emailContato"
-							value="#{orcamentoCadastroBean.orcamento.emailAviso}"
-							editable="true">
-							<f:selectItems
-								value="#{orcamentoCadastroBean.orcamento.cliente.emails}"
-								var="email" itemValue="#{email}" itemLabel="#{email}" />
-						</p:selectOneMenu>
-						<p:selectBooleanCheckbox itemLabel="Adicionar a contatos"
-							value="#{orcamentoCadastroBean.adicionarAContatos}" />
-					</p:panelGrid>
-				</p:panel>
-				<p:panel header="Dados pedido">
-					<p:panelGrid columns="6" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Pedido cliente" />
-						<p:inputText
-							value="#{orcamentoCadastroBean.orcamento.pedidoCliente}" />
-						<p:outputLabel value="Número NFS-e" />
-						<p:inputNumber
-							value="#{orcamentoCadastroBean.orcamento.numeroNfse}"
-							decimalPlaces="0" thousandSeparator="" />
-						<p:outputLabel value="Série NFS-e" />
-						<p:inputText
-							value="#{orcamentoCadastroBean.orcamento.serieNfse}" />
-							
-					</p:panelGrid>
-					<p:panelGrid columns="6" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Prazo entrega" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.prazoEntrega}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-						<p:outputLabel value="Prazo pagamento" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.prazoPagamento}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-						<p:outputLabel value="Validade" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.validadeOrcamento}"
-							showIcon="true" pattern="dd/MM/yyyy" />
-					</p:panelGrid>
-					<p:separator />
-					<p:panelGrid columns="4" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Data efetiva entrega" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.diaEntrega}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-						<p:outputLabel value="Data efetiva pagamento" />
-						<p:datePicker
-							value="#{orcamentoCadastroBean.orcamento.diaPagamento}"
-							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-
-					</p:panelGrid>
-				</p:panel>
-				<p:panel header="Dados itens pedido">
-					<p:panelGrid columns="3" layout="grid"
-						columnClasses="ui-grid-col-1, ui-grid-col-10, ui-grid-col-1"
-						styleClass="panelgrid-noborder">
-						<p:outputLabel value="Serviço" for="itemOrc" />
-						<p:autoComplete id="itemOrc" dropdown="true" forceSelection="true"
-							var="item" itemLabel="#{item.descricao}" itemValue="#{item}"
-							converter="#{orcamentoCadastroBean.itemOrcamentoConverter}"
-							value="#{orcamentoCadastroBean.itemOrcamento.servico}"
-							completeMethod="#{orcamentoCadastroBean.completeServico}">
-							<p:ajax event="itemSelect"
-								listener="#{orcamentoCadastroBean.onItemSelect}" process="@this"
-								update="table itemOrc" />
-						</p:autoComplete>
-						<p:commandButton icon="ui-icon-plus"
-							title="Cadastrar novo Serviço" style="width: 30px"
-							action="#{dialogAdicionarServicoBean.view}">
-							<p:ajax event="dialogReturn"
-								listener="#{orcamentoCadastroBean.handleReturn}"
-								update="table itemOrc" />
-						</p:commandButton>
-					</p:panelGrid>
-					<p:dataTable value="#{orcamentoCadastroBean.itensOrcamento}"
-						var="item" style="margin-top: 5px" reflow="true"
-						emptyMessage="Itens do orçamento" id="table">
-						<p:column headerText="Serviço">
-							<p:inputTextarea value="#{item.descricao}" rows="2" />
-						</p:column>
-						<p:column headerText="Qtd" width="60">
-							<p:inputNumber value="#{item.quantidade}" decimalPlaces="0"
-								thousandSeparator="">
-								<p:ajax event="blur" update="table :frm:msg" process="@this" />
-							</p:inputNumber>
-						</p:column>
-						<p:column headerText="Valor" width="130">
-							<p:inputNumber value="#{item.valor}" decimalPlaces="2"
-								symbol="R$ " symbolPosition="p" thousandSeparator="."
-								decimalSeparator=",">
-								<p:ajax event="blur" update="table :frm:msg" process="@this" />
-							</p:inputNumber>
-						</p:column>
-						<p:column headerText="Total" width="100"
-							styleClass="colunaAlinhadaEsquerda">
-							<h:outputText value="#{item.valorTotal}">
-								<f:convertNumber type="currency" />
-							</h:outputText>
-						</p:column>
-						<p:column width="30">
-							<p:commandButton icon="ui-icon-trash" title="Excluir"
-								action="#{orcamentoCadastroBean.removerItem(item)}"
-								process="@this" update="table" style="width: 30px">
-							</p:commandButton>
-						</p:column>
-						<p:columnGroup type="footer">
-							<p:row>
-								<p:column colspan="3" footerText="Subtotal"
-									style="text-align: right" />
-								<p:column style="text-align: right">
-									<f:facet name="footer">
-										<h:outputText value="#{orcamentoCadastroBean.totalItens}"
-											id="sub">
-											<f:convertNumber type="currency" />
-										</h:outputText>
-									</f:facet>
+							</p:panelGrid>
+							<p:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-4"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="E-mail contato" for="emailContato" />
+								<p:selectOneMenu id="emailContato"
+									value="#{orcamentoCadastroBean.orcamento.emailAviso}"
+									editable="true">
+									<f:selectItems
+										value="#{orcamentoCadastroBean.orcamento.cliente.emails}"
+										var="email" itemValue="#{email}" itemLabel="#{email}" />
+								</p:selectOneMenu>
+								<p:selectBooleanCheckbox itemLabel="Adicionar a contatos"
+									value="#{orcamentoCadastroBean.adicionarAContatos}" />
+							</p:panelGrid>
+						</p:panel>
+						<p:panel header="Itens">
+							<p:panelGrid columns="3" layout="grid"
+								columnClasses="ui-grid-col-1, ui-grid-col-10, ui-grid-col-1"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Serviço" for="itemOrc" />
+								<p:autoComplete id="itemOrc" dropdown="true"
+									forceSelection="true" var="item" itemLabel="#{item.descricao}"
+									itemValue="#{item}"
+									converter="#{orcamentoCadastroBean.itemOrcamentoConverter}"
+									value="#{orcamentoCadastroBean.itemOrcamento.servico}"
+									completeMethod="#{orcamentoCadastroBean.completeServico}">
+									<p:ajax event="itemSelect"
+										listener="#{orcamentoCadastroBean.onItemSelect}"
+										process="@this" update="table itemOrc" />
+								</p:autoComplete>
+								<p:commandButton icon="ui-icon-plus"
+									title="Cadastrar novo Serviço" style="width: 30px"
+									action="#{dialogAdicionarServicoBean.view}">
+									<p:ajax event="dialogReturn"
+										listener="#{orcamentoCadastroBean.handleReturn}"
+										update="table itemOrc" />
+								</p:commandButton>
+							</p:panelGrid>
+							<p:dataTable value="#{orcamentoCadastroBean.itensOrcamento}"
+								var="item" style="margin-top: 5px" reflow="true"
+								emptyMessage="Itens do orçamento" id="table">
+								<p:column headerText="Serviço">
+									<p:inputTextarea value="#{item.descricao}" rows="2" />
 								</p:column>
-								<p:column></p:column>
-							</p:row>
-						</p:columnGroup>
-					</p:dataTable>
-				</p:panel>
+								<p:column headerText="Qtd" width="60">
+									<p:inputNumber value="#{item.quantidade}" decimalPlaces="0"
+										thousandSeparator="">
+										<p:ajax event="blur" update="table :frm:msg" process="@this" />
+									</p:inputNumber>
+								</p:column>
+								<p:column headerText="Valor" width="130">
+									<p:inputNumber value="#{item.valor}" decimalPlaces="2"
+										symbol="R$ " symbolPosition="p" thousandSeparator="."
+										decimalSeparator=",">
+										<p:ajax event="blur" update="table :frm:msg" process="@this" />
+									</p:inputNumber>
+								</p:column>
+								<p:column headerText="Total" width="100"
+									styleClass="colunaAlinhadaEsquerda">
+									<h:outputText value="#{item.valorTotal}">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+								</p:column>
+								<p:column width="30">
+									<p:commandButton icon="ui-icon-trash" title="Remover item"
+										action="#{orcamentoCadastroBean.removerItem(item)}"
+										process="@this" update="table" style="width: 30px">
+									</p:commandButton>
+								</p:column>
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="3" footerText="Subtotal"
+											style="text-align: right" />
+										<p:column style="text-align: right">
+											<f:facet name="footer">
+												<h:outputText value="#{orcamentoCadastroBean.totalItens}"
+													id="sub">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+											</f:facet>
+										</p:column>
+										<p:column></p:column>
+									</p:row>
+								</p:columnGroup>
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+					<p:tab title="Dados do Pedido do cliente" id="tabPedido">
+						<p:panel header="Dados pedido">
+							<p:panelGrid columns="6" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Pedido cliente" />
+								<p:inputText
+									value="#{orcamentoCadastroBean.orcamento.pedidoCliente}" />
+								<p:outputLabel value="Número NFS-e" />
+								<p:inputNumber
+									value="#{orcamentoCadastroBean.orcamento.numeroNfse}"
+									decimalPlaces="0" thousandSeparator="" />
+								<p:outputLabel value="Série NFS-e" />
+								<p:inputText
+									value="#{orcamentoCadastroBean.orcamento.serieNfse}" />
+
+							</p:panelGrid>
+							<p:panelGrid columns="6" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Prazo entrega" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.prazoEntrega}"
+									showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+								<p:outputLabel value="Prazo pagamento" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.prazoPagamento}"
+									showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+								<p:outputLabel value="Validade" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.validadeOrcamento}"
+									showIcon="true" pattern="dd/MM/yyyy" />
+							</p:panelGrid>
+							<p:separator />
+							<p:panelGrid columns="4" layout="grid"
+								columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+								styleClass="panelgrid-noborder">
+								<p:outputLabel value="Data efetiva entrega" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.diaEntrega}"
+									showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+								<p:outputLabel value="Data efetiva pagamento" />
+								<p:datePicker
+									value="#{orcamentoCadastroBean.orcamento.diaPagamento}"
+									showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:tabView>
+
 			</div>
 			<p:confirmDialog header="Cancelamento de Orçamento"
 				message="Confirma cancelamento deste orçamento?"

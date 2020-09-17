@@ -55,7 +55,7 @@ public class EmailService implements Serializable {
 		try {
 			email.addTo(orcamento.getEmailAviso());
 			email.setFrom(mantenedora.getEmailEnvio());
-			email.setSubject("Orçamento - " + orcamento.getIdFormatted());
+			email.setSubject(mantenedora.getNomeFantasia() +  " - Orçamento - " + orcamento.getIdFormatted());
 			email.setHtmlMsg(htmlMsg(orcamento));
 			email.setTextMsg("Não carregou HTML");
 			email.send();
