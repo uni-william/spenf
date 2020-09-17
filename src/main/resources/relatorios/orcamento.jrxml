@@ -614,13 +614,6 @@ where orc.id = $P{pId}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="140" y="248" width="252" height="21" uuid="187e7814-4d8f-4524-bbc3-c657701b9fbd"/>
-				<textElement textAlignment="Center">
-					<font isBold="true" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
-			</textField>
 		</band>
 	</summary>
 </jasperReport>

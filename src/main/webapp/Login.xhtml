@@ -23,17 +23,17 @@
 		<h:form prependId="false">
 			<p:growl id="messages" autoUpdate="true" />
 			<div class="ui-fluid centralizado">
-				<h:panelGrid columns="1" columnClasses="ui-grid-col-12">
+				<h:panelGrid columns="1" columnClasses="ui-grid-col-12" style="width: 100%">
 					<h:graphicImage library="images" name="logo_sousa.jpg"
 						styleClass="logo" />
 					<p:inputText id="username" value="#{loginBean.login}"
-						placeholder="E-mail" size="25" />
-					<p:password id="password" placeholder="Password" size="25" />
+						placeholder="E-mail" />
+					<p:password id="password" placeholder="Password"/>
 
 					<h:panelGrid columns="2" style="margin-top: 20px">
 						<p:commandButton actionListener="#{loginBean.efetuarLogin}"
 							value="Login" ajax="false" />
-						<p:button value="Esqueci senha" outcome="/EsqueciSenha"
+						<p:button value="Redefinir" outcome="/EsqueciSenha"
 							style="margin-left: 10px" />
 					</h:panelGrid>
 
