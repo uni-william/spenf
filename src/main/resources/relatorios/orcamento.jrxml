@@ -507,7 +507,7 @@ where orc.id = $P{pId}]]>
 		</band>
 	</detail>
 	<summary>
-		<band height="258" splitType="Stretch">
+		<band height="277" splitType="Stretch">
 			<rectangle>
 				<reportElement x="10" y="116" width="145" height="19" uuid="798485a4-7d8e-40c8-a19b-918a7be1ae96">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -611,6 +611,13 @@ where orc.id = $P{pId}]]>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="248" width="252" height="21" uuid="187e7814-4d8f-4524-bbc3-c657701b9fbd"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
 			</textField>
