@@ -4,14 +4,14 @@
 
     <table border="1" cellspacing="0" cellpadding="3" style="width: 900px;">
         <tr style="text-align: center;">
-            <td style="padding: 2px;">
-                <b>$orcamento.mantenedora.nomeFantasia</b></p>
-                <b>Razão social: $orcamento.mantenedora.razaoSocial</b></p>
-                Telefone: $orcamento.mantenedora.telefone / $orcamento.mantenedora.telefone2</p>
-                E-mail: $orcamento.mantenedora.email</p>
-                $orcamento.mantenedora.endereco.logradouro, Nº $orcamento.mantenedora.endereco.numero, $orcamento.mantenedora.endereco.bairro</p>
-                CEP: $orcamento.mantenedora.endereco.cep, $orcamento.mantenedora.endereco.nomeCidade / $orcamento.mantenedora.endereco.estado</p>
-                CNPJ: $orcamento.mantenedora.cnpj Ins. Est. $orcamento.mantenedora.inscricaoEstadual Ins. Mun. $orcamento.mantenedora.inscricaoMunicipal</p>
+            <td style="padding: 2px; line-height: 0.8;">
+                <p><b>$orcamento.mantenedora.nomeFantasia</b></p>
+                <p><b>Razão social: $orcamento.mantenedora.razaoSocial</b></p>
+                <p>Telefone: $orcamento.mantenedora.telefone / $orcamento.mantenedora.telefone2</p>
+                <p>E-mail: $orcamento.mantenedora.email</p>
+                <p>$orcamento.mantenedora.endereco.logradouro, Nº $orcamento.mantenedora.endereco.numero, $orcamento.mantenedora.endereco.bairro</p>
+                <p>CEP: $orcamento.mantenedora.endereco.cep, $orcamento.mantenedora.endereco.nomeCidade / $orcamento.mantenedora.endereco.estado</p>
+                <p>CNPJ: $orcamento.mantenedora.cnpj Ins. Est. $orcamento.mantenedora.inscricaoEstadual Ins. Mun. $orcamento.mantenedora.inscricaoMunicipal</p>
             </td>
         </tr>
     </table>
