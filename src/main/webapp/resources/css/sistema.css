@@ -57,6 +57,7 @@ footer {
 	right: 10px;
 	width: 35px;
 	height: 35px;
+	z-index: 9999;
 }
 
 /* Menu sistema início */

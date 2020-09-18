@@ -603,14 +603,12 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA[$F{validadeProposta} + " DIAS"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="142" y="245" width="250" height="1" uuid="715e4622-a97b-4ae6-b06f-79a6004162d5"/>
+				<reportElement x="142" y="225" width="250" height="1" uuid="715e4622-a97b-4ae6-b06f-79a6004162d5"/>
 			</line>
 			<textField>
-				<reportElement x="143" y="247" width="248" height="10" uuid="b2194a5c-dec2-41e2-b35e-9b619cae0080">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="8" isBold="true" isItalic="true"/>
+				<reportElement x="142" y="230" width="250" height="20" uuid="514b1795-3bb1-4085-bfa9-8cbb21b30da7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
 			</textField>
