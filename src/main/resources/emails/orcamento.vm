@@ -4,7 +4,7 @@
 
     <table border="1" cellspacing="0" cellpadding="3" style="width: 900px;">
         <tr style="text-align: center;">
-            <td style="padding: 2px; line-height: 0.8;">
+            <td style="padding: 2px; line-height: 1;">
                 <p><b>$orcamento.mantenedora.nomeFantasia</b></p>
                 <p><b>Razão social: $orcamento.mantenedora.razaoSocial</b></p>
                 <p>Telefone: $orcamento.mantenedora.telefone / $orcamento.mantenedora.telefone2</p>

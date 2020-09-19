@@ -31,7 +31,6 @@ import br.com.sis.repository.OrcamentoRepository;
 import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
 import br.com.sis.service.EmailService;
-import br.com.sis.service.EmpresaService;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -60,9 +59,6 @@ public class OrcamentoCadastroBean implements Serializable {
 	private ServicoRepository servicoRepository;
 
 	@Inject
-	private EmpresaService empresaService;
-
-	@Inject
 	private EmailService emailService;
 
 	@Getter
@@ -82,9 +78,6 @@ public class OrcamentoCadastroBean implements Serializable {
 	@Setter
 	private List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
 
-	@Getter
-	@Setter
-	private boolean adicionarAContatos;
 
 	@Inject
 	private FacesContext facesContext;
@@ -102,12 +95,6 @@ public class OrcamentoCadastroBean implements Serializable {
 		if (orcamento == null) {
 			novoOrcamento();
 			aoSelelecionarMantenedora();
-			orcamento.setPrazoEntrega(orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoEntrega()));
-			orcamento.setPrazoPagamento(
-					orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getPrazoPagamento()));
-			orcamento.setValidadeOrcamento(
-					orcamento.getDataOrcamento().plusDays(orcamento.getCliente().getValidadeProposta()));
-
 		} else {
 			aoSelelecionarMantenedora();
 			this.itensOrcamento = orcamento.getItensOrcamento();
@@ -119,7 +106,6 @@ public class OrcamentoCadastroBean implements Serializable {
 		orcamento = new Orcamento();
 		orcamento.setMantenedora(mantenedoras.get(0));
 		orcamento.setDataOrcamento(LocalDate.now());
-		this.adicionarAContatos = false;
 	}
 
 	public List<Servico> completeServico(String descricao) {
@@ -135,16 +121,6 @@ public class OrcamentoCadastroBean implements Serializable {
 		orcamento = orcamentoService.salvar(orcamento);
 		this.itensOrcamento = orcamento.getItensOrcamento();
 		FacesUtil.addInfoMessage("Orçamento salvo com sucesso!");
-	}
-
-	public void adicionarAContatos() {
-		if (this.isAdicionarAContatos() && !StringUtils.isEmpty(this.orcamento.getEmailAviso())) {
-			Empresa clienteContato = empresaRepository.findById(orcamento.getCliente().getId());
-			if (!clienteContato.getEmails().contains(this.orcamento.getEmailAviso())) {
-				clienteContato.getEmails().add(this.orcamento.getEmailAviso());
-				empresaService.salvar(clienteContato);
-			}
-		}
 	}
 
 	public void aoSelelecionarMantenedora() {
@@ -166,7 +142,7 @@ public class OrcamentoCadastroBean implements Serializable {
 	}
 
 	public boolean isPodeInserir() {
-		for (ItemOrcamento it : itensOrcamento) {
+		for (ItemOrcamento it : this.itensOrcamento) {
 			if (it.getServico().getId().equals(itemOrcamento.getServico().getId()))
 				return false;
 		}
@@ -192,14 +168,14 @@ public class OrcamentoCadastroBean implements Serializable {
 
 	public void sendEmail() {
 		orcamento = orcamentoService.salvar(orcamento);
-		if (!StringUtils.isEmpty(orcamento.getEmailAviso())) {
+		if (!orcamento.getEmailsOrcamento().isEmpty()) {
 			Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
 			if (emailService.sendHtmlEmail(mantenedora, orcamento))
 				FacesUtil.addInfoMessage("E-mail enviado com sucesso");
 			else
 				FacesUtil.addErroMessage("Erro ao enviar e-mail");
 		} else {
-			FacesUtil.addErroMessage("Este orçamento não possui E-mail para contato. Verifique!");
+			FacesUtil.addErroMessage("Este orçamento não possui E-mails para envio. Verifique!");
 		}
 	}
 

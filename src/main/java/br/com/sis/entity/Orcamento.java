@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -51,38 +53,42 @@ public class Orcamento implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Empresa cliente;
 	
-	@Column(length = 60)
+	@Column(length = 120)
 	private String solicitante;
 	
-	@Column(length = 60)
+	@Column(length = 120)
 	private String responsavel;
 	
 	private LocalDate dataOrcamento;
-	private LocalDate prazoEntrega;
-	private LocalDate prazoPagamento;
-	private LocalDate validadeOrcamento;
+	
 	
 	@Column(length = 20)
 	private String pedidoCliente;
 	
+	private LocalDate dataRecebimentoPedido;
+	private LocalDate dataEntregaPedido;
+	
 	@Column(precision = 10, scale = 2)
 	private BigDecimal valorOrcamento;
-	
-	private LocalDate diaEntrega;
-	
-	private LocalDate diaPagamento;
 	
 	private boolean cancelado = false;
 	
 	private Long numeroNfse;
-	
 	@Column(length = 20)
 	private String serieNfse;
 	
-	private String emailAviso;
+	private LocalDate dataEmissaoNota;
+	private LocalDate dataPrevisaoPagamento;
+	private LocalDate dataEfetivaPagamento;
 	
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "emails_orcamento",
+	joinColumns = @JoinColumn(name = "orcamento_id"))
+	@Column(name = "emails_orcamento")
+	private List<String> emailsOrcamento = new ArrayList<String>();
 	
 	public String getIdFormatted() {
 		if (this.getId() != null)
@@ -102,7 +108,7 @@ public class Orcamento implements Serializable {
 	
 	@Transient
 	public boolean isJaEntregue() {
-		return this.getDiaEntrega() != null;
+		return this.getDataEmissaoNota() != null;
 	}
 	
 	@Transient

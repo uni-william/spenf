@@ -55,7 +55,7 @@ public class DialogAdicionarServicoBean implements Serializable{
 	}	
 
 	public void adicionarServico() {
-		servicoService.salvar(servico);
+		servico = servicoService.salvar(servico);
 		PrimeFaces.current().dialog().closeDynamic(servico);
 	}
 

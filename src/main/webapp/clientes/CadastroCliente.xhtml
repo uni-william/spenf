@@ -177,7 +177,7 @@
 								update="emailContato table"
 								action="#{clienteCadastroBean.adicionarEmailLista()}" />
 						</p:panelGrid>
-						<p:dataTable value="#{clienteCadastroBean.empresa.emails}"
+						<p:dataTable value="#{clienteCadastroBean.emails}"
 							var="email" style="margin-top: 20px" reflow="true"
 							emptyMessage="Nenhum e-mail cadastrado" id="table">
 							<p:column headerText="E-mail">

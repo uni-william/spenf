@@ -108,10 +108,10 @@ public class Empresa implements Serializable {
 	private boolean sslOnConection;
 	private boolean tlsRequired;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "emails_cliente",
 	joinColumns = @JoinColumn(name = "cliente_id"))
 	@Column(name = "email")
-	private List<String> emails = new ArrayList<String>();
+	private List<String> emailsCliente = new ArrayList<String>();
 	
 }

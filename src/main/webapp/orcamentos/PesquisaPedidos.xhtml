@@ -68,21 +68,16 @@
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>					
 					<p:column headerText="Data pedido" width="8%">
-						<h:outputText value="#{orcamento.dataOrcamento}"
+						<h:outputText value="#{orcamento.dataRecebimentoPedido}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Previsão entrega" width="8%">
-						<h:outputText value="#{orcamento.prazoEntrega}"
+						<h:outputText value="#{orcamento.dataEntregaPedido}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Data efetiva entrega" width="8%">
-						<h:outputText value="#{orcamento.diaEntrega}"
-							converter="localDateConverter">
-						</h:outputText>
-					</p:column>
 					<p:column headerText="Total" width="8%" styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />

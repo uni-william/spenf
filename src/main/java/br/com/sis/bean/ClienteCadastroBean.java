@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -54,6 +55,10 @@ public class ClienteCadastroBean implements Serializable {
 	@Getter
 	@Setter
 	private String email;
+	
+	@Getter
+	@Setter
+	private List<String> emails = new ArrayList<String>();
 
 	@Getter
 	private boolean podeSalvar;
@@ -73,6 +78,9 @@ public class ClienteCadastroBean implements Serializable {
 				empresa.setCrt(TipoRegime.CLIENTE);
 				empresa.setMantenedora(this.mantenedoras.get(0));
 			}
+			else {
+				this.emails = empresa.getEmailsCliente();
+			}
 			podeSalvar = true;
 		} else {
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
@@ -81,6 +89,7 @@ public class ClienteCadastroBean implements Serializable {
 	}
 
 	public void salvar() {
+		empresa.setEmailsCliente(this.emails);
 		empresa = empresaService.salvar(empresa);
 		FacesUtil.addInfoMessage("Cliente salvo com sucesso!");
 	}
@@ -132,14 +141,14 @@ public class ClienteCadastroBean implements Serializable {
 	}
 
 	public void adicionarEmailLista() {
-		if (!this.empresa.getEmails().contains(this.email) && !StringUtils.isEmpty(this.email)) {
-			this.empresa.getEmails().add(this.email);
+		if (!this.getEmails().contains(this.email) && !StringUtils.isEmpty(this.email)) {
+			this.getEmails().add(this.email);
 		}
 		this.email = "";
 	}
 
 	public void removerEmailLista(String email) {
-		this.empresa.getEmails().remove(email);
+		this.getEmails().remove(email);
 	}
 
 }

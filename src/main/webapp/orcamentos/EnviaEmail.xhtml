@@ -1,0 +1,48 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Envio de E-mail de orçamento</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{envioEmailBean.inicializar()}" />
+			<f:viewParam name="orcamento" value="#{envioEmailBean.orcamento}" />
+		</f:metadata>
+		<h:form id="frm">
+			<h1 id="titulo" class="aw-page-title">Envio de e-mail de
+				orçamento para cliente</h1>
+			<p:growl />
+			<div class="ui-fluid">
+				<p:panel header="Resumo do orçamento">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-10"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
+						<p:outputLabel value="#{envioEmailBean.orcamento.idFormatted}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Data" />
+						<p:outputLabel
+							value="#{envioEmailBean.orcamento.dataOrcamentoFormatted}" />
+
+						<p:outputLabel value="Total" />
+						<p:outputLabel value="#{envioEmailBean.orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="Cliente" />
+						<p:outputLabel
+							value="#{envioEmailBean.orcamento.cliente.nomeFantasia}" />
+
+					</p:panelGrid>
+				</p:panel>
+
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

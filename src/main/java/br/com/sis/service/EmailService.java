@@ -53,7 +53,9 @@ public class EmailService implements Serializable {
 				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
 		email.setSSLOnConnect(mantenedora.isSslOnConection());
 		try {
-			email.addTo(orcamento.getEmailAviso());
+			for (String contato: orcamento.getEmailsOrcamento()) {
+				email.addTo(contato);
+			}
 			email.setFrom(mantenedora.getEmailEnvio());
 			email.setSubject(mantenedora.getNomeFantasia() +  " - Orçamento - " + orcamento.getIdFormatted());
 			email.setHtmlMsg(htmlMsg(orcamento));
