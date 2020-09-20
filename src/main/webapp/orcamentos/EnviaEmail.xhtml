@@ -38,9 +38,8 @@
 							value="#{envioEmailBean.orcamento.cliente.nomeFantasia}" />
 					</p:panelGrid>
 					<p:dataTable value="#{envioEmailBean.orcamento.itensOrcamento}"
-						var="item">
-						<f:facet name="header">Serviços</f:facet>
-						<p:column headerText="Descrição">
+						var="item" style="margin-top: 10px">
+						<p:column headerText="Serviços realizados">
 							<h:outputText value="#{item.descricao}" />
 						</p:column>
 						<p:column headerText="Qtde" width="70"

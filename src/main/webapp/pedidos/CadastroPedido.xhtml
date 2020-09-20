@@ -1,0 +1,104 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Pedido</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{pedidoCadastroBean.inicializar()}" />
+			<f:viewParam name="orcamento" value="#{pedidoCadastroBean.orcamento}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Pedido</h1>
+		<h:form id="frm">
+			<p:growl id="msg" />
+			<div class="ui-fluid">
+				<p:panel header="Resumo do pedido">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-10"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
+						<p:outputLabel value="#{pedidoCadastroBean.orcamento.idFormatted}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Data" />
+						<p:outputLabel
+							value="#{pedidoCadastroBean.orcamento.dataOrcamentoFormatted}" />
+
+						<p:outputLabel value="Total" />
+						<p:outputLabel
+							value="#{pedidoCadastroBean.orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="Cliente" />
+						<p:outputLabel
+							value="#{pedidoCadastroBean.orcamento.cliente.nomeFantasia}" />
+					</p:panelGrid>
+					<p:dataTable value="#{pedidoCadastroBean.itens}" var="item"
+						style="margin-top: 10px">
+						<p:column headerText="Serviços realizados">
+							<h:outputText value="#{item.descricao}" />
+						</p:column>
+						<p:column headerText="Qtde" width="70"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valorTotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel value="Pedido clientde" for="pedido" />
+					<p:inputText id="pedido" value="#{pedidoCadastroBean.numeroPedido}" />
+					<p:outputLabel value="Data do pedido" for="datapedido" />
+					<p:datePicker value="#{pedidoCadastroBean.dataPedido}"
+						id="datapedido" required="true"
+						requiredMessage="Data do pedido é obrigatória" showIcon="true"
+						pattern="dd/MM/yyyy" locale="pt" />
+
+					<p:outputLabel value="Data da entrega" for="dataentrega" />
+					<p:datePicker value="#{pedidoCadastroBean.dataEntrega}"
+						id="dataentrega" required="true"
+						requiredMessage="Data da entrega é obrigatória" showIcon="true"
+						pattern="dd/MM/yyyy" locale="pt" />
+
+				</p:panelGrid>
+
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Confirmar número pedido"
+							icon="ui-icon-check" update="@form"
+							action="#{pedidoCadastroBean.salvarPedido}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:button value="Voltar" icon="ui-icon-arrowreturn-1-w"
+							outcome="/orcamentos/CadastroOrcamento">
+							<f:param name="orcamento"
+								value="#{pedidoCadastroBean.orcamento.id}" />
+						</p:button>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

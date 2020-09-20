@@ -91,9 +91,13 @@
 						<h:outputText value="#{orcamento.numeroNfse}" />
 					</p:column>
 
-					<p:column width="4%" exportable="false">
+					<p:column width="70" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/orcamentos/CadastroOrcamento">
+							outcome="/orcamentos/CadastroOrcamento" title="Editar orçamento">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+						<p:button icon="ui-icon-cart" style="width: 30px" title="Dados do pedido"
+							outcome="/pedidos/CadastroPedido">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 					</p:column>

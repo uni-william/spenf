@@ -23,75 +23,7 @@
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-8"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Cliente" />
-					<p:selectOneMenu id="cliente"
-						value="#{pedidoEmAbertoPesquisaBean.filter.cliente}">
-						<f:selectItem itemLabel="Selecione..." />
-						<f:selectItems value="#{pedidoEmAbertoPesquisaBean.clientes}"
-							var="cliente" itemValue="#{cliente}"
-							itemLabel="#{cliente.nomeFantasia}" />
-					</p:selectOneMenu>
-				</p:panelGrid>
-
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-3"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
-					<p:outputLabel value="Previsão início" />
-					<p:datePicker value="#{pedidoEmAbertoPesquisaBean.filter.dataPrevisaoPagamentoIni}"
-						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-					<p:outputLabel value="Previsão fim" />
-					<p:datePicker value="#{pedidoEmAbertoPesquisaBean.filter.dataPrevisaoPagamentoFim}"
-						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-				</p:panelGrid>
-
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2"
-					styleClass="panelgrid-noborder">
-					<p:outputLabel value="Pedido" />
-					<p:inputText value="#{pedidoEmAbertoPesquisaBean.filter.pedido}" />
-				</p:panelGrid>
-
-				<p:dataTable value="#{pedidoEmAbertoPesquisaBean.orcamentos}"
-					var="orcamento" style="margin-top: 20px" reflow="true" rows="10" paginatorAlwaysVisible="false"
-					emptyMessage="Sem registro de dados" id="table" paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rowsPerPageTemplate="5,10,20"
-					paginatorPosition="bottom">
-					<p:column headerText="Pedido" width="8%">
-						<h:outputText value="#{orcamento.pedidoCliente}" />
-					</p:column>
-					<p:column headerText="Cliente">
-						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
-					</p:column>
-					
-					<p:column headerText="Data pedido" width="8%">
-						<h:outputText value="#{orcamento.dataOrcamento}"
-							converter="localDateConverter">
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Previsão pagto" width="8%">
-						<h:outputText value="#{orcamento.prazoPagamento}"
-							converter="localDateConverter">
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Total" width="10%" styleClass="colunaAlinhadaEsquerda">
-						<h:outputText value="#{orcamento.valorOrcamento}">
-							<f:convertNumber type="currency" />
-						</h:outputText>
-					</p:column>
-
-					<p:column width="4%" exportable="false">
-						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/orcamentos/CadastroOrcamento">
-							<f:param name="orcamento" value="#{orcamento.id}" />
-						</p:button>
-					</p:column>
-				</p:dataTable>
+				
 			</div>
 		</h:form>
 

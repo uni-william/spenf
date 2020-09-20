@@ -18,11 +18,13 @@
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" icon="ui-icon-plus" />
+						<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento"
+							icon="ui-icon-plus" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
-							action="#{orcamentoPesquisaBean.pesquisar}" update="@form" icon="ui-icon-search" />
+							action="#{orcamentoPesquisaBean.pesquisar}" update="@form"
+							icon="ui-icon-search" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />
@@ -59,10 +61,7 @@
 					rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false"
 					paginatorPosition="bottom">
 					<p:column headerText="Número" width="8%">
-						<h:outputText value="#{orcamento.id}" />
-					</p:column>
-					<p:column headerText="Pedido" width="8%">
-						<h:outputText value="#{orcamento.pedidoCliente}" />
+						<h:outputText value="#{orcamento.idFormatted}" />
 					</p:column>
 					<p:column headerText="Cliente">
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
@@ -76,15 +75,20 @@
 						<h:outputText value="Cancelado" style="color:red;"
 							rendered="#{orcamento.cancelado}" />
 					</p:column>
-					<p:column headerText="Total" width="12%" styleClass="colunaAlinhadaEsquerda">
+					<p:column headerText="Total" width="12%"
+						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
 					</p:column>
 
-					<p:column width="4%" exportable="false">
+					<p:column width="70" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/orcamentos/CadastroOrcamento">
+							outcome="/orcamentos/CadastroOrcamento" title="Editar orçamento">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+						<p:button icon="ui-icon-cart" style="width: 30px"
+							title="Informe pedido do cliente ao orçamento" outcome="/pedidos/CadastroPedido">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 					</p:column>

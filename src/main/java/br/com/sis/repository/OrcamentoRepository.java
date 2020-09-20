@@ -13,6 +13,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.com.sis.entity.Orcamento;
 import br.com.sis.repository.filter.OrcamentoFilter;
 import br.com.sis.util.jpa.Transactional;
@@ -72,10 +74,10 @@ public class OrcamentoRepository implements Serializable {
 			predicates.add(builder.lessThanOrEqualTo(root.get("dataOrcamento"), filter.getDataCricaoFim()));
 		
 		if (filter.getDataPrevisaoPagamentoIni() != null)
-			predicates.add(builder.greaterThanOrEqualTo(root.get("prazoPagamento"), filter.getDataPrevisaoPagamentoIni()));
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoIni()));
 		
 		if (filter.getDataPrevisaoPagamentoFim() != null)
-			predicates.add(builder.lessThanOrEqualTo(root.get("prazoPagamento"), filter.getDataPrevisaoPagamentoFim()));		
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoFim()));		
 		
 		if (filter.isSomenteComPedido())
 			predicates.add(builder.isNotNull(root.get("pedidoCliente")));
@@ -83,7 +85,10 @@ public class OrcamentoRepository implements Serializable {
 			predicates.add(builder.isNull(root.get("pedidoCliente")));
 		
 		if (filter.isEmAbertos())
-			predicates.add(builder.isNull(root.get("diaPagamento")));
+			predicates.add(builder.isNull(root.get("dataEfetivaPagamento")));
+		
+		if (!StringUtils.isEmpty(filter.getPedido()))
+			predicates.add(builder.equal(root.get("pedidoCliente"), filter.getPedido()));
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

@@ -31,7 +31,12 @@
 						disabled="#{orcamentoCadastroBean.disableCancelar}" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-
+					<p:button value="Pedido cliente" outcome="/pedidos/CadastroPedido"
+						icon="ui-icon-cart"
+						disabled="#{orcamentoCadastroBean.disablePedidoCliente}">
+						<f:param name="orcamento"
+							value="#{orcamentoCadastroBean.orcamento.id}" />
+					</p:button>
 					<p:separator />
 					<p:commandButton ajax="false" value="Imprimir" icon="ui-icon-print"
 						action="#{orcamentoCadastroBean.emitirOrcamento}" update="msg"
@@ -50,22 +55,32 @@
 
 			<p:growl id="msg" />
 			<div class="ui-fluid">
-				<p:panelGrid columns="5" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-4, ui-grid-col-1, ui-grid-col-2"
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.idFormatted}"
 						styleClass="textoNegrito" />
+
+					<p:outputLabel value="Status" styleClass="textoNegrito"
+						rendered="#{orcamentoCadastroBean.orcamento.cancelado == true}" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.canceladoDescription}"
+						rendered="#{orcamentoCadastroBean.orcamento.cancelado == true}"
 						style="color: red; font-weight: bold;" />
+
 					<p:outputLabel value="Valor Total" styleClass="textoNegrito" />
 					<p:outputLabel
 						value="#{orcamentoCadastroBean.orcamento.valorOrcamento}"
 						styleClass="textoNegrito">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
+
+					<p:outputLabel value="Pedido cliente" styleClass="textoNegrito" />
+					<p:outputLabel
+						value="#{orcamentoCadastroBean.orcamento.pedidoCliente}"
+						styleClass="textoNegrito" />
 				</p:panelGrid>
 				<p:separator />
 				<p:panelGrid columns="2" layout="grid"
