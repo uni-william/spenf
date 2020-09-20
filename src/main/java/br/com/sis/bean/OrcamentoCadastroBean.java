@@ -30,7 +30,6 @@ import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.OrcamentoRepository;
 import br.com.sis.repository.ServicoRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
-import br.com.sis.service.EmailService;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -57,10 +56,6 @@ public class OrcamentoCadastroBean implements Serializable {
 
 	@Inject
 	private ServicoRepository servicoRepository;
-
-	@Inject
-	private EmailService emailService;
-
 	@Getter
 	private ItemOrcamentoConverter itemOrcamentoConverter;
 
@@ -166,18 +161,6 @@ public class OrcamentoCadastroBean implements Serializable {
 		return total;
 	}
 
-	public void sendEmail() {
-		orcamento = orcamentoService.salvar(orcamento);
-		if (!orcamento.getEmailsOrcamento().isEmpty()) {
-			Empresa mantenedora = empresaRepository.findById(this.orcamento.getMantenedora().getId());
-			if (emailService.sendHtmlEmail(mantenedora, orcamento))
-				FacesUtil.addInfoMessage("E-mail enviado com sucesso");
-			else
-				FacesUtil.addErroMessage("Erro ao enviar e-mail");
-		} else {
-			FacesUtil.addErroMessage("Este orçamento não possui E-mails para envio. Verifique!");
-		}
-	}
 
 	public void cancelarOrcamento() {
 		Orcamento orcamentoSalvo = orcamentoRepository.findById(orcamento.getId());

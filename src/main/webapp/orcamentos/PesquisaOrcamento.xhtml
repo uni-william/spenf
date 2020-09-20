@@ -50,14 +50,6 @@
 					<p:datePicker value="#{orcamentoPesquisaBean.filter.dataCricaoFim}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
-
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2"
-					styleClass="panelgrid-noborder">
-					<p:outputLabel value="Pedido" />
-					<p:inputText value="#{orcamentoPesquisaBean.filter.pedido}" />
-				</p:panelGrid>
-
 				<p:dataTable value="#{orcamentoPesquisaBean.orcamentos}"
 					var="orcamento" style="margin-top: 5px" reflow="true"
 					emptyMessage="Sem registro de dados" id="table" rows="10"

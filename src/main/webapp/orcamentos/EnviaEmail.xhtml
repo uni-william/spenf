@@ -36,9 +36,88 @@
 						<p:outputLabel value="Cliente" />
 						<p:outputLabel
 							value="#{envioEmailBean.orcamento.cliente.nomeFantasia}" />
-
 					</p:panelGrid>
+					<p:dataTable value="#{envioEmailBean.orcamento.itensOrcamento}"
+						var="item">
+						<f:facet name="header">Serviços</f:facet>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{item.descricao}" />
+						</p:column>
+						<p:column headerText="Qtde" width="70"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valorTotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
 				</p:panel>
+				<p:separator />
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-1"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Contatos" />
+					<p:selectOneMenu id="cbEmail" value="#{envioEmailBean.email}"
+						editable="true">
+						<f:selectItems
+							value="#{envioEmailBean.emailsContatosCLienteOrcamento}"
+							var="email" itemValue="#{email}" itemLabel="#{email}" />
+					</p:selectOneMenu>
+					<p:commandButton icon="ui-icon-plus" title="Adicionar e-mail"
+						style="width: 30px" action="#{envioEmailBean.adicionarEmail}"
+						process="@this cbEmail" update="@form">
+					</p:commandButton>
+				</p:panelGrid>
+				<p:separator />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-5"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="" />
+					<p:outputLabel value="E-mails a serem enviados" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-5"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="" />
+					<p:dataTable value="#{envioEmailBean.emails}" var="email"
+						emptyMessage="Adicione os e-mails de envio" reflow="true"
+						id="tableEmails">
+						<p:column headerText="E-mails">
+							<h:outputText value="#{email}" />
+						</p:column>
+						<p:column width="30">
+							<p:commandButton icon="ui-icon-trash" title="Remover item"
+								action="#{envioEmailBean.removerItem(email)}" process="@this"
+								update="@form" style="width: 30px">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+
+
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Enviar" icon="ui-icon-mail-closed"
+							disabled="#{envioEmailBean.emails.size() == 0}"
+							action="#{envioEmailBean.sendEmail}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:button value="Voltar" icon="ui-icon-arrowreturn-1-w"
+							outcome="/orcamentos/CadastroOrcamento">
+							<f:param name="orcamento" value="#{envioEmailBean.orcamento.id}" />
+						</p:button>
+					</p:toolbarGroup>
+				</p:toolbar>
 
 			</div>
 		</h:form>

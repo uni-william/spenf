@@ -24,12 +24,14 @@
 					<p:commandButton value="Salvar" icon="ui-icon-check"
 						action="#{orcamentoCadastroBean.salvar}" update="@form"
 						disabled="#{orcamentoCadastroBean.disableSalvar}" />
-				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
+					<p:separator />
 					<p:commandButton value="Cancelar" icon="ui-icon-cancel"
 						oncomplete="PF('confirmacao').show(); return false;"
 						process="@this" update="conf"
 						disabled="#{orcamentoCadastroBean.disableCancelar}" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+
 					<p:separator />
 					<p:commandButton ajax="false" value="Imprimir" icon="ui-icon-print"
 						action="#{orcamentoCadastroBean.emitirOrcamento}" update="msg"
@@ -37,7 +39,8 @@
 					<p:button value="Enviar E-mail" icon="ui-icon-mail-closed"
 						disabled="#{orcamentoCadastroBean.disableEnviarEmail}"
 						outcome="/orcamentos/EnviaEmail">
-						<f:param name="orcamento" value="#{orcamentoCadastroBean.orcamento.id}" />
+						<f:param name="orcamento"
+							value="#{orcamentoCadastroBean.orcamento.id}" />
 					</p:button>
 					<p:separator />
 					<p:button value="Pesquisa" outcome="/orcamentos/PesquisaOrcamento"
@@ -86,8 +89,8 @@
 							value="#{orcamentoCadastroBean.orcamento.dataOrcamento}"
 							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					</p:panelGrid>
-					<p:panelGrid columns="4" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-6"
 						styleClass="panelgrid-noborder">
 						<p:outputLabel value="Solicitante" />
 						<p:inputText

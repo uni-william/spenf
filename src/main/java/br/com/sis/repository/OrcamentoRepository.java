@@ -79,6 +79,8 @@ public class OrcamentoRepository implements Serializable {
 		
 		if (filter.isSomenteComPedido())
 			predicates.add(builder.isNotNull(root.get("pedidoCliente")));
+		else
+			predicates.add(builder.isNull(root.get("pedidoCliente")));
 		
 		if (filter.isEmAbertos())
 			predicates.add(builder.isNull(root.get("diaPagamento")));
