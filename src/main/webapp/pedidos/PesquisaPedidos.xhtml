@@ -25,7 +25,7 @@
 				</p:toolbar>
 				<p:growl id="msg" />
 				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-8"
+					columnClasses="ui-grid-col-2, ui-grid-col-6"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Cliente" />
 					<p:selectOneMenu id="cliente"
@@ -37,8 +37,8 @@
 					</p:selectOneMenu>
 				</p:panelGrid>
 
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-3"
+				<p:panelGrid columns="4" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Data início" />
 					<p:datePicker value="#{pedidoPesquisaBean.filter.dataPedidoIni}"
@@ -48,11 +48,21 @@
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
 
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2"
+				<p:panelGrid columns="4" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2"
 					styleClass="panelgrid-noborder">
 					<p:outputLabel value="Pedido" />
 					<p:inputText value="#{pedidoPesquisaBean.filter.pedido}" />
+					<p:outputLabel value="Nota" for="nota" />
+					<p:inputText value="#{pedidoPesquisaBean.filter.numeroNota}"
+						id="nota" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Somente não pagos" />
+					<p:selectBooleanCheckbox
+						value="#{pedidoPesquisaBean.filter.emAbertos}" />
 				</p:panelGrid>
 
 				<p:dataTable value="#{pedidoPesquisaBean.orcamentos}"

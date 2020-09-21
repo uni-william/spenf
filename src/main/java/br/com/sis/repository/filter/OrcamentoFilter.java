@@ -24,5 +24,6 @@ public class OrcamentoFilter {
 	private String pedido;
 	private boolean somenteComPedido = false;
 	private boolean emAbertos = false;
+	private Long numeroNota;
 
 }
