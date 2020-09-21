@@ -59,51 +59,50 @@
 							</h:outputText>
 						</p:column>
 					</p:dataTable>
+
+					<p:separator />
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-1"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Contatos" />
+						<p:selectOneMenu id="cbEmail" value="#{envioEmailBean.email}"
+							editable="true">
+							<f:selectItems
+								value="#{envioEmailBean.emailsContatosCLienteOrcamento}"
+								var="email" itemValue="#{email}" itemLabel="#{email}" />
+						</p:selectOneMenu>
+						<p:commandButton icon="ui-icon-plus" title="Adicionar e-mail"
+							style="width: 30px" action="#{envioEmailBean.adicionarEmail}"
+							process="@this cbEmail" update="@form">
+						</p:commandButton>
+					</p:panelGrid>
+					<p:separator />
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-5"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="" />
+						<p:outputLabel value="E-mails a serem enviados" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-5"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="" />
+						<p:dataTable value="#{envioEmailBean.emails}" var="email"
+							emptyMessage="Adicione os e-mails de envio" reflow="true"
+							id="tableEmails">
+							<p:column headerText="E-mails">
+								<h:outputText value="#{email}" />
+							</p:column>
+							<p:column width="30">
+								<p:commandButton icon="ui-icon-trash" title="Remover item"
+									action="#{envioEmailBean.removerItem(email)}" process="@this"
+									update="@form" style="width: 30px">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
 				</p:panel>
-				<p:separator />
-				<p:panelGrid columns="3" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-1"
-					styleClass="panelgrid-noborder">
-					<p:outputLabel value="Contatos" />
-					<p:selectOneMenu id="cbEmail" value="#{envioEmailBean.email}"
-						editable="true">
-						<f:selectItems
-							value="#{envioEmailBean.emailsContatosCLienteOrcamento}"
-							var="email" itemValue="#{email}" itemLabel="#{email}" />
-					</p:selectOneMenu>
-					<p:commandButton icon="ui-icon-plus" title="Adicionar e-mail"
-						style="width: 30px" action="#{envioEmailBean.adicionarEmail}"
-						process="@this cbEmail" update="@form">
-					</p:commandButton>
-				</p:panelGrid>
-				<p:separator />
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-5"
-					styleClass="panelgrid-noborder">
-					<p:outputLabel value="" />
-					<p:outputLabel value="E-mails a serem enviados" />
-				</p:panelGrid>
-
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-5"
-					styleClass="panelgrid-noborder">
-					<p:outputLabel value="" />
-					<p:dataTable value="#{envioEmailBean.emails}" var="email"
-						emptyMessage="Adicione os e-mails de envio" reflow="true"
-						id="tableEmails">
-						<p:column headerText="E-mails">
-							<h:outputText value="#{email}" />
-						</p:column>
-						<p:column width="30">
-							<p:commandButton icon="ui-icon-trash" title="Remover item"
-								action="#{envioEmailBean.removerItem(email)}" process="@this"
-								update="@form" style="width: 30px">
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-				</p:panelGrid>
-
-
 				<p:toolbar>
 					<p:toolbarGroup>
 						<p:commandButton value="Enviar" icon="ui-icon-mail-closed"
@@ -117,7 +116,6 @@
 						</p:button>
 					</p:toolbarGroup>
 				</p:toolbar>
-
 			</div>
 		</h:form>
 

@@ -178,11 +178,11 @@ public class OrcamentoCadastroBean implements Serializable {
 
 
 	public boolean isDisableSalvar() {
-		return this.orcamento.isCancelado();
+		return this.orcamento.isCancelado() || this.orcamento.getDataEfetivaPagamento() != null;
 	}
 
 	public boolean isDisableCancelar() {
-		return this.orcamento.isCancelado() || !this.isEditando();
+		return this.orcamento.isCancelado() || !this.isEditando() || this.orcamento.getDataEfetivaPagamento() != null;
 	}
 
 	public boolean isDisableEmitir() {

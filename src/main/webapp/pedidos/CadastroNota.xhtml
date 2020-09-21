@@ -1,0 +1,120 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Nota fiscal e pagamento do pedido</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{notaCadastroBean.inicializar()}" />
+			<f:viewParam name="orcamento" value="#{notaCadastroBean.orcamento}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Nota fiscal e pagamento do pedido</h1>
+		<h:form id="frm">
+			<p:growl id="msg" />
+			<div class="ui-fluid">
+				<p:panel header="Resumo do pedido">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-10"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
+						<p:outputLabel value="#{notaCadastroBean.orcamento.idFormatted}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Pedido cliente" styleClass="textoNegrito" />
+						<p:outputLabel value="#{notaCadastroBean.orcamento.pedidoCliente}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Data" />
+						<p:outputLabel
+							value="#{notaCadastroBean.orcamento.dataOrcamentoFormatted}" />
+
+						<p:outputLabel value="Total" />
+						<p:outputLabel
+							value="#{notaCadastroBean.orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="Cliente" />
+						<p:outputLabel
+							value="#{notaCadastroBean.orcamento.cliente.nomeFantasia}" />
+						<p:outputLabel value="Solicitante(s)" />
+						<p:outputLabel value="#{notaCadastroBean.orcamento.solicitante}" />
+						<p:outputLabel value="Responsável" />
+						<p:outputLabel value="#{notaCadastroBean.orcamento.responsavel}" />
+					</p:panelGrid>
+					<p:dataTable value="#{notaCadastroBean.itens}" var="item"
+						style="margin-top: 10px">
+						<p:column headerText="Serviços realizados">
+							<h:outputText value="#{item.descricao}" />
+						</p:column>
+						<p:column headerText="Qtde" width="70"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valorTotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						styleClass="panelgrid-noborder" style="margin-top: 20px">
+
+						<p:outputLabel value="Nota fiscal" for="nota" />
+						<p:inputText id="nota" value="#{notaCadastroBean.numeroNota}" />
+
+						<p:outputLabel value="Série" for="serie" />
+						<p:inputText id="serie" value="#{notaCadastroBean.serieNota}" />
+
+						<p:outputLabel value="Data emissão" for="dataemissao" />
+						<p:datePicker value="#{notaCadastroBean.dataEmissaoNota}"
+							id="dataemissao" required="true"
+							requiredMessage="Data da emissão da nota é obrigatória"
+							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+
+						<p:outputLabel value="Previsão pagamento" for="datapagamento" />
+						<p:datePicker value="#{notaCadastroBean.dataPrevisaoPagamento}"
+							id="datapagamento" required="true"
+							requiredMessage="Data da previsão de pagamento é obrigatória"
+							showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+
+					</p:panelGrid>
+				</p:panel>
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar dados"
+						icon="ui-icon-check" update="@form"
+						action="#{notaCadastroBean.salvarPedido}"
+						disabled="#{notaCadastroBean.orcamento.dataEfetivaPagamento != null}" />
+					<p:button value="Confirmar pagamento " icon="ui-icon-calculator"
+						outcome="/pedidos/CadastroPagamento" disabled="#{notaCadastroBean.orcamento.dataEmissaoNota == null}">
+						<f:param name="orcamento" value="#{notaCadastroBean.orcamento.id}" />
+					</p:button>						
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Voltar para o pedido" icon="ui-icon-arrowreturn-1-w"
+						outcome="/pedidos/CadastroPedido">
+						<f:param name="orcamento" value="#{notaCadastroBean.orcamento.id}" />
+					</p:button>
+					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
+						outcome="/pedidos/PesquisaPedidos">
+					</p:button>					
+				</p:toolbarGroup>
+			</p:toolbar>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

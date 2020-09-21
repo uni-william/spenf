@@ -73,11 +73,11 @@ public class OrcamentoRepository implements Serializable {
 		if (filter.getDataCricaoFim() != null)
 			predicates.add(builder.lessThanOrEqualTo(root.get("dataOrcamento"), filter.getDataCricaoFim()));
 		
-		if (filter.getDataPrevisaoPagamentoIni() != null)
-			predicates.add(builder.greaterThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoIni()));
+		if (filter.getDataPedidoIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataRecebimentoPedido"), filter.getDataPedidoIni()));
 		
-		if (filter.getDataPrevisaoPagamentoFim() != null)
-			predicates.add(builder.lessThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoFim()));		
+		if (filter.getDataPedidoFim() != null)
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataRecebimentoPedido"), filter.getDataPedidoFim()));		
 		
 		if (filter.isSomenteComPedido())
 			predicates.add(builder.isNotNull(root.get("pedidoCliente")));

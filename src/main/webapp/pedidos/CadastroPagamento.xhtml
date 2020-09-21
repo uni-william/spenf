@@ -1,0 +1,144 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Pagamento de pedido</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{pagamentoCadastroBean.inicializar()}" />
+			<f:viewParam name="orcamento"
+				value="#{pagamentoCadastroBean.orcamento}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Dados de pagamento de pedido</h1>
+		<h:form id="frm">
+			<p:growl id="msg" />
+			<div class="ui-fluid">
+				<p:panel header="Resumo do pedido">
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-10"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Orçamento" styleClass="textoNegrito" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.idFormatted}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Pedido cliente" styleClass="textoNegrito" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.pedidoCliente}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Data" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.dataOrcamentoFormatted}" />
+
+						<p:outputLabel value="Total" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="Cliente" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.cliente.nomeFantasia}" />
+						<p:outputLabel value="Solicitante(s)" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.solicitante}" />
+						<p:outputLabel value="Responsável" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.responsavel}" />
+
+					</p:panelGrid>
+					<p:dataTable value="#{pagamentoCadastroBean.itens}" var="item"
+						style="margin-top: 10px">
+						<p:column headerText="Serviços realizados">
+							<h:outputText value="#{item.descricao}" />
+						</p:column>
+						<p:column headerText="Qtde" width="70"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Vlr Unitário" width="100"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{item.valorTotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						styleClass="panelgrid-noborder" style="margin-top: 20px">
+
+						<p:outputLabel value="Nota fiscal" styleClass="textoNegrito" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.numeroNfse}"
+							styleClass="textoNegrito" />
+						<p:outputLabel value="Data emissão" styleClass="textoNegrito" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.dataEmissaoNota}"
+							styleClass="textoNegrito" converter="localDateConverter">
+						</p:outputLabel>
+						<p:outputLabel value="Previsão pagamento"
+							styleClass="textoNegrito" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.dataPrevisaoPagamento}"
+							styleClass="textoNegrito" converter="localDateConverter">
+						</p:outputLabel>
+					</p:panelGrid>
+					<p:separator />
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Data do pagamento" for="datapagamento" />
+						<p:datePicker value="#{pagamentoCadastroBean.dataPagamento}"
+							id="datapagamento" required="true"
+							requiredMessage="Data do pagamento é obrigatória" showIcon="true"
+							pattern="dd/MM/yyyy" locale="pt" />
+
+					</p:panelGrid>
+				</p:panel>
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Confirmar pagamento" icon="ui-icon-check"
+						update="@form" action="#{pagamentoCadastroBean.salvarPedido}" />
+					<p:separator />
+					<p:commandButton value="Limpar pagamento" icon="ui-icon-closethick"
+						oncomplete="PF('confirmacao').show(); return false;"
+						process="@this" update="conf"
+						disabled="#{!pagamentoCadastroBean.permitirLimparPagamento}" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Voltar para nota fiscal"
+						icon="ui-icon-arrowreturn-1-w" outcome="/pedidos/CadastroNota">
+						<f:param name="orcamento"
+							value="#{pagamentoCadastroBean.orcamento.id}" />
+					</p:button>
+					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
+						outcome="/pedidos/PesquisaPedidos">
+					</p:button>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:confirmDialog header="Limpeza da pagamento"
+				message="Confirma estorno de pagamento deste pedido?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{pagamentoCadastroBean.limparPagamento}" />
+			</p:confirmDialog>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

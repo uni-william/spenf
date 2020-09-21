@@ -81,6 +81,9 @@ public class Seguranca {
 		return externalContext.isUserInRole(Funcionalidade.MANTENEDORA_DEL.toString());
 	}	
 	
+	public boolean isPermiteLimparPagamento() {
+		return externalContext.isUserInRole(Funcionalidade.PAGAMENTO_CLEAR.toString());
+	}
 	
 
 }

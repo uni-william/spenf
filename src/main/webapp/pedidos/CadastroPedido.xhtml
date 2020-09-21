@@ -36,6 +36,10 @@
 						<p:outputLabel value="Cliente" />
 						<p:outputLabel
 							value="#{pedidoCadastroBean.orcamento.cliente.nomeFantasia}" />
+						<p:outputLabel value="Solicitante(s)" />
+						<p:outputLabel value="#{pedidoCadastroBean.orcamento.solicitante}" />
+						<p:outputLabel value="Responsável" />
+						<p:outputLabel value="#{pedidoCadastroBean.orcamento.responsavel}" />
 					</p:panelGrid>
 					<p:dataTable value="#{pedidoCadastroBean.itens}" var="item"
 						style="margin-top: 10px">
@@ -59,44 +63,52 @@
 							</h:outputText>
 						</p:column>
 					</p:dataTable>
+
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						styleClass="panelgrid-noborder" style="margin-top: 20px">
+
+						<p:outputLabel value="Pedido clientde" for="pedido" />
+						<p:inputText id="pedido"
+							value="#{pedidoCadastroBean.numeroPedido}" />
+						<p:outputLabel value="Data do pedido" for="datapedido" />
+						<p:datePicker value="#{pedidoCadastroBean.dataPedido}"
+							id="datapedido" required="true"
+							requiredMessage="Data do pedido é obrigatória" showIcon="true"
+							pattern="dd/MM/yyyy" locale="pt" />
+
+						<p:outputLabel value="Data da entrega" for="dataentrega" />
+						<p:datePicker value="#{pedidoCadastroBean.dataEntrega}"
+							id="dataentrega" required="true"
+							requiredMessage="Data da entrega é obrigatória" showIcon="true"
+							pattern="dd/MM/yyyy" locale="pt" />
+
+					</p:panelGrid>
 				</p:panel>
-
-				<p:panelGrid columns="2" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-3"
-					styleClass="panelgrid-noborder">
-
-					<p:outputLabel value="Pedido clientde" for="pedido" />
-					<p:inputText id="pedido" value="#{pedidoCadastroBean.numeroPedido}" />
-					<p:outputLabel value="Data do pedido" for="datapedido" />
-					<p:datePicker value="#{pedidoCadastroBean.dataPedido}"
-						id="datapedido" required="true"
-						requiredMessage="Data do pedido é obrigatória" showIcon="true"
-						pattern="dd/MM/yyyy" locale="pt" />
-
-					<p:outputLabel value="Data da entrega" for="dataentrega" />
-					<p:datePicker value="#{pedidoCadastroBean.dataEntrega}"
-						id="dataentrega" required="true"
-						requiredMessage="Data da entrega é obrigatória" showIcon="true"
-						pattern="dd/MM/yyyy" locale="pt" />
-
-				</p:panelGrid>
-
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Confirmar número pedido"
-							icon="ui-icon-check" update="@form"
-							action="#{pedidoCadastroBean.salvarPedido}" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:button value="Voltar" icon="ui-icon-arrowreturn-1-w"
-							outcome="/orcamentos/CadastroOrcamento">
-							<f:param name="orcamento"
-								value="#{pedidoCadastroBean.orcamento.id}" />
-						</p:button>
-					</p:toolbarGroup>
-				</p:toolbar>
-
 			</div>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar dados do pedido" icon="ui-icon-check"
+						update="@form" action="#{pedidoCadastroBean.salvarPedido}"
+						disabled="#{pedidoCadastroBean.orcamento.dataEfetivaPagamento != null}" />
+					<p:button value="Dados da nota fiscal do pedido" icon="ui-icon-cart"
+						outcome="/pedidos/CadastroNota"
+						disabled="#{pedidoCadastroBean.orcamento.pedidoCliente == null}">
+						<f:param name="orcamento"
+							value="#{pedidoCadastroBean.orcamento.id}" />
+					</p:button>
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Voltar para o orçamento" icon="ui-icon-arrowreturn-1-w"
+						outcome="/orcamentos/CadastroOrcamento">
+						<f:param name="orcamento"
+							value="#{pedidoCadastroBean.orcamento.id}" />
+					</p:button>
+					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
+						outcome="/pedidos/PesquisaPedidos">
+					</p:button>					
+				</p:toolbarGroup>
+			</p:toolbar>
 		</h:form>
 
 	</ui:define>

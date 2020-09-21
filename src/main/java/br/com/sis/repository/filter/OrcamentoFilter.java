@@ -18,8 +18,8 @@ public class OrcamentoFilter {
 	private Empresa cliente;
 	private LocalDate dataCricaoInicio;
 	private LocalDate dataCricaoFim;
-	private LocalDate dataPrevisaoPagamentoIni;
-	private LocalDate dataPrevisaoPagamentoFim;	
+	private LocalDate dataPedidoIni;
+	private LocalDate dataPedidoFim;	
 	
 	private String pedido;
 	private boolean somenteComPedido = false;

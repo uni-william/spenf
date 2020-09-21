@@ -19,7 +19,8 @@
 				<p:toolbar>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Consultar pedidos"
-							action="#{pedidoPesquisaBean.pesquisar}" update="@form" icon="ui-icon-search" />
+							action="#{pedidoPesquisaBean.pesquisar}" update="@form"
+							icon="ui-icon-search" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:growl id="msg" />
@@ -40,10 +41,10 @@
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Data início" />
-					<p:datePicker value="#{pedidoPesquisaBean.filter.dataCricaoInicio}"
+					<p:datePicker value="#{pedidoPesquisaBean.filter.dataPedidoIni}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
-					<p:datePicker value="#{pedidoPesquisaBean.filter.dataCricaoFim}"
+					<p:datePicker value="#{pedidoPesquisaBean.filter.dataPedidoFim}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
 
@@ -55,18 +56,16 @@
 				</p:panelGrid>
 
 				<p:dataTable value="#{pedidoPesquisaBean.orcamentos}"
-					var="orcamento" style="margin-top: 20px" reflow="true" rows="10" paginatorAlwaysVisible="false"
-					emptyMessage="Sem registro de dados" id="table" paginator="true"
+					var="orcamento" style="margin-top: 20px" reflow="true" rows="10"
+					paginatorAlwaysVisible="false" emptyMessage="Sem registro de dados"
+					id="table" paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rowsPerPageTemplate="5,10,20"
-					paginatorPosition="bottom">
+					rowsPerPageTemplate="5,10,20" paginatorPosition="bottom">
 					<p:column headerText="Pedido" width="8%">
-						<h:outputText value="#{orcamento.pedidoCliente}" />
+						<h:outputText value="#{orcamento.pedidoCliente}"
+							title="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
-					<p:column headerText="Cliente">
-						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
-					</p:column>					
 					<p:column headerText="Data pedido" width="8%">
 						<h:outputText value="#{orcamento.dataRecebimentoPedido}"
 							converter="localDateConverter">
@@ -78,26 +77,60 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Total" width="8%" styleClass="colunaAlinhadaEsquerda">
+					<p:column headerText="Total" width="8%"
+						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Entrega realizada" width="8%">
-						<h:outputText value="SIM" rendered="#{orcamento.jaEntregue}" />
+
+					<p:column headerText="Status entrega" width="12%">
+						<h:outputText value="#{orcamento.statusEntrega}" />
 					</p:column>
 
 					<p:column headerText="NFS-e " width="5%">
 						<h:outputText value="#{orcamento.numeroNfse}" />
 					</p:column>
+					<p:column headerText="Data emissão" width="8%">
+						<h:outputText value="#{orcamento.dataEmissaoNota}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Previsão pagamento" width="8%">
+						<h:outputText value="#{orcamento.dataPrevisaoPagamento}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
 
-					<p:column width="70" exportable="false">
+					<p:column headerText="Data pagamento" width="8%">
+						<h:outputText value="#{orcamento.dataEfetivaPagamento}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Status pagamento" width="12%">
+						<h:outputText value="#{orcamento.statusPagamento}" />
+					</p:column>
+
+					<p:column width="130" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
 							outcome="/orcamentos/CadastroOrcamento" title="Editar orçamento">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
-						<p:button icon="ui-icon-cart" style="width: 30px" title="Dados do pedido"
-							outcome="/pedidos/CadastroPedido">
+						<p:button icon="ui-icon-cart" style="width: 30px"
+							title="Dados do pedido" outcome="/pedidos/CadastroPedido">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+
+						<p:button icon="ui-icon-document" style="width: 30px"
+							title="Informar nota fiscal e prazo de pagamento"
+							outcome="/pedidos/CadastroNota">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+						<p:button icon="ui-icon-calculator" style="width: 30px"
+							title="Informar pagamento do pedido"
+							disabled="#{!orcamento.jaEntregue}"
+							outcome="/pedidos/CadastroPagamento">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 					</p:column>

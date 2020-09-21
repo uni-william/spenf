@@ -8,10 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import br.com.sis.entity.ItemOrcamento;
 import br.com.sis.entity.Orcamento;
+import br.com.sis.security.Seguranca;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import lombok.Setter;
 
 @Named
 @ViewScoped
-public class PedidoCadastroBean implements Serializable {
+public class PagamentoCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,29 +31,19 @@ public class PedidoCadastroBean implements Serializable {
 
 	@Getter
 	@Setter
-	@NotEmpty
-	private String numeroPedido;
-
-	@Getter
-	@Setter
-	private LocalDate dataPedido;
-
-	@Getter
-	@Setter
-	private LocalDate dataEntrega;
+	private LocalDate dataPagamento;
 
 	@Getter
 	private List<ItemOrcamento> itens;
+	
+	@Inject
+	private Seguranca seguranca;
 
 	public void inicializar() {
 		if (this.orcamento != null) {
 			itens = this.orcamento.getItensOrcamento();
-			if (this.orcamento.getPedidoCliente() != null)
-				this.numeroPedido = this.orcamento.getPedidoCliente();
-			if (this.orcamento.getDataRecebimentoPedido() != null)
-				this.dataPedido = this.orcamento.getDataRecebimentoPedido();
-			if (this.orcamento.getDataEntregaPedido() != null)
-				this.dataEntrega = this.orcamento.getDataEntregaPedido();
+			if (this.orcamento.getDataEfetivaPagamento() != null)
+				this.dataPagamento = this.orcamento.getDataEfetivaPagamento();
 		} else {
 			FacesUtil.redirecionarPagina("Erro.xhtml");
 		}
@@ -62,11 +51,20 @@ public class PedidoCadastroBean implements Serializable {
 	}
 
 	public void salvarPedido() {
-		this.orcamento.setPedidoCliente(this.numeroPedido);
-		this.orcamento.setDataRecebimentoPedido(this.dataPedido);
-		this.orcamento.setDataEntregaPedido(this.dataEntrega);
+		this.orcamento.setDataEfetivaPagamento(this.dataPagamento);
 		this.orcamento = orcamentoService.salvar(this.orcamento);
-		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+		FacesUtil.addInfoMessage("Nota fiscal salva com sucesso!");
+	}
+	
+	public void limparPagamento() {
+		this.orcamento.setDataEfetivaPagamento(null);
+		this.orcamento = orcamentoService.salvar(this.orcamento);
+		this.dataPagamento = null;
+		FacesUtil.addWarnMessage("Pagamento retirado!");
+	}
+	
+	public boolean isPermitirLimparPagamento() {
+		return this.orcamento.getDataEfetivaPagamento() != null && seguranca.isPermiteLimparPagamento(); 
 	}
 
 }
