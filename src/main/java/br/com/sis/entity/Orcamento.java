@@ -112,22 +112,36 @@ public class Orcamento implements Serializable {
 	@Transient
 	public String getStatusEntrega() {
 		if (this.getDataEmissaoNota() != null)
-			return "Pedido entregue";
+			return "Entregue";
 		else {
 			if (this.getDataEntregaPedido().isAfter(LocalDate.now()))
-				return "Entrega dentro do prazo";
+				return "No prazo";
 			else if (this.getDataEntregaPedido().isBefore(LocalDate.now()))
-				return "Entrega atrasada";
+				return "Atrasada";
 			else
-				return "Entrega prevista para hoje";
+				return "Entregar hoje";
 		}
+	}
+	
+	@Transient
+	public String getEntregaCor() {
+		if (this.getDataEmissaoNota() != null)
+			return "black";
+		else {
+			if (this.getDataEntregaPedido().isAfter(LocalDate.now()))
+				return "green";
+			else if (this.getDataEntregaPedido().isBefore(LocalDate.now()))
+				return "red";
+			else
+				return "blue";
+		}		
 	}
 
 	@Transient
 	public String getStatusPagamento() {
 		if (this.getDataEmissaoNota() != null) {
 			if (this.getDataEfetivaPagamento() != null)
-				return "Pedido pago";
+				return "Pago";
 			else {
 				if (this.getDataPrevisaoPagamento().isBefore(LocalDate.now()))
 					return "Vencido";
@@ -139,6 +153,24 @@ public class Orcamento implements Serializable {
 		} else
 			return null;
 	}
+	
+	@Transient
+	public String getPagamentoCor() {
+		if (this.getDataEmissaoNota() != null) {
+			if (this.getDataEfetivaPagamento() != null)
+				return "black";
+			else {
+				if (this.getDataPrevisaoPagamento().isBefore(LocalDate.now()))
+					return "red";
+				else if (this.getDataPrevisaoPagamento().isAfter(LocalDate.now()))
+					return "green";
+				else
+					return "blue";
+			}
+		} else
+			return "black";		
+	}
+	
 
 	@Transient
 	public String getCanceladoDescription() {
