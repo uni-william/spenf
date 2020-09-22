@@ -32,7 +32,7 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<p:growl />
+			<p:growl id="msg" />
 			<div class="ui-fluid">
 				<p:tabView id="tab" prependId="false">
 					<p:tab title="Dados cadastrais" id="tbdados">
@@ -79,7 +79,7 @@
 									value="#{colaboradorCadastroBean.colaborador.endereco.cep}" />
 								<p:commandButton value="Carregar"
 									action="#{colaboradorCadastroBean.carregarDadosCep()}"
-									process="cep @this" update="painel" />
+									process="cep @this" update="painel :frm:msg" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-8"
