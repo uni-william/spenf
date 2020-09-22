@@ -61,7 +61,6 @@ public class ColaboradorCadastroBean implements Serializable {
 
 	@Getter
 	private boolean podeSalvar;
-	
 
 	@Getter
 	@Setter
@@ -134,12 +133,16 @@ public class ColaboradorCadastroBean implements Serializable {
 				conn.disconnect();
 				Gson gson = new Gson();
 				CepVO dados = gson.fromJson(new String(output.getBytes()), CepVO.class);
-				this.getColaborador().getEndereco().setLogradouro(dados.getLogradouro());
-				this.getColaborador().getEndereco().setComplemento(dados.getComplemento());
-				this.getColaborador().getEndereco().setBairro(dados.getBairro());
-				this.getColaborador().getEndereco().setNomeCidade(dados.getLocalidade());
-				this.getColaborador().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
-				this.getColaborador().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				if (dados.getLogradouro() != null) {
+					this.getColaborador().getEndereco().setLogradouro(dados.getLogradouro());
+					this.getColaborador().getEndereco().setComplemento(dados.getComplemento());
+					this.getColaborador().getEndereco().setBairro(dados.getBairro());
+					this.getColaborador().getEndereco().setNomeCidade(dados.getLocalidade());
+					this.getColaborador().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
+					this.getColaborador().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				} else {
+					FacesUtil.addErroMessage("CEP não encontrado!");
+				}
 
 			} catch (IOException e) {
 				System.out.println(e.getMessage());

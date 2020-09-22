@@ -55,7 +55,7 @@ public class ClienteCadastroBean implements Serializable {
 	@Getter
 	@Setter
 	private String email;
-	
+
 	@Getter
 	@Setter
 	private List<String> emails = new ArrayList<String>();
@@ -77,8 +77,7 @@ public class ClienteCadastroBean implements Serializable {
 				empresa.setTipoEmpresa(TipoEmpresa.CLIENTE);
 				empresa.setCrt(TipoRegime.CLIENTE);
 				empresa.setMantenedora(this.mantenedoras.get(0));
-			}
-			else {
+			} else {
 				this.emails = empresa.getEmailsCliente();
 			}
 			podeSalvar = true;
@@ -126,12 +125,16 @@ public class ClienteCadastroBean implements Serializable {
 				conn.disconnect();
 				Gson gson = new Gson();
 				CepVO dados = gson.fromJson(new String(output.getBytes()), CepVO.class);
-				this.getEmpresa().getEndereco().setLogradouro(dados.getLogradouro());
-				this.getEmpresa().getEndereco().setComplemento(dados.getComplemento());
-				this.getEmpresa().getEndereco().setBairro(dados.getBairro());
-				this.getEmpresa().getEndereco().setNomeCidade(dados.getLocalidade());
-				this.getEmpresa().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
-				this.getEmpresa().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				if (dados.getLogradouro() != null) {
+					this.getEmpresa().getEndereco().setLogradouro(dados.getLogradouro());
+					this.getEmpresa().getEndereco().setComplemento(dados.getComplemento());
+					this.getEmpresa().getEndereco().setBairro(dados.getBairro());
+					this.getEmpresa().getEndereco().setNomeCidade(dados.getLocalidade());
+					this.getEmpresa().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
+					this.getEmpresa().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				} else {
+					FacesUtil.addErroMessage("CEP não encontrado!");
+				}
 
 			} catch (IOException e) {
 				System.out.println(e.getMessage());

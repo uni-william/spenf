@@ -42,16 +42,16 @@ public class MantenedoraCadastroBean implements Serializable {
 	@Getter
 	@Setter
 	private Empresa empresa;
-	
+
 	@Inject
 	private EmpresaRepository empresaRepository;
 
 	@Inject
 	private EmpresaService empresaService;
-	
+
 	@Getter
 	private boolean podeSalvar = true;
-	
+
 	@Inject
 	private Seguranca seguranca;
 
@@ -61,13 +61,13 @@ public class MantenedoraCadastroBean implements Serializable {
 			empresa.getEndereco().setEstado(Estado.AM);
 			empresa.getEndereco().setCodigoIbegeEstado("13");
 			empresa.getEndereco().setCodigoIbegePais("1058");
-			empresa.getEndereco().setPais("Brasil");			
+			empresa.getEndereco().setPais("Brasil");
 			empresa.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 			empresa.setCrt(TipoRegime.SIMPLES_NACIONAL);
 			if (this.isExisteMantenedoraCadastrada())
 				podeSalvar = false;
 			podeSalvar = podeSalvar && seguranca.isMantenedoraInserir();
-		
+
 		} else {
 			podeSalvar = seguranca.isMantenedoraEditar();
 		}
@@ -85,10 +85,11 @@ public class MantenedoraCadastroBean implements Serializable {
 	public Estado[] getEstados() {
 		return Estado.values();
 	}
-	
+
 	public TipoRegime[] getTipoRegimes() {
 		return TipoRegime.values();
 	}
+
 	public void carregarDadosCep() {
 		String cep = Utils.removerCaracter(Utils.removerCaracter(this.getEmpresa().getEndereco().getCep(), "."), "-");
 		String url = URL_VIA_CEP + cep + FORMATO;
@@ -109,12 +110,16 @@ public class MantenedoraCadastroBean implements Serializable {
 				conn.disconnect();
 				Gson gson = new Gson();
 				CepVO dados = gson.fromJson(new String(output.getBytes()), CepVO.class);
-				this.getEmpresa().getEndereco().setLogradouro(dados.getLogradouro());
-				this.getEmpresa().getEndereco().setComplemento(dados.getComplemento());
-				this.getEmpresa().getEndereco().setBairro(dados.getBairro());
-				this.getEmpresa().getEndereco().setNomeCidade(dados.getLocalidade());
-				this.getEmpresa().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
-				this.getEmpresa().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				if (dados.getLogradouro() != null) {
+					this.getEmpresa().getEndereco().setLogradouro(dados.getLogradouro());
+					this.getEmpresa().getEndereco().setComplemento(dados.getComplemento());
+					this.getEmpresa().getEndereco().setBairro(dados.getBairro());
+					this.getEmpresa().getEndereco().setNomeCidade(dados.getLocalidade());
+					this.getEmpresa().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
+					this.getEmpresa().getEndereco().setCodigoIbegeCidade(dados.getIbge());
+				} else {
+					FacesUtil.addErroMessage("CEP não encontrado!");
+				}
 
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
@@ -122,7 +127,7 @@ public class MantenedoraCadastroBean implements Serializable {
 		}
 
 	}
-	
+
 	public boolean isExisteMantenedoraCadastrada() {
 		EmpresaFilter filter = new EmpresaFilter();
 		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
