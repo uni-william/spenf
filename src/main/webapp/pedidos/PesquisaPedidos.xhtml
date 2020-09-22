@@ -64,14 +64,21 @@
 					<p:selectBooleanCheckbox
 						value="#{pedidoPesquisaBean.filter.emAbertos}" />
 				</p:panelGrid>
-
 				<p:dataTable value="#{pedidoPesquisaBean.orcamentos}"
 					var="orcamento" style="margin-top: 20px" reflow="true" rows="10"
-					paginatorAlwaysVisible="false" emptyMessage="Sem registro de dados"
-					id="table" paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowKey="#{orcamento.id}" paginatorAlwaysVisible="true"
+					emptyMessage="Sem registro de dados" id="table" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
 					rowsPerPageTemplate="5,10,20" paginatorPosition="bottom">
+					<f:facet name="{Exporters}">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink rendered="#{pedidoPesquisaBean.orcamentos.size() > 0}" title="Exportar para excel">
+								<p:graphicImage library="images" name="excel.png" width="24" />
+								<p:dataExporter type="xls" target="table" fileName="pedidos" />
+							</h:commandLink>
+						</div>
+					</f:facet>
 					<p:column headerText="Pedido" width="8%">
 						<h:outputText value="#{orcamento.pedidoCliente}"
 							title="#{orcamento.cliente.nomeFantasia}" />

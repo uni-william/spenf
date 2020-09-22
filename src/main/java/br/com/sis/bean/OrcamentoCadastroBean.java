@@ -204,13 +204,13 @@ public class OrcamentoCadastroBean implements Serializable {
 		this.itemOrcamento = new ItemOrcamento();
 	}
 
-	public void emitirOrcamento() {
+	public void emitirOrcamento(int tipoRelatorio) {
 		orcamento = orcamentoService.salvar(orcamento);
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("pId", orcamento.getId());
 		String nomeRel = "Orcamento_" + numeroFormatado(orcamento.getId()) + ".pdf";
 		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/orcamento.jasper", this.response, parametros,
-				nomeRel);
+				nomeRel, tipoRelatorio);
 
 		Session session = manager.unwrap(Session.class);
 		session.doWork(executor);

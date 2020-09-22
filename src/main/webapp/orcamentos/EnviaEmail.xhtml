@@ -16,7 +16,7 @@
 		<h:form id="frm">
 			<h1 id="titulo" class="aw-page-title">Envio de e-mail de
 				orçamento para cliente</h1>
-			<p:growl />
+			<p:growl id="msg" />
 			<div class="ui-fluid">
 				<p:panel header="Resumo do orçamento">
 					<p:panelGrid columns="2" layout="grid"
@@ -103,20 +103,25 @@
 						</p:dataTable>
 					</p:panelGrid>
 				</p:panel>
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Enviar" icon="ui-icon-mail-closed"
-							disabled="#{envioEmailBean.emails.size() == 0}"
-							action="#{envioEmailBean.sendEmail}" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:button value="Voltar" icon="ui-icon-arrowreturn-1-w"
-							outcome="/orcamentos/CadastroOrcamento">
-							<f:param name="orcamento" value="#{envioEmailBean.orcamento.id}" />
-						</p:button>
-					</p:toolbarGroup>
-				</p:toolbar>
 			</div>
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Enviar Orçamento no corpo do e-mail" icon="ui-icon-mail-closed"
+						disabled="#{envioEmailBean.emails.size() == 0}"
+						action="#{envioEmailBean.sendEmail}" />
+					<p:separator />
+					<p:commandButton value="Enviar Orçamento em anexo"
+						icon="ui-icon-mail-closed"
+						disabled="#{envioEmailBean.emails.size() == 0}"
+						action="#{envioEmailBean.sendEmailAttachment}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Voltar" icon="ui-icon-arrowreturn-1-w"
+						outcome="/orcamentos/CadastroOrcamento">
+						<f:param name="orcamento" value="#{envioEmailBean.orcamento.id}" />
+					</p:button>
+				</p:toolbarGroup>
+			</p:toolbar>
 		</h:form>
 
 	</ui:define>

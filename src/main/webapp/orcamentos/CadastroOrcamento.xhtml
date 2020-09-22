@@ -39,8 +39,9 @@
 					</p:button>
 					<p:separator />
 					<p:commandButton ajax="false" value="Imprimir" icon="ui-icon-print"
-						action="#{orcamentoCadastroBean.emitirOrcamento}" update="msg"
+						action="#{orcamentoCadastroBean.emitirOrcamento(0)}" update="msg"
 						disabled="#{orcamentoCadastroBean.disableEmitir}" />
+						
 					<p:button value="Enviar E-mail" icon="ui-icon-mail-closed"
 						disabled="#{orcamentoCadastroBean.disableEnviarEmail}"
 						outcome="/orcamentos/EnviaEmail">

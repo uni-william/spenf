@@ -60,6 +60,7 @@
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
 					rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false"
 					paginatorPosition="bottom">
+
 					<p:column headerText="Número" width="8%">
 						<h:outputText value="#{orcamento.idFormatted}" />
 					</p:column>
@@ -88,7 +89,8 @@
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 						<p:button icon="ui-icon-cart" style="width: 30px"
-							title="Informe pedido do cliente ao orçamento" outcome="/pedidos/CadastroPedido">
+							title="Informe pedido do cliente ao orçamento"
+							outcome="/pedidos/CadastroPedido">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
 					</p:column>
