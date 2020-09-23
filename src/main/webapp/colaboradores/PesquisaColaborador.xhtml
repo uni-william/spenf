@@ -47,11 +47,12 @@
 					var="colaborador" style="margin-top: 20px" reflow="true"
 					emptyMessage="Nenhum colaborador cadastrado" id="table"
 					paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rowsPerPageTemplate="5,10,20" rows="10"
+					rows="10"
 					paginatorAlwaysVisible="false"
-					rowIndexVar="row">
+					rowIndexVar="row"
+					paginatorPosition="bottom">
 					<p:column headerText="Colaborador">
 						<h:outputText value="#{colaborador.nome}" />
 					</p:column>

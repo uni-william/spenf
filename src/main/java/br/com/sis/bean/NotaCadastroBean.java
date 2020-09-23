@@ -58,10 +58,16 @@ public class NotaCadastroBean implements Serializable {
 				this.numeroNota = this.orcamento.getNumeroNfse();
 			if (this.orcamento.getSerieNfse() != null)
 				this.serieNota = this.orcamento.getSerieNfse();
+			
 			if (this.orcamento.getDataEmissaoNota() != null)
 				this.dataEmissaoNota = this.orcamento.getDataEmissaoNota();
+			else
+				this.dataEmissaoNota = LocalDate.now();
+			
 			if (this.orcamento.getDataPrevisaoPagamento() != null)
 				this.dataPrevisaoPagamento = this.orcamento.getDataPrevisaoPagamento();
+			else
+				this.dataPrevisaoPagamento = this.dataEmissaoNota.plusDays(this.orcamento.getCliente().getPrazoPagamento());
 		} else {
 			FacesUtil.redirecionarPagina("Erro.xhtml");
 		}

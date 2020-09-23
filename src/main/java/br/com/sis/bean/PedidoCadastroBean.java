@@ -53,8 +53,13 @@ public class PedidoCadastroBean implements Serializable {
 				this.numeroPedido = this.orcamento.getPedidoCliente();
 			if (this.orcamento.getDataRecebimentoPedido() != null)
 				this.dataPedido = this.orcamento.getDataRecebimentoPedido();
+			else
+				this.dataPedido = LocalDate.now();
+			
 			if (this.orcamento.getDataEntregaPedido() != null)
 				this.dataEntrega = this.orcamento.getDataEntregaPedido();
+			else
+				this.dataEntrega = this.getDataPedido().plusDays(this.orcamento.getCliente().getPrazoEntrega());
 		} else {
 			FacesUtil.redirecionarPagina("Erro.xhtml");
 		}
