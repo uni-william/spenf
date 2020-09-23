@@ -62,7 +62,8 @@ public class OrcamentoRepository implements Serializable {
 		 tipo = 1 - Orçamentos gerados (campo dataOrcamento)
 		 tipo = 2 - Pedidos gerados (campo dataRecebimentoPedido)
 		 tipo = 3 - Pedidos com nota (campo dataEmissaoNota)
-		 tipo = 4 - Total de pedidos recebidos no periodo (campo dataEfetivaPagamento)
+		 tipo = 4 - Previsão de pagamento (campo dataPrevisaoPagamento)
+		 tipo = 5 - Total de pedidos recebidos no periodo (campo dataEfetivaPagamento)
 		 */
 		if (tipo == 1)
 			predicates.add(builder.between(root.get("dataOrcamento"), dataInicio, dataFim));
@@ -70,6 +71,8 @@ public class OrcamentoRepository implements Serializable {
 			predicates.add(builder.between(root.get("dataRecebimentoPedido"), dataInicio, dataFim));
 		else if (tipo == 3)
 			predicates.add(builder.between(root.get("dataEmissaoNota"), dataInicio, dataFim));
+		else if (tipo == 4)
+			predicates.add(builder.between(root.get("dataPrevisaoPagamento"), dataInicio, dataFim));		
 		else
 			predicates.add(builder.between(root.get("dataEfetivaPagamento"), dataInicio, dataFim));
 		
@@ -101,8 +104,8 @@ public class OrcamentoRepository implements Serializable {
 		if (filter.getCliente() != null)
 			predicates.add(builder.equal(root.get("cliente"), filter.getCliente()));
 		
-		if (filter.getDataCricaoInicio() != null)
-			predicates.add(builder.greaterThanOrEqualTo(root.get("dataOrcamento"), filter.getDataCricaoInicio()));
+		if (filter.getDataCricaoIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataOrcamento"), filter.getDataCricaoIni()));
 		
 		if (filter.getDataCricaoFim() != null)
 			predicates.add(builder.lessThanOrEqualTo(root.get("dataOrcamento"), filter.getDataCricaoFim()));
@@ -111,7 +114,25 @@ public class OrcamentoRepository implements Serializable {
 			predicates.add(builder.greaterThanOrEqualTo(root.get("dataRecebimentoPedido"), filter.getDataPedidoIni()));
 		
 		if (filter.getDataPedidoFim() != null)
-			predicates.add(builder.lessThanOrEqualTo(root.get("dataRecebimentoPedido"), filter.getDataPedidoFim()));		
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataRecebimentoPedido"), filter.getDataPedidoFim()));
+		
+		if (filter.getDataNotaIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataEmissaoNota"), filter.getDataNotaIni()));
+		
+		if (filter.getDataNotaFim() != null)
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataEmissaoNota"), filter.getDataNotaFim()));
+		
+		if (filter.getDataPrevisaoPagamentoIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoIni()));
+		
+		if (filter.getDataPrevisaoPagamentoFim() != null)
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataPrevisaoPagamento"), filter.getDataPrevisaoPagamentoFim()));
+		
+		if (filter.getDataPagamentoIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataEfetivaPagamento"), filter.getDataPagamentoIni()));
+		
+		if (filter.getDataPagamentoFim() != null)
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataEfetivaPagamento"), filter.getDataPagamentoFim()));		
 		
 		if (filter.isSomenteComPedido())
 			predicates.add(builder.isNotNull(root.get("pedidoCliente")));

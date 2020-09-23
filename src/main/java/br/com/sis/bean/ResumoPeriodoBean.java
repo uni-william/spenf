@@ -47,6 +47,9 @@ public class ResumoPeriodoBean implements Serializable {
 	private ResumoPorPeriodo totalPedidos;
 	@Getter
 	private ResumoPorPeriodo totalNotas;
+	
+	@Getter
+	private ResumoPorPeriodo totalPrevisaoPagamentos;	
 	@Getter
 	private ResumoPorPeriodo totalPagamentos;
 
@@ -65,11 +68,17 @@ public class ResumoPeriodoBean implements Serializable {
 	public void consultar() {
 		totalOrcamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 1);
 		totalOrcamentos.setTotal(totalOrcamentos.getTotal() != null ? totalOrcamentos.getTotal() : BigDecimal.ZERO);
+		
 		totalPedidos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 2);
 		totalPedidos.setTotal(totalPedidos.getTotal() != null ? totalPedidos.getTotal() : BigDecimal.ZERO);
+		
 		totalNotas = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 3);
 		totalNotas.setTotal(totalNotas.getTotal() != null ? totalNotas.getTotal() : BigDecimal.ZERO);
-		totalPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 4);
+		
+		totalPrevisaoPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 4);
+		totalPrevisaoPagamentos.setTotal(totalPrevisaoPagamentos.getTotal() != null ? totalPrevisaoPagamentos.getTotal() : BigDecimal.ZERO);
+		
+		totalPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 5);
 		totalPagamentos.setTotal(totalPagamentos.getTotal() != null ? totalPagamentos.getTotal() : BigDecimal.ZERO);
 	}
 }

@@ -44,6 +44,17 @@ public class PedidoPesquisaBean implements Serializable {
 
 	@Getter
 	private List<Empresa> clientes;
+	
+	@Getter
+	@Setter	
+	private LocalDate dataIni;
+	@Getter
+	@Setter	
+	private LocalDate dataFim;
+	
+	@Getter
+	@Setter
+	private int tipoData = 1;
 
 	@Getter
 	@Setter
@@ -53,14 +64,13 @@ public class PedidoPesquisaBean implements Serializable {
 		EmpresaFilter filterMantenedora = new EmpresaFilter();
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		mantenedoras = empresaRepository.listAll(filterMantenedora);
-		filter = new OrcamentoFilter();
 		LocalDate date = LocalDate.now();
+		dataIni = date.with(TemporalAdjusters.firstDayOfMonth());
+		dataFim = date.with(TemporalAdjusters.lastDayOfMonth());
+		filter = new OrcamentoFilter();
 		if (mantenedoras.size() > 0) {
 			filter.setMantenedora(mantenedoras.get(0));
 			aoSelelecionarMantenedora();
-			filter.setDataPedidoIni(date.with(TemporalAdjusters.firstDayOfMonth()));
-			filter.setDataPedidoFim(date.with(TemporalAdjusters.lastDayOfMonth()));
-			filter.setSomenteComPedido(true);
 			pesquisar();
 		} else {
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
@@ -75,6 +85,29 @@ public class PedidoPesquisaBean implements Serializable {
 	}
 
 	public void pesquisar() {
+		filter.setDataPedidoIni(null);
+		filter.setDataPedidoFim(null);
+		filter.setDataNotaIni(null);
+		filter.setDataNotaFim(null);
+		filter.setDataPrevisaoPagamentoIni(null);
+		filter.setDataPrevisaoPagamentoFim(null);
+		filter.setDataPagamentoIni(null);
+		filter.setDataPagamentoFim(null);
+		if (tipoData == 1) {
+			filter.setDataPedidoIni(this.getDataIni());
+			filter.setDataPedidoFim(this.getDataFim());			
+		} else if (tipoData == 2) {
+			filter.setDataNotaIni(this.getDataIni());
+			filter.setDataNotaFim(this.getDataFim());			
+		} else if (tipoData == 3) {
+			filter.setDataPrevisaoPagamentoIni(this.getDataIni());
+			filter.setDataPrevisaoPagamentoFim(this.getDataFim());			
+		} else if (tipoData == 4) {
+			filter.setDataPagamentoIni(this.getDataIni());
+			filter.setDataPagamentoFim(this.getDataFim());			
+		}
+		
+		filter.setSomenteComPedido(true);		
 		orcamentos = orcamentoRepository.listAll(filter);
 	}
 

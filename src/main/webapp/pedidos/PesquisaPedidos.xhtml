@@ -37,15 +37,27 @@
 					</p:selectOneMenu>
 				</p:panelGrid>
 
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Por" />
+					<p:selectOneRadio value="#{pedidoPesquisaBean.tipoData}">
+						<f:selectItem itemLabel="Data do pedido" itemValue="1" />
+						<f:selectItem itemLabel="Emissão da nota" itemValue="2" />
+						<f:selectItem itemLabel="Previsão pagamento" itemValue="3" />
+						<f:selectItem itemLabel="Pagamento realizado" itemValue="4" />
+					</p:selectOneRadio>
+				</p:panelGrid>
+
 				<p:panelGrid columns="4" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2"
-					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					styleClass="panelgrid-noborder">
 					<p:outputLabel value="Data início" />
-					<p:datePicker value="#{pedidoPesquisaBean.filter.dataPedidoIni}"
-						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:datePicker value="#{pedidoPesquisaBean.dataIni}" showIcon="true"
+						pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
-					<p:datePicker value="#{pedidoPesquisaBean.filter.dataPedidoFim}"
-						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:datePicker value="#{pedidoPesquisaBean.dataFim}" showIcon="true"
+						pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
 
 				<p:panelGrid columns="4" layout="grid"
@@ -73,7 +85,9 @@
 					paginatorPosition="bottom">
 					<f:facet name="{Exporters}">
 						<div style="float: right; padding-top: 5px;">
-							<h:commandLink rendered="#{pedidoPesquisaBean.orcamentos.size() > 0}" title="Exportar para excel">
+							<h:commandLink
+								rendered="#{pedidoPesquisaBean.orcamentos.size() > 0}"
+								title="Exportar para excel">
 								<p:graphicImage library="images" name="excel.png" width="24" />
 								<p:dataExporter type="xls" target="table" fileName="pedidos" />
 							</h:commandLink>

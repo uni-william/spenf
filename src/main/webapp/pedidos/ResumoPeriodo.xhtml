@@ -37,7 +37,7 @@
 				<p:separator />
 
 				<p:panelGrid columns="3" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+					columnClasses="ui-grid-col-3, ui-grid-col-2, ui-grid-col-2"
 					styleClass="panelgrid-noborder">
 					<p:outputLabel value="Tipo" styleClass="textoNegrito" />
 					<p:outputLabel value="Total" styleClass="textoNegrito" />
@@ -61,7 +61,13 @@
 					</p:outputLabel>
 					<p:outputLabel value="#{resumoPeriodoBean.totalNotas.quantidade}" />
 					
-					<p:outputLabel value="Pagamentos" />
+					<p:outputLabel value="Previsão pagamentos" />
+					<p:outputLabel value="#{resumoPeriodoBean.totalPrevisaoPagamentos.total}">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+					<p:outputLabel value="#{resumoPeriodoBean.totalPrevisaoPagamentos.quantidade}" />					
+					
+					<p:outputLabel value="Pagamentos realizados" />
 					<p:outputLabel value="#{resumoPeriodoBean.totalPagamentos.total}">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
