@@ -1,6 +1,8 @@
 package br.com.sis.repository;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.com.sis.entity.Empresa;
 import br.com.sis.entity.Orcamento;
 import br.com.sis.repository.filter.OrcamentoFilter;
 import br.com.sis.util.jpa.Transactional;
@@ -43,6 +46,35 @@ public class OrcamentoRepository implements Serializable {
 	
 	public Orcamento salvar(Orcamento orcamento) {
 		return manager.merge(orcamento);
+	}
+	
+	public BigDecimal somatorioTransacoes(Empresa mantenedora, LocalDate dataInicio, LocalDate dataFim, long tipo) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<BigDecimal> criteriaQuery = builder.createQuery(BigDecimal.class);
+		Root<Orcamento> root = criteriaQuery.from(Orcamento.class);
+		criteriaQuery.select(builder.sum(root.get("valorOrcamento")));
+		
+		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(builder.equal(root.get("mantenedora"), mantenedora));
+		/*
+		 tipo = 1 - Orçamentos gerados (campo dataOrcamento)
+		 tipo = 2 - Pedidos gerados (campo dataRecebimentoPedido)
+		 tipo = 3 - Pedidos com nota (campo dataEmissaoNota)
+		 tipo = 4 - Total de pedidos recebidos no periodo (campo dataEfetivaPagamento)
+		 */
+		if (tipo == 1)
+			predicates.add(builder.between(root.get("dataOrcamento"), dataInicio, dataFim));
+		else if (tipo == 2)
+			predicates.add(builder.between(root.get("dataRecebimentoPedido"), dataInicio, dataFim));
+		else if (tipo == 3)
+			predicates.add(builder.between(root.get("dataEmissaoNota"), dataInicio, dataFim));
+		else
+			predicates.add(builder.between(root.get("dataEfetivaPagamento"), dataInicio, dataFim));
+		
+		criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
+		TypedQuery<BigDecimal> query = manager.createQuery(criteriaQuery);
+		return query.getSingleResult();
+		
 	}
 
 	@Transactional

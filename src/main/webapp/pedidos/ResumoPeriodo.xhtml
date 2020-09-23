@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Resumo por período</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{resumoPeriodoBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Resumo por período</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Atualizar dados"
+							action="#{resumoPeriodoBean.consultar}" update="@form"
+							icon="ui-icon-search" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Data início" for="dataInicio" />
+					<p:datePicker value="#{resumoPeriodoBean.dataInicio}"
+						id="dataInicio" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:outputLabel value="Data fim" for="dataFim" />
+					<p:datePicker value="#{resumoPeriodoBean.dataFim}" id="dataFim"
+						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+				</p:panelGrid>
+				<p:separator />
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-6"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Total orçamentos" />
+					<p:outputLabel value="#{resumoPeriodoBean.totalOrcamentos}">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+					<p:outputLabel value="Total pedidos" />
+					<p:outputLabel value="#{resumoPeriodoBean.totalPedidos}">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+					<p:outputLabel value="Total notas" />
+					<p:outputLabel value="#{resumoPeriodoBean.totalNotas}">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+					<p:outputLabel value="Total pagamentos" />
+					<p:outputLabel value="#{resumoPeriodoBean.totalPagamentos}">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+				</p:panelGrid>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
