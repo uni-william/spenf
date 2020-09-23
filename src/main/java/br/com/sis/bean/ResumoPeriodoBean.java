@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.sis.entity.Empresa;
+import br.com.sis.entity.dto.ResumoPorPeriodo;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
 import br.com.sis.repository.OrcamentoRepository;
@@ -23,32 +24,32 @@ import lombok.Setter;
 public class ResumoPeriodoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private OrcamentoRepository orcamentoRepository;
-	
+
 	@Inject
 	private EmpresaRepository empresaRepository;
-	
+
 	private Empresa mantenedora;
-	
+
 	@Getter
 	@Setter
 	private LocalDate dataInicio;
-	
+
 	@Getter
 	@Setter
 	private LocalDate dataFim;
-	
+
 	@Getter
-	private BigDecimal totalOrcamentos;
+	private ResumoPorPeriodo totalOrcamentos;
 	@Getter
-	private BigDecimal totalPedidos;
+	private ResumoPorPeriodo totalPedidos;
 	@Getter
-	private BigDecimal totalNotas;
+	private ResumoPorPeriodo totalNotas;
 	@Getter
-	private BigDecimal totalPagamentos;
-	
+	private ResumoPorPeriodo totalPagamentos;
+
 	public void inicializar() {
 		EmpresaFilter filterMantenedora = new EmpresaFilter();
 		filterMantenedora.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
@@ -60,19 +61,15 @@ public class ResumoPeriodoBean implements Serializable {
 		dataFim = date.with(TemporalAdjusters.lastDayOfMonth());
 		consultar();
 	}
-	
+
 	public void consultar() {
 		totalOrcamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 1);
-		if (totalOrcamentos == null)
-			totalOrcamentos = BigDecimal.ZERO;
+		totalOrcamentos.setTotal(totalOrcamentos.getTotal() != null ? totalOrcamentos.getTotal() : BigDecimal.ZERO);
 		totalPedidos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 2);
-		if (totalPedidos == null)
-			totalPedidos = BigDecimal.ZERO;		
+		totalPedidos.setTotal(totalPedidos.getTotal() != null ? totalPedidos.getTotal() : BigDecimal.ZERO);
 		totalNotas = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 3);
-		if (totalNotas == null)
-			totalNotas = BigDecimal.ZERO;		
+		totalNotas.setTotal(totalNotas.getTotal() != null ? totalNotas.getTotal() : BigDecimal.ZERO);
 		totalPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 4);
-		if (totalPagamentos == null)
-			totalPagamentos = BigDecimal.ZERO;		
+		totalPagamentos.setTotal(totalPagamentos.getTotal() != null ? totalPagamentos.getTotal() : BigDecimal.ZERO);
 	}
 }

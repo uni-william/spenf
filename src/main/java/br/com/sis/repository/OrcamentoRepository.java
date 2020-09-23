@@ -1,7 +1,6 @@
 package br.com.sis.repository;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.com.sis.entity.Empresa;
 import br.com.sis.entity.Orcamento;
+import br.com.sis.entity.dto.ResumoPorPeriodo;
 import br.com.sis.repository.filter.OrcamentoFilter;
 import br.com.sis.util.jpa.Transactional;
 import br.com.sis.util.jsf.FacesUtil;
@@ -48,11 +48,13 @@ public class OrcamentoRepository implements Serializable {
 		return manager.merge(orcamento);
 	}
 	
-	public BigDecimal somatorioTransacoes(Empresa mantenedora, LocalDate dataInicio, LocalDate dataFim, long tipo) {
+	public ResumoPorPeriodo somatorioTransacoes(Empresa mantenedora, LocalDate dataInicio, LocalDate dataFim, long tipo) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<BigDecimal> criteriaQuery = builder.createQuery(BigDecimal.class);
+		CriteriaQuery<ResumoPorPeriodo> criteriaQuery = builder.createQuery(ResumoPorPeriodo.class);
 		Root<Orcamento> root = criteriaQuery.from(Orcamento.class);
-		criteriaQuery.select(builder.sum(root.get("valorOrcamento")));
+		criteriaQuery.select(builder.construct(ResumoPorPeriodo.class,
+				builder.sum(root.get("valorOrcamento")),
+				builder.count(root.get("id"))));
 		
 		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(builder.equal(root.get("mantenedora"), mantenedora));
@@ -72,7 +74,7 @@ public class OrcamentoRepository implements Serializable {
 			predicates.add(builder.between(root.get("dataEfetivaPagamento"), dataInicio, dataFim));
 		
 		criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
-		TypedQuery<BigDecimal> query = manager.createQuery(criteriaQuery);
+		TypedQuery<ResumoPorPeriodo> query = manager.createQuery(criteriaQuery);
 		return query.getSingleResult();
 		
 	}
