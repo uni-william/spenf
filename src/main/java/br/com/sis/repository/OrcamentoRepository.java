@@ -149,6 +149,9 @@ public class OrcamentoRepository implements Serializable {
 		if (!StringUtils.isEmpty(filter.getPedido()))
 			predicates.add(builder.equal(root.get("pedidoCliente"), filter.getPedido()));
 		
+		if (filter.isSomenteComNota())
+			predicates.add(builder.isNotNull(root.get("numeroNfse")));
+		
 		if (filter.getNumeroNota() != null)
 			predicates.add(builder.equal(root.get("numeroNfse"), filter.getNumeroNota()));
 		return predicates.toArray(new Predicate[predicates.size()]);

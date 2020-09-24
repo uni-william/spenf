@@ -13,6 +13,7 @@
 			<f:viewAction action="#{pagamentoCadastroBean.inicializar()}" />
 			<f:viewParam name="orcamento"
 				value="#{pagamentoCadastroBean.orcamento}" />
+			<f:viewParam name="origem" value="#{pagamentoCadastroBean.origem}" />
 		</f:metadata>
 		<h1 class="aw-page-title">Dados de pagamento de pedido</h1>
 		<h:form id="frm">
@@ -121,9 +122,10 @@
 						<f:param name="orcamento"
 							value="#{pagamentoCadastroBean.orcamento.id}" />
 					</p:button>
-					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
-						outcome="/pedidos/PesquisaPedidos">
-					</p:button>
+					<p:commandButton value="#{pagamentoCadastroBean.descricaoRetorno}"
+						icon="ui-icon-search" process="@this"
+						action="#{pagamentoCadastroBean.retornarPaginaAnterior}">
+					</p:commandButton>
 				</p:toolbarGroup>
 			</p:toolbar>
 

@@ -38,6 +38,10 @@ public class PagamentoCadastroBean implements Serializable {
 	
 	@Inject
 	private Seguranca seguranca;
+	
+	@Getter
+	@Setter	
+	private String origem;
 
 	public void inicializar() {
 		if (this.orcamento != null) {
@@ -65,6 +69,23 @@ public class PagamentoCadastroBean implements Serializable {
 	
 	public boolean isPermitirLimparPagamento() {
 		return this.orcamento.getDataEfetivaPagamento() != null && seguranca.isPermiteLimparPagamento(); 
+	}
+	
+	public String getDescricaoRetorno() {
+		if (origem == null || !origem.equals("2")) {
+			return "Pesquisa de pedidos";
+			
+		} else {
+			return "Previsão de pagamento";
+		}
+	}
+	
+	public void retornarPaginaAnterior() {
+		if (origem == null || !origem.equals("2")) {
+			FacesUtil.redirecionarPagina("pedidos/PesquisaPedidos.xhtml");
+		} else {
+			FacesUtil.redirecionarPagina("pedidos/PrevisaoPagamento.xhtml");
+		}		
 	}
 
 }

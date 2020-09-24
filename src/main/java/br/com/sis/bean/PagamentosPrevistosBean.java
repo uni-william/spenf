@@ -54,6 +54,7 @@ public class PagamentosPrevistosBean implements Serializable {
 		LocalDate date = LocalDate.now();
 		dataInicio = date.with(TemporalAdjusters.firstDayOfMonth());
 		dataFim = date.with(TemporalAdjusters.lastDayOfMonth());
+		consultar();
 	}
 	
 	public void consultar() {
@@ -62,6 +63,7 @@ public class PagamentosPrevistosBean implements Serializable {
 		filter.setDataPrevisaoPagamentoIni(dataInicio);
 		filter.setDataPrevisaoPagamentoFim(dataFim);
 		filter.setSomenteComPedido(true);
+		filter.setSomenteComNota(true);
 		orcamentos = orcamentoRepository.listAll(filter, "dataPrevisaoPagamento");
 	}
 
