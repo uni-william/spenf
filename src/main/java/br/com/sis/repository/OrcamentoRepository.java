@@ -34,12 +34,16 @@ public class OrcamentoRepository implements Serializable {
 		return manager.find(Orcamento.class, id);
 	}
 
-	public List<Orcamento> listAll(OrcamentoFilter filter) {
+	public List<Orcamento> listAll(OrcamentoFilter filter, String ordem) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Orcamento> criteriaQuery = builder.createQuery(Orcamento.class);
 		Root<Orcamento> root = criteriaQuery.from(Orcamento.class);
+		root.fetch("mantenedora");
+		root.fetch("cliente");
 		criteriaQuery.select(root);
 		criteriaQuery.where(criarRestricoes(filter, builder, root));
+		if (ordem != null)
+			criteriaQuery.orderBy(builder.asc(root.get(ordem)));
 		TypedQuery<Orcamento> query = manager.createQuery(criteriaQuery);
 		return query.getResultList();
 	}

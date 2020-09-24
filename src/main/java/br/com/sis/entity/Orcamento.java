@@ -155,6 +155,11 @@ public class Orcamento implements Serializable {
 	}
 	
 	@Transient
+	public boolean isJaPago() {
+		return this.getDataEfetivaPagamento() != null;
+	}	
+	
+	@Transient
 	public String getPagamentoCor() {
 		if (this.getDataEmissaoNota() != null) {
 			if (this.getDataEfetivaPagamento() != null)

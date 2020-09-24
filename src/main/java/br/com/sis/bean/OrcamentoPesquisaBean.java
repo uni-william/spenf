@@ -69,7 +69,7 @@ public class OrcamentoPesquisaBean implements Serializable {
 
 	public void pesquisar() {
 		if (mantenedoras.size() > 0)
-			orcamentos = orcamentoRepository.listAll(filter);
+			orcamentos = orcamentoRepository.listAll(filter, null);
 		else
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
 	}

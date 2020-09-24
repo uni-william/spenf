@@ -1,0 +1,96 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Previsão de pagamento</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{pagamentosPrevistosBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Previsão de pagamento</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Atualizar dados"
+							action="#{pagamentosPrevistosBean.consultar}" update="@form"
+							icon="ui-icon-search" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Data início" for="dataInicio" />
+					<p:datePicker value="#{pagamentosPrevistosBean.dataInicio}"
+						id="dataInicio" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:outputLabel value="Data fim" for="dataFim" />
+					<p:datePicker value="#{pagamentosPrevistosBean.dataFim}"
+						id="dataFim" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+				</p:panelGrid>
+
+				<p:dataTable value="#{pagamentosPrevistosBean.orcamentos}"
+					var="orcamento" style="margin-top: 20px" reflow="true" rows="10"
+					rowKey="#{orcamento.id}" paginatorAlwaysVisible="true"
+					emptyMessage="Sem registro de dados" id="table" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					paginatorPosition="bottom">
+					<f:facet name="{Exporters}">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink
+								rendered="#{pagamentosPrevistosBean.orcamentos.size() > 0}"
+								title="Exportar para excel">
+								<p:graphicImage library="images" name="excel.png" width="24" />
+								<p:dataExporter type="xls" target="table" fileName="pedidos" />
+							</h:commandLink>
+						</div>
+					</f:facet>
+					<p:column headerText="Pedido" width="8%">
+						<h:outputText value="#{orcamento.pedidoCliente}" />
+					</p:column>
+					<p:column headerText="Cliente">
+						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
+					</p:column>
+					<p:column headerText="Total" width="8%"
+						styleClass="colunaAlinhadaEsquerda">
+						<h:outputText value="#{orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Previsão pagamento" width="8%">
+						<h:outputText value="#{orcamento.dataPrevisaoPagamento}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data pagamento" width="8%">
+						<h:outputText value="#{orcamento.dataEfetivaPagamento}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Status pagamento" width="12%"
+						style="color: #{orcamento.pagamentoCor}">
+						<h:outputText value="#{orcamento.statusPagamento}" />
+					</p:column>
+					<p:column width="35" exportable="false">
+						<p:button icon="ui-icon-calculator" style="width: 30px"
+							title="Informar pagamento do pedido"
+							disabled="#{orcamento.jaPago}"
+							outcome="/pedidos/CadastroPagamento">
+							<f:param name="orcamento" value="#{orcamento.id}" />
+						</p:button>
+					</p:column>
+				</p:dataTable>
+
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

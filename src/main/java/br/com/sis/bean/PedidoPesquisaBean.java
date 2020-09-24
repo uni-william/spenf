@@ -93,22 +93,27 @@ public class PedidoPesquisaBean implements Serializable {
 		filter.setDataPrevisaoPagamentoFim(null);
 		filter.setDataPagamentoIni(null);
 		filter.setDataPagamentoFim(null);
+		String ordem = null;
 		if (tipoData == 1) {
 			filter.setDataPedidoIni(this.getDataIni());
-			filter.setDataPedidoFim(this.getDataFim());			
+			filter.setDataPedidoFim(this.getDataFim());
+			ordem = "dataRecebimentoPedido";
 		} else if (tipoData == 2) {
 			filter.setDataNotaIni(this.getDataIni());
-			filter.setDataNotaFim(this.getDataFim());			
+			filter.setDataNotaFim(this.getDataFim());
+			ordem = "dataEmissaoNota";
 		} else if (tipoData == 3) {
 			filter.setDataPrevisaoPagamentoIni(this.getDataIni());
-			filter.setDataPrevisaoPagamentoFim(this.getDataFim());			
+			filter.setDataPrevisaoPagamentoFim(this.getDataFim());
+			ordem = "dataPrevisaoPagamento";
 		} else if (tipoData == 4) {
 			filter.setDataPagamentoIni(this.getDataIni());
-			filter.setDataPagamentoFim(this.getDataFim());			
+			filter.setDataPagamentoFim(this.getDataFim());
+			ordem = "dataEfetivaPagamento";
 		}
 		
 		filter.setSomenteComPedido(true);		
-		orcamentos = orcamentoRepository.listAll(filter);
+		orcamentos = orcamentoRepository.listAll(filter, ordem);
 	}
 
 }
