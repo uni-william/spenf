@@ -1,0 +1,88 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Fluxo de caixa</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{fluxoDeCaixaBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Fluxo de caixa</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Atualizar dados"
+							action="#{fluxoDeCaixaBean.consultar}" update="@form"
+							icon="ui-icon-search" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Data início" for="dataInicio" />
+					<p:datePicker value="#{fluxoDeCaixaBean.dataIni}" id="dataInicio"
+						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:outputLabel value="Data fim" for="dataFim" />
+					<p:datePicker value="#{fluxoDeCaixaBean.dataFim}" id="dataFim"
+						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+				</p:panelGrid>
+				<p:dataTable value="#{fluxoDeCaixaBean.fluxoDeCaixaLista}"
+					var="fluxo" style="margin-top: 20px" reflow="true" rows="10"
+					rowKey="#{orcamento.id}" paginatorAlwaysVisible="true"
+					emptyMessage="Sem registro de dados" id="table" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					paginatorPosition="bottom" sortBy="#{fluxo.data}">
+					<f:facet name="{Exporters}">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink
+								rendered="#{fluxoDeCaixaBean.fluxoDeCaixaLista.size() > 0}"
+								title="Exportar para excel">
+								<p:graphicImage library="images" name="excel.png" width="24" />
+								<p:dataExporter type="xls" target="table" fileName="fluxo" />
+							</h:commandLink>
+						</div>
+					</f:facet>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{fluxo.descricao}"
+							style="color: #{fluxo.cor}" />
+					</p:column>
+					<p:column headerText="Data" width="8%">
+						<h:outputText value="#{fluxo.data}" converter="localDateConverter"
+							style="color: #{fluxo.cor}" />
+					</p:column>
+					<p:column headerText="Valor" width="8%"
+						styleClass="colunaAlinhadaEsquerda">
+						<h:outputText value="#{fluxo.valor}" style="color: #{fluxo.cor}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Total de receita" style="font-weight: bold;" />
+					<p:outputLabel value="#{fluxoDeCaixaBean.totalReceita}" style="font-weight: bold; color: blue;">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>
+					<p:outputLabel value="Total de despesa" style="font-weight: bold;" />
+					<p:outputLabel value="#{fluxoDeCaixaBean.totalDespesa}" style="font-weight: bold; color: red;">
+						<f:convertNumber type="currency" />
+					</p:outputLabel>					
+				</p:panelGrid>
+
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

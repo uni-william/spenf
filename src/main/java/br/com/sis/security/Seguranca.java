@@ -81,6 +81,18 @@ public class Seguranca {
 		return externalContext.isUserInRole(Funcionalidade.MANTENEDORA_DEL.toString());
 	}	
 	
+	public boolean isDespesaInserir() {
+		return externalContext.isUserInRole(Funcionalidade.DESPESA_INS.toString());
+	}
+
+	public boolean isDespesaEditar() {
+		return externalContext.isUserInRole(Funcionalidade.DESPESA_UPD.toString());
+	}
+
+	public boolean isDespesaExcluir() {
+		return externalContext.isUserInRole(Funcionalidade.DESPESA_DEL.toString());
+	}	
+	
 	public boolean isPermiteLimparPagamento() {
 		return externalContext.isUserInRole(Funcionalidade.PAGAMENTO_CLEAR.toString());
 	}

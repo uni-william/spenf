@@ -29,7 +29,12 @@ public enum Funcionalidade {
 	COLABORADOR_VIEW("Colaborador - Visualizar"),
 	COLABORADOR_INS("Colaborador - Cadastrar"),
 	COLABORADOR_UPD("Colaborador - Atualizar"),
-	COLABORADOR_DEL("Colaborador - Excluir");	
+	COLABORADOR_DEL("Colaborador - Excluir"),
+	DESPESA_VIEW("Despesa - Visualizar"),
+	DESPESA_INS("Despesa - Cadastrar"),
+	DESPESA_UPD("Despesa - Atualizar"),
+	DESPESA_DEL("Despesa - Excluir"),
+	FLUXO_CAIXA("Caixa - Fluxo de caixa");	
 	
 	private Funcionalidade(String descricao) {
 		this.descricao = descricao;
