@@ -85,7 +85,7 @@
 									value="#{mantenedoraCadastroBean.empresa.endereco.cep}" />
 								<p:commandButton value="Carregar"
 									action="#{mantenedoraCadastroBean.carregarDadosCep()}"
-									process="cep @this" update="painel msg" />
+									process="cep @this" update="painel :frm:msg" />
 							</p:panelGrid>
 							<p:panelGrid columns="2" layout="grid"
 								columnClasses="ui-grid-col-2, ui-grid-col-10"
