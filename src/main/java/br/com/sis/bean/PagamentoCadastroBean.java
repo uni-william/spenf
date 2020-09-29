@@ -57,7 +57,7 @@ public class PagamentoCadastroBean implements Serializable {
 	public void salvarPedido() {
 		this.orcamento.setDataEfetivaPagamento(this.dataPagamento);
 		this.orcamento = orcamentoService.salvar(this.orcamento);
-		FacesUtil.addInfoMessage("Nota fiscal salva com sucesso!");
+		FacesUtil.addInfoMessage("Pagamento registrado com sucesso!");
 	}
 	
 	public void limparPagamento() {
