@@ -1,0 +1,65 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Resumo por período</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{somatorioDespesaPeriodoBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Resumo de despesa por período</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Atualizar dados"
+							action="#{somatorioDespesaPeriodoBean.consultar}" update="@form"
+							icon="ui-icon-search" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Data início" for="dataInicio" />
+					<p:datePicker
+						value="#{somatorioDespesaPeriodoBean.despesaFilter.dataIni}"
+						id="dataInicio" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+					<p:outputLabel value="Data fim" for="dataFim" />
+					<p:datePicker
+						value="#{somatorioDespesaPeriodoBean.despesaFilter.dataFim}"
+						id="dataFim" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+				</p:panelGrid>
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+					styleClass="panelgrid-noborder" style="margin-top: 20px;">
+					<p:outputLabel value="Descrição" styleClass="textoNegrito" />
+					<p:outputLabel value="Total" styleClass="textoNegrito" />
+					<p:outputLabel value="Quantidade" styleClass="textoNegrito" />
+				</p:panelGrid>
+				<p:separator />
+				<p:repeat value="#{somatorioDespesaPeriodoBean.depesasPorPeriodo}"
+					var="somatorio">
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="#{somatorio.descricao}" />
+						<p:outputLabel value="#{somatorio.total}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="#{somatorio.quantidade}" />
+					</p:panelGrid>
+					<p:separator />
+				</p:repeat>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

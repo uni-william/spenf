@@ -8,10 +8,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.sis.entity.Empresa;
+import br.com.sis.entity.TipoDespesa;
 import br.com.sis.entity.Despesa;
 import br.com.sis.enuns.TipoEmpresa;
 import br.com.sis.repository.EmpresaRepository;
+import br.com.sis.repository.TipoDespesaRepository;
 import br.com.sis.repository.filter.EmpresaFilter;
+import br.com.sis.repository.filter.TipoDespesaFilter;
 import br.com.sis.security.Seguranca;
 import br.com.sis.service.DespesaService;
 import br.com.sis.util.jsf.FacesUtil;
@@ -39,15 +42,24 @@ public class DespesaCadastroBean implements Serializable {
 
 	@Inject
 	private Seguranca seguranca;
-
+	
+	@Inject
+	private TipoDespesaRepository tipoDespesaRepository;
+	
 	@Getter
 	private boolean podeSalvar;
+	
+	@Getter
+	private List<TipoDespesa> tipoDespesas;
 
 	public void inicializar() {
 		EmpresaFilter filter = new EmpresaFilter();
 		filter.setTipoEmpresa(TipoEmpresa.MANTENEDORA);
 		this.mantenedoras = empresaRepository.listAll(filter);
 		if (this.mantenedoras.size() > 0) {
+			TipoDespesaFilter despesaFilter = new TipoDespesaFilter();
+			despesaFilter.setMantenedora(this.mantenedoras.get(0));
+			tipoDespesas = tipoDespesaRepository.listAll(despesaFilter);
 			this.podeSalvar = true;
 			if (despesa == null) {
 				despesa = new Despesa();

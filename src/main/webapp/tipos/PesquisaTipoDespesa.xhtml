@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	ounfxmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<head>
+<meta charset="UTF-8" />
+	</head>
+	<ui:define name="titulo">Serviço</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{tipoDespesaPesquisaBean.inicializar()}" />
+		</f:metadata>
+		<h1 class="aw-page-title">Tipos de Despesas</h1>
+		<h:form id="frm">
+			<p:growl />
+			<div class="ui-fluid">
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:button value="Novo" outcome="/tipos/CadastroTipoDespesa" icon="ui-icon-plus" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Pesquisar"
+							action="#{tipoDespesaPesquisaBean.pesquisar}" update="@form" icon="ui-icon-search" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Descrição" />
+					<p:inputText value="#{tipoDespesaPesquisaBean.filter.descricao}" />
+				</p:panelGrid>
+
+				<p:dataTable value="#{tipoDespesaPesquisaBean.tipoDespesas}" var="tipoDespesa"
+					style="margin-top: 20px" reflow="true"
+					emptyMessage="Nenhuma serviço cadastrado" id="table"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+					rows="10"
+					paginatorAlwaysVisible="false"
+					rowIndexVar="row"
+					paginatorPosition="bottom">
+					<p:column headerText="Código" width="8%">
+						<h:outputText value="#{tipoDespesa.id}" />
+					</p:column>					
+					<p:column headerText="Descrição">
+						<h:outputText value="#{tipoDespesa.descricao}" />
+					</p:column>
+					<p:column width="8%" exportable="false">
+						<p:button icon="ui-icon-pencil" style="width: 30px"
+							outcome="/tipos/CadastroTipoDespesa">
+							<f:param name="tipoDespesa" value="#{tipoDespesa.id}" />
+						</p:button>
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
+							oncomplete="PF('confirmacao').show(); return false;"
+							process="@this" update=":frm:conf" style="width: 30px">
+							<f:setPropertyActionListener value="#{tipoDespesa}"
+								target="#{tipoDespesaPesquisaBean.tipoDespesaSelecionado}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</div>
+			<p:confirmDialog header="Exclusão de Registro"
+				message="Tem certeza que deseja excluir o  #{tipoDespesaPesquisaBean.tipoDespesaSelecionado.descricao}?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{tipoDespesaPesquisaBean.excluir}" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

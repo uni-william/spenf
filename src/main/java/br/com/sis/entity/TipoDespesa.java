@@ -1,8 +1,6 @@
 package br.com.sis.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -28,8 +25,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "despesas")
-public class Despesa implements Serializable{
+@Table(name = "tipos_despesa")
+public class TipoDespesa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -41,23 +38,9 @@ public class Despesa implements Serializable{
 	@NotEmpty
 	@Column(length = 256, nullable = false)	
 	private String descricao;
-	
-	@NotNull
-	@Column(precision = 10, scale = 2)
-	private BigDecimal valor;
-	
-	@Column(length = 20)
-	private String comprovante;
-	
-	private LocalDate data;
 		
 	@ManyToOne
 	@JoinColumn(name = "mantenedora_id")
-	private Empresa mantenedora;
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "tipo_despesa_id", nullable = false)	
-	private TipoDespesa tipoDespesa;
+	private Empresa mantenedora;	
 
 }

@@ -10,12 +10,16 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.sis.entity.Despesa;
+import br.com.sis.entity.TipoDespesa;
+import br.com.sis.entity.dto.SomatorioDepesaPorPeriodo;
 import br.com.sis.repository.filter.DespesaFilter;
 import br.com.sis.util.jpa.Transactional;
 import br.com.sis.util.jsf.FacesUtil;
@@ -40,7 +44,7 @@ public class DespesaRepository implements Serializable {
 		TypedQuery<Despesa> query = manager.createQuery(criteriaQuery);
 		return query.getResultList();
 	}
-	
+
 	public Despesa salvar(Despesa despesa) {
 		return manager.merge(despesa);
 	}
@@ -58,18 +62,31 @@ public class DespesaRepository implements Serializable {
 		}
 	}
 
+	public List<SomatorioDepesaPorPeriodo> despesaPorPeriodo(DespesaFilter filter) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<SomatorioDepesaPorPeriodo> criteriaQuery = builder.createQuery(SomatorioDepesaPorPeriodo.class);
+		Root<Despesa> root = criteriaQuery.from(Despesa.class);
+		Join<Despesa, TipoDespesa> tipoJoin = root.join("tipoDespesa", JoinType.INNER);
+		criteriaQuery.select(builder.construct(SomatorioDepesaPorPeriodo.class, tipoJoin.get("descricao"),
+				builder.sum(root.get("valor")), builder.count(root.get("id"))));
+		criteriaQuery.where(criarRestricoes(filter, builder, root));
+		criteriaQuery.groupBy(tipoJoin.get("descricao"));
+		TypedQuery<SomatorioDepesaPorPeriodo> query = manager.createQuery(criteriaQuery);
+		return query.getResultList();
+	}
+
 	private Predicate[] criarRestricoes(DespesaFilter filter, CriteriaBuilder builder, Root<Despesa> root) {
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (!StringUtils.isEmpty(filter.getDescricao()))
 			predicates.add(builder.like(builder.lower(root.get("descricao")),
 					"%" + filter.getDescricao().toLowerCase() + "%"));
-		
+
 		if (filter.getDataIni() != null)
 			predicates.add(builder.greaterThanOrEqualTo(root.get("data"), filter.getDataIni()));
-		
+
 		if (filter.getDataFim() != null)
-			predicates.add(builder.lessThanOrEqualTo(root.get("data"), filter.getDataFim()));		
+			predicates.add(builder.lessThanOrEqualTo(root.get("data"), filter.getDataFim()));
 
 		if (filter.getMantenedora() != null)
 			predicates.add(builder.equal(root.get("mantenedora"), filter.getMantenedora()));

@@ -58,6 +58,10 @@
 					<p:column headerText="Descrição">
 						<h:outputText value="#{despesa.descricao}" />
 					</p:column>
+					
+					<p:column headerText="Tipo despesa" width="25%">
+						<h:outputText value="#{despesa.tipoDespesa.descricao}" />
+					</p:column>					
 					<p:column headerText="Data" width="8%">
 						<h:outputText value="#{despesa.data}"
 							converter="localDateConverter">

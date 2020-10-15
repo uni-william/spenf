@@ -34,6 +34,11 @@ public enum Funcionalidade {
 	DESPESA_INS("Despesa - Cadastrar"),
 	DESPESA_UPD("Despesa - Atualizar"),
 	DESPESA_DEL("Despesa - Excluir"),
+	TIPO_DESPESA_VIEW("Tipo Despesa - Visualizar"),
+	TIPO_DESPESA_INS("Tipo Despesa - Cadastrar"),
+	TIPO_DESPESA_UPD("Tipo Despesa - Atualizar"),
+	TIPO_DESPESA_DEL("Tipo Despesa - Excluir"),	
+	TIPO_DESPESA_SOMA("Despesa - Resumo por período"),
 	FLUXO_CAIXA("Caixa - Fluxo de caixa");	
 	
 	private Funcionalidade(String descricao) {
