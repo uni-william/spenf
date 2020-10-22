@@ -88,13 +88,18 @@
 						columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-2"
 						styleClass="panelgrid-noborder">
 						<p:outputLabel value="Pedido cliente" />
-						<p:fileUpload id="arquivo"
+						<p:fileUpload id="arquivo" allowTypes="/(\.|\/)(pdf)$/" accept="application/pdf"
 							listener="#{pedidoCadastroBean.carregarArquivo}"
 							rendered="#{!pedidoCadastroBean.temArquivo}" label="Escolher"
 							mode="advanced" skinSimple="true" auto="true" update="@form" />
-
 						<p:outputLabel rendered="#{pedidoCadastroBean.temArquivo}"
 							value="#{pedidoCadastroBean.orcamento.nomeArquivo}" />
+						<p:commandButton value="Baixar pedido"
+							rendered="#{pedidoCadastroBean.temArquivo}"
+							actionListener="#{pedidoCadastroBean.baixarPedido}"
+							process="@this" ajax="false">
+							<p:fileDownload value="#{pedidoCadastroBean.file}" />
+						</p:commandButton>
 					</p:panelGrid>
 
 				</p:panel>
