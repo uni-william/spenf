@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -71,6 +72,12 @@ public class Orcamento implements Serializable {
 	private BigDecimal valorOrcamento;
 
 	private boolean cancelado = false;
+	
+	@Lob
+	private byte[] arquivo;
+	
+	@Column(length = 100)
+	private String nomeArquivo;
 
 	private Long numeroNfse;
 	@Column(length = 20)

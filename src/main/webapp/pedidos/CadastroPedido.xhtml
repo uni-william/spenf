@@ -14,7 +14,7 @@
 			<f:viewParam name="orcamento" value="#{pedidoCadastroBean.orcamento}" />
 		</f:metadata>
 		<h1 class="aw-page-title">Pedido</h1>
-		<h:form id="frm">
+		<h:form id="frm" enctype="multipart/form-data">
 			<p:growl id="msg" />
 			<div class="ui-fluid">
 				<p:panel header="Resumo do pedido">
@@ -84,29 +84,45 @@
 							pattern="dd/MM/yyyy" locale="pt" />
 
 					</p:panelGrid>
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-2"
+						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Pedido cliente" />
+						<p:fileUpload id="arquivo"
+							listener="#{pedidoCadastroBean.carregarArquivo}"
+							rendered="#{!pedidoCadastroBean.temArquivo}" label="Escolher"
+							mode="advanced" skinSimple="true" auto="true" update="@form" />
+
+						<p:outputLabel rendered="#{pedidoCadastroBean.temArquivo}"
+							value="#{pedidoCadastroBean.orcamento.nomeArquivo}" />
+					</p:panelGrid>
+
 				</p:panel>
+
 			</div>
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:commandButton value="Salvar dados do pedido" icon="ui-icon-check"
-						update="@form" action="#{pedidoCadastroBean.salvarPedido}"
+					<p:commandButton value="Salvar dados do pedido"
+						icon="ui-icon-check" update="@form"
+						action="#{pedidoCadastroBean.salvarPedido}"
 						disabled="#{pedidoCadastroBean.orcamento.dataEfetivaPagamento != null}" />
-					<p:button value="Dados da nota fiscal do pedido" icon="ui-icon-cart"
-						outcome="/pedidos/CadastroNota"
+					<p:button value="Dados da nota fiscal do pedido"
+						icon="ui-icon-cart" outcome="/pedidos/CadastroNota"
 						disabled="#{pedidoCadastroBean.orcamento.pedidoCliente == null}">
 						<f:param name="orcamento"
 							value="#{pedidoCadastroBean.orcamento.id}" />
 					</p:button>
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Voltar para o orçamento" icon="ui-icon-arrowreturn-1-w"
+					<p:button value="Voltar para o orçamento"
+						icon="ui-icon-arrowreturn-1-w"
 						outcome="/orcamentos/CadastroOrcamento">
 						<f:param name="orcamento"
 							value="#{pedidoCadastroBean.orcamento.id}" />
 					</p:button>
 					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
 						outcome="/pedidos/PesquisaPedidos">
-					</p:button>					
+					</p:button>
 				</p:toolbarGroup>
 			</p:toolbar>
 		</h:form>

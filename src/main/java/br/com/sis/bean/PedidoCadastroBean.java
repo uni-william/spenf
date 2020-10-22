@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.primefaces.event.FileUploadEvent;
 
 import br.com.sis.entity.ItemOrcamento;
 import br.com.sis.entity.Orcamento;
@@ -55,7 +56,7 @@ public class PedidoCadastroBean implements Serializable {
 				this.dataPedido = this.orcamento.getDataRecebimentoPedido();
 			else
 				this.dataPedido = LocalDate.now();
-			
+
 			if (this.orcamento.getDataEntregaPedido() != null)
 				this.dataEntrega = this.orcamento.getDataEntregaPedido();
 			else
@@ -72,6 +73,24 @@ public class PedidoCadastroBean implements Serializable {
 		this.orcamento.setDataEntregaPedido(this.dataEntrega);
 		this.orcamento = orcamentoService.salvar(this.orcamento);
 		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+	}
+	
+	public boolean isTemArquivo() {
+		return this.orcamento.getNomeArquivo() != null;
+	}
+	
+	public void carregarArquivo(FileUploadEvent event) {
+		System.out.println("Executou");
+		if (event.getFile() != null) {
+			this.orcamento.setArquivo(event.getFile().getContent());
+			this.orcamento.setNomeArquivo(event.getFile().getFileName());
+			this.orcamento = orcamentoService.salvar(this.orcamento);
+			FacesUtil.addInfoMessage("Arquivo anexado com sucesso!");
+		}
+		else {
+			FacesUtil.addErroMessage("Sem arquivo para salvar");
+		}
+		
 	}
 
 }
