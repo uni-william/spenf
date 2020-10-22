@@ -116,6 +116,12 @@ public class PedidoCadastroBean implements Serializable {
                 .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/files/pedido.pdf"))
                 .build();
 	}
+	
+	public void limparArquivo() {
+		this.orcamento.setArquivo(null);
+		this.orcamento.setNomeArquivo(null);
+		this.orcamento = orcamentoService.salvar(this.orcamento);
+	}
 
 	private void gerarImagemDisco() {
 		this.orcamento = orcamentoRepository.findById(this.orcamento.getId());

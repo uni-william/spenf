@@ -84,11 +84,12 @@
 							pattern="dd/MM/yyyy" locale="pt" />
 
 					</p:panelGrid>
-					<p:panelGrid columns="3" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-2"
+					<p:panelGrid columns="4" layout="grid"
+						columnClasses="ui-grid-col-2, ui-grid-col-3, ui-grid-col-2, ui-grid-col-2"
 						styleClass="panelgrid-noborder">
 						<p:outputLabel value="Pedido cliente" />
-						<p:fileUpload id="arquivo" allowTypes="/(\.|\/)(pdf)$/" accept="application/pdf"
+						<p:fileUpload id="arquivo" allowTypes="/(\.|\/)(pdf)$/"
+							accept="application/pdf"
 							listener="#{pedidoCadastroBean.carregarArquivo}"
 							rendered="#{!pedidoCadastroBean.temArquivo}" label="Escolher"
 							mode="advanced" skinSimple="true" auto="true" update="@form" />
@@ -96,10 +97,15 @@
 							value="#{pedidoCadastroBean.orcamento.nomeArquivo}" />
 						<p:commandButton value="Baixar pedido"
 							rendered="#{pedidoCadastroBean.temArquivo}"
+							icon="ui-icon-circle-arrow-s"
 							actionListener="#{pedidoCadastroBean.baixarPedido}"
 							process="@this" ajax="false">
 							<p:fileDownload value="#{pedidoCadastroBean.file}" />
 						</p:commandButton>
+						<p:commandButton value="Limpar" icon="ui-icon-circle-minus"
+							update="@form" process="@this"
+							action="#{pedidoCadastroBean.limparArquivo}"
+							rendered="#{pedidoCadastroBean.temArquivo}" />
 					</p:panelGrid>
 
 				</p:panel>
