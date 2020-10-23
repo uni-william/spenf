@@ -1,11 +1,6 @@
 package br.com.sis.bean;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.DualListModel;
-
-import com.google.gson.Gson;
 
 import br.com.sis.entity.Colaborador;
 import br.com.sis.entity.Empresa;
@@ -39,9 +31,6 @@ import lombok.Setter;
 public class ColaboradorCadastroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String URL_VIA_CEP = "http://viacep.com.br/ws/";
-	private static final String FORMATO = "/json/";
 
 	@Getter
 	@Setter
@@ -113,41 +102,17 @@ public class ColaboradorCadastroBean implements Serializable {
 	}
 
 	public void carregarDadosCep() {
-		String cep = Utils.removerCaracter(Utils.removerCaracter(this.getColaborador().getEndereco().getCep(), "."),
-				"-");
-		String url = URL_VIA_CEP + cep + FORMATO;
-		if (!StringUtils.isEmpty(cep)) {
-			try {
-				HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-				conn.setRequestMethod("GET");
-				conn.setRequestProperty("Accept", "application/json");
-				if (conn.getResponseCode() != 200) {
-					System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
-				}
-				BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-				String output = "";
-				String line;
-				while ((line = br.readLine()) != null) {
-					output += line;
-				}
-				conn.disconnect();
-				Gson gson = new Gson();
-				CepVO dados = gson.fromJson(new String(output.getBytes()), CepVO.class);
-				if (dados.getLogradouro() != null) {
-					this.getColaborador().getEndereco().setLogradouro(dados.getLogradouro());
-					this.getColaborador().getEndereco().setComplemento(dados.getComplemento());
-					this.getColaborador().getEndereco().setBairro(dados.getBairro());
-					this.getColaborador().getEndereco().setNomeCidade(dados.getLocalidade());
-					this.getColaborador().getEndereco().setEstado(Estado.valueOf(dados.getUf()));
-					this.getColaborador().getEndereco().setCodigoIbegeCidade(dados.getIbge());
-				} else {
-					FacesUtil.addErroMessage("CEP não encontrado!");
-				}
-
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+		CepVO cepVO = Utils.retonaDadosEndereco(this.getColaborador().getEndereco().getCep());
+		if (cepVO != null) {
+			this.getColaborador().getEndereco().setLogradouro(cepVO.getLogradouro());
+			this.getColaborador().getEndereco().setComplemento(cepVO.getComplemento());
+			this.getColaborador().getEndereco().setBairro(cepVO.getBairro());
+			this.getColaborador().getEndereco().setNomeCidade(cepVO.getLocalidade());
+			this.getColaborador().getEndereco().setEstado(Estado.valueOf(cepVO.getUf()));
+			this.getColaborador().getEndereco().setCodigoIbegeCidade(cepVO.getIbge());
 		}
+		else 
+			FacesUtil.addErroMessage("CEP não encontrado!");		
 
 	}
 

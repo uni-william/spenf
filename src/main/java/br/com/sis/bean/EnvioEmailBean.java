@@ -104,8 +104,10 @@ public class EnvioEmailBean implements Serializable {
 	
 	public boolean gerarRelatorio(int tipoRelatorio) {
 		orcamento = orcamentoService.salvar(orcamento);
+		String caminhoLogo = FacesUtil.localFotos() + "/logo_sousa.jpg";
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("pId", orcamento.getId());
+		parametros.put("logo", caminhoLogo);
 		String nomeRel = "Orcamento_" + numeroFormatado(orcamento.getId()) + ".pdf";
 		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/orcamento.jasper", this.response, parametros,
 				nomeRel, tipoRelatorio);

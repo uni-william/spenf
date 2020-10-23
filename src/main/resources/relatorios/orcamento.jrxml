@@ -4,6 +4,7 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="spenf_db"/>
 	<parameter name="pId" class="java.lang.Long"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select 
   mant.nomeFantasia,
@@ -207,7 +208,7 @@ where orc.id = $P{pId}]]>
 				<reportElement x="0" y="0" width="555" height="140" uuid="6d66322a-f303-45ea-86af-45a2efd55fb1"/>
 			</rectangle>
 			<textField>
-				<reportElement x="90" y="5" width="410" height="20" uuid="e7763cd2-714a-4dd5-ad1b-8191dfd7b93f">
+				<reportElement x="110" y="5" width="390" height="20" uuid="e7763cd2-714a-4dd5-ad1b-8191dfd7b93f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -216,7 +217,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="23" width="410" height="20" uuid="5b1f4374-fa4e-4f34-94f7-d32ece792148">
+				<reportElement x="110" y="23" width="390" height="20" uuid="5b1f4374-fa4e-4f34-94f7-d32ece792148">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -226,7 +227,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA["Razão social: " + $F{razaoSocial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="41" width="410" height="20" uuid="60cd83b8-4f11-485c-b944-6a9c360b505e">
+				<reportElement x="110" y="41" width="390" height="20" uuid="60cd83b8-4f11-485c-b944-6a9c360b505e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -236,7 +237,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA["Telefone " + $F{telefone} + " / " + $F{telefone2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="59" width="410" height="20" uuid="89ef29c0-dbab-45e5-8e5c-eaf7b3a917d0">
+				<reportElement x="110" y="59" width="390" height="20" uuid="89ef29c0-dbab-45e5-8e5c-eaf7b3a917d0">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -246,7 +247,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA["E-mail: " + $F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="77" width="410" height="20" uuid="e4996079-7423-410d-b00b-fdf165a444b4">
+				<reportElement x="110" y="77" width="390" height="20" uuid="e4996079-7423-410d-b00b-fdf165a444b4">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -256,7 +257,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA["Rua: " + $F{logradouro} + ",  N. " + $F{numero} + ", " + $F{bairro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="95" width="410" height="20" uuid="c8c6c77b-85f9-4348-99a8-918ce8973062">
+				<reportElement x="110" y="95" width="390" height="20" uuid="c8c6c77b-85f9-4348-99a8-918ce8973062">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -266,7 +267,7 @@ where orc.id = $P{pId}]]>
 				<textFieldExpression><![CDATA["CEP: " + $F{cep} + ", " + $F{nomeCidade} + "/" + $F{estado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="113" width="410" height="20" uuid="aed25917-67b4-4c08-964f-1d7c9b269fb9">
+				<reportElement x="110" y="113" width="390" height="20" uuid="aed25917-67b4-4c08-964f-1d7c9b269fb9">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -402,6 +403,10 @@ where orc.id = $P{pId}]]>
 				</textElement>
 				<text><![CDATA[ORÇAMENTO N.]]></text>
 			</staticText>
+			<image>
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="29" width="80" height="71" uuid="e1096c76-02d6-445d-bcda-4275cba3fccc"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>
