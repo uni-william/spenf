@@ -206,7 +206,7 @@ public class OrcamentoCadastroBean implements Serializable {
 
 	public void emitirOrcamento(int tipoRelatorio) {
 		orcamento = orcamentoService.salvar(orcamento);
-		String caminhoLogo = FacesUtil.localFotos() + "/logo_sousa.jpg";
+		String caminhoLogo = FacesUtil.localFotos() + "/logo_sousa.png";
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("pId", orcamento.getId());
 		parametros.put("logo", caminhoLogo);

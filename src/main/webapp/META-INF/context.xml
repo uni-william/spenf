@@ -11,10 +11,10 @@
 		minPoolSize="10"
 		maxPoolSize="100"
 		name="jdbc/spenfBD"
-		user="root"
-		password="root" 
+		user="spenf_root"
+		password="spenf" 
 		factory="org.apache.naming.factory.BeanFactory"
 		type="com.mchange.v2.c3p0.ComboPooledDataSource"
-		jdbcUrl="jdbc:mysql://localhost:3306/spenf?useSSL=false&amp;useTimezone=true&amp;serverTimezone=GMT-4" />		
+		jdbcUrl="jdbc:mysql://localhost:3306/spenf?useSSL=false&amp;useTimezone=true&amp;serverTimezone=GMT-4&amp;allowPublicKeyRetrieval=true" />		
 
 </Context>
