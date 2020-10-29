@@ -73,5 +73,12 @@ public class OrcamentoPesquisaBean implements Serializable {
 		else
 			FacesUtil.addWarnMessage("Não existe Mantenedora cadastrada. Verifique!");
 	}
+	
+	public void excluir() {
+		if (orcamentoRepository.remover(this.orcamentoSelecionado)) {
+			FacesUtil.addInfoMessage("Orçmanento excluído com sucesso");
+			orcamentos = orcamentoRepository.listAll(filter, null);
+		}
+	}
 
 }

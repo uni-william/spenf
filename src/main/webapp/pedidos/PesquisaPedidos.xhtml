@@ -97,6 +97,9 @@
 						<h:outputText value="#{orcamento.pedidoCliente}"
 							title="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
+					<p:column headerText="Orçamento" width="8%">
+						<h:outputText value="#{orcamento.idFormatted}" />
+					</p:column>
 					<p:column headerText="Data pedido" width="8%">
 						<h:outputText value="#{orcamento.dataRecebimentoPedido}"
 							converter="localDateConverter">

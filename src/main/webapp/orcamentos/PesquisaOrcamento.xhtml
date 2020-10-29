@@ -45,8 +45,7 @@
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 2px;">
 					<p:outputLabel value="Data início" />
-					<p:datePicker
-						value="#{orcamentoPesquisaBean.filter.dataCricaoIni}"
+					<p:datePicker value="#{orcamentoPesquisaBean.filter.dataCricaoIni}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
 					<p:datePicker value="#{orcamentoPesquisaBean.filter.dataCricaoFim}"
@@ -58,8 +57,7 @@
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					paginatorAlwaysVisible="false"
-					paginatorPosition="bottom">
+					paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
 					<p:column headerText="Número" width="8%">
 						<h:outputText value="#{orcamento.idFormatted}" />
@@ -83,7 +81,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column width="70" exportable="false">
+					<p:column width="100" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
 							outcome="/orcamentos/CadastroOrcamento" title="Editar orçamento">
 							<f:param name="orcamento" value="#{orcamento.id}" />
@@ -93,9 +91,24 @@
 							outcome="/pedidos/CadastroPedido">
 							<f:param name="orcamento" value="#{orcamento.id}" />
 						</p:button>
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
+							oncomplete="PF('confirmacao').show(); return false;"
+							process="@this" update=":frm:conf" style="width: 30px">
+							<f:setPropertyActionListener value="#{orcamento}"
+								target="#{orcamentoPesquisaBean.orcamentoSelecionado}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</div>
+			<p:confirmDialog header="Exclusão de Registro"
+				message="Tem certeza que deseja excluir o orçamento #{orcamentoPesquisaBean.orcamentoSelecionado.idFormatted}?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{orcamentoPesquisaBean.excluir}" />
+			</p:confirmDialog>
 		</h:form>
 
 	</ui:define>
