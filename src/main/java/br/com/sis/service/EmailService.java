@@ -20,6 +20,7 @@ import org.apache.velocity.tools.generic.NumberTool;
 
 import br.com.sis.entity.Empresa;
 import br.com.sis.entity.Orcamento;
+import br.com.sis.util.jsf.FacesUtil;
 
 public class EmailService implements Serializable {
 
@@ -101,6 +102,35 @@ public class EmailService implements Serializable {
 			return false;
 		}
 	}
+	
+	public boolean sendAttachmentEmailBackup(Empresa mantenedora, String assunto, String mensagem, String emailDestino, String arquivo) {
+		EmailAttachment attachment = new EmailAttachment();
+		attachment.setPath(arquivo);
+		attachment.setDisposition(EmailAttachment.ATTACHMENT);
+		attachment.setDescription("db_spenf_backup.sql");
+		attachment.setName("db_spenf_backup.sql");
+		// Create the email message
+		MultiPartEmail email = new MultiPartEmail();
+		email.setHostName(mantenedora.getHost());
+		email.setSmtpPort(mantenedora.getPorta());
+		email.setAuthenticator(
+				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
+		email.setSSLOnConnect(mantenedora.isSslOnConection());		
+		try {
+			email.addTo(emailDestino);
+			email.setFrom(mantenedora.getEmailEnvio());
+			email.setSubject(assunto);
+			email.setMsg(mensagem);
+			// add the attachment
+			email.attach(attachment);
+			// send the email
+			email.send();
+			return true;
+		} catch (EmailException e) {
+			FacesUtil.addErroMessage(e.getMessage());
+			return false;
+		}
+	}	
 
 	private String htmlMsg(Orcamento orcamento) {
 		VelocityEngine ve = new VelocityEngine();

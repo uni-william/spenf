@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro despesaMaterial</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{despesaMaterialCadastroBean.inicializar()}" />
+			<f:viewParam name="despesaMaterial" value="#{despesaMaterialCadastroBean.despesaMaterial}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">#{despesaMaterialCadastroBean.editando ?
+			'Edição de despesa com material' : 'Nova despesa com material'}</h1>
+		<br />
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar"
+						action="#{despesaMaterialCadastroBean.salvar}" update="@form"
+						disabled="#{!despesaMaterialCadastroBean.podeSalvar}" icon="ui-icon-check" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Nova" outcome="/despesas/CadastroDespesaMaterial"
+						icon="ui-icon-plus" />
+					<p:button value="Pesquisa" outcome="/despesas/PesquisaDespesaMaterial"
+						icon="ui-icon-search" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:growl />
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:outputLabel value="Descrição" for="descricao" />
+					<p:inputTextarea id="descricao"
+						value="#{despesaMaterialCadastroBean.despesaMaterial.descricao}" rows="5" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+
+					<p:outputLabel value="Data da despesaMaterial" for="data" />
+					<p:datePicker value="#{despesaMaterialCadastroBean.despesaMaterial.data}" id="data"
+						required="true" requiredMessage="Data da despesaMaterial é obrigatória"
+						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+
+					<p:outputLabel value="Valor" for="valor" />
+					<p:inputNumber id="valor"
+						value="#{despesaMaterialCadastroBean.despesaMaterial.valor}" symbol="R$ "
+						symbolPosition="p" decimalSeparator="," thousandSeparator="." />
+
+					<p:outputLabel value="Nota/Recibo" />
+					<p:inputText value="#{despesaMaterialCadastroBean.despesaMaterial.comprovante}" />
+
+				</p:panelGrid>
+
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -39,7 +39,8 @@ public enum Funcionalidade {
 	TIPO_DESPESA_UPD("Tipo Despesa - Atualizar"),
 	TIPO_DESPESA_DEL("Tipo Despesa - Excluir"),	
 	TIPO_DESPESA_SOMA("Despesa - Resumo por período"),
-	FLUXO_CAIXA("Caixa - Fluxo de caixa");	
+	FLUXO_CAIXA("Caixa - Fluxo de caixa"),
+	EFETUAR_BACKUP("Efetuar Backup");	
 	
 	private Funcionalidade(String descricao) {
 		this.descricao = descricao;

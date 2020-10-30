@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UnknownFormatConversionException;
 
@@ -73,13 +75,18 @@ public class Utils implements Serializable {
 		return null;
 	}
 	
-	public static  boolean fazerBackup() {
+	public static String dataCompletaFormatada(Date data) {
+		SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
+		return sd.format(data);
+	}	
+	
+	public static  String fazerBackup() {
 		String caminhoBackup = FacesUtil.localArquivos();
 		File diretorio = new File(caminhoBackup);
 		if(!diretorio.exists()) {
 			diretorio.mkdir();
 		}
-		caminhoBackup = FacesUtil.localArquivos() +  "db_prime_backup.sql";
+		caminhoBackup = FacesUtil.localArquivos() +  "db_spenf_backup.sql";
 		File arq = new File(caminhoBackup);
 		if (arq.exists())
 			arq.delete();
@@ -90,16 +97,17 @@ public class Utils implements Serializable {
 			mysqldump = "C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\" + mysqldump;
 		}
 		try {
-			proc = Runtime.getRuntime().exec(mysqldump + " --databases primedb -u primeroot -pprime > " + caminhoBackup);
+			proc = Runtime.getRuntime().exec(mysqldump + " --databases spenf -u spenf_root -pspenf > " + caminhoBackup);
 			Path path = Paths.get(caminhoBackup);
 			String line = inputStreamToString(proc.getInputStream());
 			Files.createFile(path);
 		    //printa o retorno
 		   	Files.write(path, line.getBytes(), StandardOpenOption.APPEND);
-			return true;
+		   	System.out.println(caminhoBackup);
+			return caminhoBackup;
 		} catch (IOException | UnknownFormatConversionException e) {
 			FacesUtil.addErroMessage(e.getMessage() != null ? e.getMessage(): e.getCause().toString());		
-			return false;
+			return null;
 		}
 	}
 	

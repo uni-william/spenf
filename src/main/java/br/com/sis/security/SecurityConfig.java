@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/despesas/PesquisaDespesa.xhtml").hasAnyRole("DESPESA_VIEW")
 			.antMatchers("/despesas/CadastroDespesa.xhtml").hasAnyRole("DESPESA_INS", "DESPESA_UPD")
 			.antMatchers("/despesas/SomatorioPorPeriodo.xhtml").hasAnyRole("TIPO_DESPESA_SOMA")
+			.antMatchers("/Backup.xhtml").hasAnyRole("EFETUAR_BACKUP")
 			.and()
 		.formLogin()
 			.loginPage("/Login.xhtml")

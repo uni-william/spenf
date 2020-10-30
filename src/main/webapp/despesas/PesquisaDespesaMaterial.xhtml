@@ -7,23 +7,23 @@
 	<head>
 <meta charset="UTF-8" />
 	</head>
-	<ui:define name="titulo">Despesa</ui:define>
+	<ui:define name="titulo">Despesa com Material</ui:define>
 	<ui:define name="content">
 		<f:metadata>
-			<f:viewAction action="#{despesaPesquisaBean.inicializar()}" />
+			<f:viewAction action="#{despesaMaterialPesquisaBean.inicializar()}" />
 		</f:metadata>
-		<h1 class="aw-page-title">Despesas</h1>
+		<h1 class="aw-page-title">Despesas com Material</h1>
 		<h:form id="frm">
 			<p:growl />
 			<div class="ui-fluid">
 				<p:toolbar>
 					<p:toolbarGroup>
-						<p:button value="Nova" outcome="/despesas/CadastroDespesa"
+						<p:button value="Nova" outcome="/despesas/CadastroDespesaMaterial"
 							icon="ui-icon-plus" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Pesquisar"
-							action="#{despesaPesquisaBean.pesquisar}" update="@form"
+							action="#{despesaMaterialPesquisaBean.pesquisar}" update="@form"
 							icon="ui-icon-search" />
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -32,7 +32,7 @@
 					columnClasses="ui-grid-col-2, ui-grid-col-8"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Descrição" />
-					<p:inputText value="#{despesaPesquisaBean.filter.descricao}" />
+					<p:inputText value="#{despesaMaterialPesquisaBean.filter.descricao}" />
 				</p:panelGrid>
 				
 				<p:panelGrid columns="2" layout="grid"
@@ -40,16 +40,16 @@
 					styleClass="panelgrid-noborder" style="margin-top: 2px;">
 					<p:outputLabel value="Data início" />
 					<p:datePicker
-						value="#{despesaPesquisaBean.filter.dataIni}"
+						value="#{despesaMaterialPesquisaBean.filter.dataIni}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
-					<p:datePicker value="#{despesaPesquisaBean.filter.dataFim}"
+					<p:datePicker value="#{despesaMaterialPesquisaBean.filter.dataFim}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>				
 
-				<p:dataTable value="#{despesaPesquisaBean.despesas}" var="despesa"
+				<p:dataTable value="#{despesaMaterialPesquisaBean.despesaMaterials}" var="despesaMaterial"
 					style="margin-top: 20px" reflow="true"
-					emptyMessage="Nenhuma despesa cadastrada" id="table"
+					emptyMessage="Nenhuma despesa com materiais cadastrada" id="table"
 					paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
@@ -58,7 +58,7 @@
 					<f:facet name="{Exporters}">
 						<div style="float: right; padding-top: 5px;">
 							<h:commandLink
-								rendered="#{despesaPesquisaBean.despesas.size() > 0}"
+								rendered="#{despesaMaterialPesquisaBean.despesaMaterials.size() > 0}"
 								title="Exportar para excel">
 								<p:graphicImage library="images" name="excel.png" width="24" />
 								<p:dataExporter type="xls" target="table" fileName="pedidos" />
@@ -66,43 +66,39 @@
 						</div>
 					</f:facet>					
 					<p:column headerText="Descrição">
-						<h:outputText value="#{despesa.descricao}" />
-					</p:column>
-					
-					<p:column headerText="Tipo despesa" width="25%">
-						<h:outputText value="#{despesa.tipoDespesa.descricao}" />
+						<h:outputText value="#{despesaMaterial.descricao}" />
 					</p:column>					
 					<p:column headerText="Data" width="8%">
-						<h:outputText value="#{despesa.data}"
+						<h:outputText value="#{despesaMaterial.data}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Valor" width="10%"
 						styleClass="colunaAlinhadaEsquerda">
-						<h:outputText value="#{despesa.valor}">
+						<h:outputText value="#{despesaMaterial.valor}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
 					</p:column>
 					<p:column width="8%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
-							outcome="/despesas/CadastroDespesa">
-							<f:param name="despesa" value="#{despesa.id}" />
+							outcome="/despesas/CadastroDespesaMaterial">
+							<f:param name="despesaMaterial" value="#{despesaMaterial.id}" />
 						</p:button>
 						<p:commandButton icon="ui-icon-trash" title="Excluir"
 							oncomplete="PF('confirmacao').show(); return false;"
 							process="@this" update=":frm:conf" style="width: 30px"
 							disabled="#{!seguranca.despesaExcluir}">
-							<f:setPropertyActionListener value="#{despesa}"
-								target="#{despesaPesquisaBean.despesaSelecionado}" />
+							<f:setPropertyActionListener value="#{despesaMaterial}"
+								target="#{despesaMaterialPesquisaBean.despesaMaterialSelecionado}" />
 						</p:commandButton>
 					</p:column>
 					<p:columnGroup type="footer">
 						<p:row>
-							<p:column colspan="3" footerText="Total"
+							<p:column colspan="2" footerText="Total"
 								style="text-align: right" />
 							<p:column style="text-align: right">
 								<f:facet name="footer">
-									<h:outputText value="#{despesaPesquisaBean.totalItens}"
+									<h:outputText value="#{despesaMaterialPesquisaBean.totalItens}"
 										id="sub">
 										<f:convertNumber type="currency" />
 									</h:outputText>
@@ -115,13 +111,13 @@
 
 			</div>
 			<p:confirmDialog header="Exclusão de Registro"
-				message="Tem certeza que deseja excluir a despesa #{despesaPesquisaBean.despesaSelecionado.descricao}?"
+				message="Tem certeza que deseja excluir a despesaMaterial #{despesaMaterialPesquisaBean.despesaMaterialSelecionado.descricao}?"
 				widgetVar="confirmacao" id="conf">
 				<p:button value="Não"
 					onclick="PF('confirmacao').hide(); return false;" />
 				<p:commandButton value="Sim" update="@form"
 					oncomplete="PF('confirmacao').hide()" process="@this"
-					action="#{despesaPesquisaBean.excluir}" />
+					action="#{despesaMaterialPesquisaBean.excluir}" />
 			</p:confirmDialog>
 		</h:form>
 
