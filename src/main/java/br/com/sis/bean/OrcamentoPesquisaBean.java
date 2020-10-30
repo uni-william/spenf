@@ -1,6 +1,8 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -31,7 +33,7 @@ public class OrcamentoPesquisaBean implements Serializable {
 	private OrcamentoRepository orcamentoRepository;
 
 	@Getter
-	private List<Orcamento> orcamentos;
+	private List<Orcamento> orcamentos = new ArrayList<Orcamento>();
 
 	@Getter
 	@Setter
@@ -80,5 +82,14 @@ public class OrcamentoPesquisaBean implements Serializable {
 			orcamentos = orcamentoRepository.listAll(filter, null);
 		}
 	}
+	
+	public BigDecimal getTotalItens() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (Orcamento orcamento : this.orcamentos) {
+			total = total.add(orcamento.getValorOrcamento());
+		}
+		
+		return total;
+	}	
 
 }

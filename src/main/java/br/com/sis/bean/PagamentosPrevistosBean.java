@@ -1,6 +1,7 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -66,5 +67,13 @@ public class PagamentosPrevistosBean implements Serializable {
 		filter.setSomenteComNota(true);
 		orcamentos = orcamentoRepository.listAll(filter, "dataPrevisaoPagamento");
 	}
+	
+	public BigDecimal getTotalItens() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (Orcamento orcamento : this.orcamentos) {
+			total = total.add(orcamento.getValorOrcamento());
+		}	
+		return total;
+	}		
 
 }

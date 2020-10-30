@@ -60,11 +60,13 @@
 						pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
 
-				<p:panelGrid columns="4" layout="grid"
-					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2"
+				<p:panelGrid columns="6" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-2"
 					styleClass="panelgrid-noborder">
 					<p:outputLabel value="Pedido" />
 					<p:inputText value="#{pedidoPesquisaBean.filter.pedido}" />
+					<p:outputLabel value="Orçamento" />
+					<p:inputText value="#{pedidoPesquisaBean.filter.numeroOrcamento}" />					
 					<p:outputLabel value="Nota" for="nota" />
 					<p:inputText value="#{pedidoPesquisaBean.filter.numeroNota}"
 						id="nota" />
@@ -97,21 +99,21 @@
 						<h:outputText value="#{orcamento.pedidoCliente}"
 							title="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
-					<p:column headerText="Orçamento" width="8%">
+					<p:column headerText="Orçamento" width="10%">
 						<h:outputText value="#{orcamento.idFormatted}" />
 					</p:column>
-					<p:column headerText="Data pedido" width="8%">
+					<p:column headerText="Data pedido" width="10%">
 						<h:outputText value="#{orcamento.dataRecebimentoPedido}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Previsão entrega" width="8%">
+					<p:column headerText="Previsão entrega" width="10%">
 						<h:outputText value="#{orcamento.dataEntregaPedido}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Total" width="8%"
+					<p:column headerText="Total" width="10%"
 						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
@@ -171,6 +173,21 @@
 							<f:param name="origem" value="1" />
 						</p:button>
 					</p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="4" footerText="Total"
+								style="text-align: right" />
+							<p:column style="text-align: right">
+								<f:facet name="footer">
+									<h:outputText value="#{pedidoPesquisaBean.totalItens}"
+										id="sub">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column colspan="7" ></p:column>
+						</p:row>
+					</p:columnGroup>					
 				</p:dataTable>
 			</div>
 		</h:form>

@@ -1,8 +1,10 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -33,7 +35,7 @@ public class PedidoPesquisaBean implements Serializable {
 	private OrcamentoRepository orcamentoRepository;
 
 	@Getter
-	private List<Orcamento> orcamentos;
+	private List<Orcamento> orcamentos = new ArrayList<Orcamento>();
 
 	@Getter
 	@Setter
@@ -115,5 +117,14 @@ public class PedidoPesquisaBean implements Serializable {
 		filter.setSomenteComPedido(true);		
 		orcamentos = orcamentoRepository.listAll(filter, ordem);
 	}
+	
+	public BigDecimal getTotalItens() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (Orcamento orcamento : this.orcamentos) {
+			total = total.add(orcamento.getValorOrcamento());
+		}
+		
+		return total;
+	}		
 
 }

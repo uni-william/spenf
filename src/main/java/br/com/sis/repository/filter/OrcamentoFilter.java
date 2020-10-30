@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OrcamentoFilter {
 	
+	private Long numeroOrcamento;
 	private Empresa mantenedora;
 	private Empresa cliente;
 	

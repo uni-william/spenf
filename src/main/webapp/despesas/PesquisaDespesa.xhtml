@@ -51,10 +51,20 @@
 					style="margin-top: 20px" reflow="true"
 					emptyMessage="Nenhuma serviço cadastrado" id="table"
 					paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					rows="10" paginatorAlwaysVisible="false" rowIndexVar="row"
+					rows="10" paginatorAlwaysVisible="true" rowIndexVar="row"
 					paginatorPosition="bottom">
+					<f:facet name="{Exporters}">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink
+								rendered="#{despesaPesquisaBean.despesas.size() > 0}"
+								title="Exportar para excel">
+								<p:graphicImage library="images" name="excel.png" width="24" />
+								<p:dataExporter type="xls" target="table" fileName="pedidos" />
+							</h:commandLink>
+						</div>
+					</f:facet>					
 					<p:column headerText="Descrição">
 						<h:outputText value="#{despesa.descricao}" />
 					</p:column>
@@ -86,7 +96,21 @@
 								target="#{despesaPesquisaBean.despesaSelecionado}" />
 						</p:commandButton>
 					</p:column>
-
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="2" footerText="Total"
+								style="text-align: right" />
+							<p:column style="text-align: right">
+								<f:facet name="footer">
+									<h:outputText value="#{despesaPesquisaBean.totalItens}"
+										id="sub">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column colspan="2" ></p:column>
+						</p:row>
+					</p:columnGroup>
 				</p:dataTable>
 
 			</div>

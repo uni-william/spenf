@@ -51,21 +51,36 @@
 					<p:datePicker value="#{orcamentoPesquisaBean.filter.dataCricaoFim}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-3"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Orçamento" />
+					<p:inputText value="#{orcamentoPesquisaBean.filter.numeroOrcamento}" />
+				</p:panelGrid>
 				<p:dataTable value="#{orcamentoPesquisaBean.orcamentos}"
 					var="orcamento" style="margin-top: 5px" reflow="true"
 					emptyMessage="Sem registro de dados" id="table" rows="10"
 					paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					paginatorAlwaysVisible="false" paginatorPosition="bottom">
-
-					<p:column headerText="Número" width="8%">
+					paginatorAlwaysVisible="true" paginatorPosition="bottom">
+					<f:facet name="{Exporters}">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink
+								rendered="#{orcamentoPesquisaBean.orcamentos.size() > 0}"
+								title="Exportar para excel">
+								<p:graphicImage library="images" name="excel.png" width="24" />
+								<p:dataExporter type="xls" target="table" fileName="pedidos" />
+							</h:commandLink>
+						</div>
+					</f:facet>
+					<p:column headerText="Número" width="10%">
 						<h:outputText value="#{orcamento.idFormatted}" />
 					</p:column>
 					<p:column headerText="Cliente">
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
-					<p:column headerText="Data" width="8%">
+					<p:column headerText="Data" width="10%">
 						<h:outputText value="#{orcamento.dataOrcamento}"
 							converter="localDateConverter">
 						</h:outputText>
@@ -98,6 +113,22 @@
 								target="#{orcamentoPesquisaBean.orcamentoSelecionado}" />
 						</p:commandButton>
 					</p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="4" footerText="Total"
+								style="text-align: right" />
+							<p:column style="text-align: right">
+								<f:facet name="footer">
+									<h:outputText value="#{orcamentoPesquisaBean.totalItens}"
+										id="sub">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column></p:column>
+
+						</p:row>
+					</p:columnGroup>
 				</p:dataTable>
 			</div>
 			<p:confirmDialog header="Exclusão de Registro"

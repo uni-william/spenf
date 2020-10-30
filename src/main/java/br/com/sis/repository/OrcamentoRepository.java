@@ -101,6 +101,9 @@ public class OrcamentoRepository implements Serializable {
 
 	private Predicate[] criarRestricoes(OrcamentoFilter filter, CriteriaBuilder builder, Root<Orcamento> root) {
 		List<Predicate> predicates = new ArrayList<>();
+		
+		if (filter.getNumeroOrcamento() != null)
+			predicates.add(builder.equal(root.get("id"), filter.getNumeroOrcamento()));
 
 		if (filter.getMantenedora() != null)
 			predicates.add(builder.equal(root.get("mantenedora"), filter.getMantenedora()));

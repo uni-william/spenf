@@ -58,18 +58,18 @@
 					<p:column headerText="Cliente">
 						<h:outputText value="#{orcamento.cliente.nomeFantasia}" />
 					</p:column>
-					<p:column headerText="Total" width="8%"
+					<p:column headerText="Total" width="10%"
 						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{orcamento.valorOrcamento}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Previsão pagamento" width="8%">
+					<p:column headerText="Previsão pagamento" width="10%">
 						<h:outputText value="#{orcamento.dataPrevisaoPagamento}"
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Data pagamento" width="8%">
+					<p:column headerText="Data pagamento" width="10%">
 						<h:outputText value="#{orcamento.dataEfetivaPagamento}"
 							converter="localDateConverter">
 						</h:outputText>
@@ -87,6 +87,21 @@
 							<f:param name="origem" value="2" />
 						</p:button>
 					</p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="2" footerText="Total"
+								style="text-align: right" />
+							<p:column style="text-align: right">
+								<f:facet name="footer">
+									<h:outputText value="#{pagamentosPrevistosBean.totalItens}"
+										id="sub">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column colspan="4" ></p:column>
+						</p:row>
+					</p:columnGroup>					
 				</p:dataTable>
 
 			</div>
