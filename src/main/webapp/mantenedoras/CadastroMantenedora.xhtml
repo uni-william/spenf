@@ -23,11 +23,13 @@
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar"
 						action="#{mantenedoraCadastroBean.salvar}" update="@form"
-						disabled="#{!mantenedoraCadastroBean.podeSalvar}" icon="ui-icon-check" />
+						disabled="#{!mantenedoraCadastroBean.podeSalvar}"
+						icon="ui-icon-check" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Nova" outcome="/mantenedoras/CadastroMantenedora"
-					disabled="#{mantenedoraCadastroBean.existeMantenedoraCadastrada}" icon="ui-icon-plus" />
+						disabled="#{mantenedoraCadastroBean.existeMantenedoraCadastrada}"
+						icon="ui-icon-plus" />
 					<p:button value="Pesquisa"
 						outcome="/mantenedoras/PesquisaMantenedora" icon="ui-icon-search" />
 				</p:toolbarGroup>
@@ -175,12 +177,11 @@
 								value="#{mantenedoraCadastroBean.empresa.emailEnvio}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
-							columnClasses="ui-grid-col-2, ui-grid-col-4"
+							columnClasses="ui-grid-col-2, ui-grid-col-8"
 							styleClass="panelgrid-noborder">
 							<p:outputLabel value="Senha e-mail envio" />
-							<p:password
-								value="#{mantenedoraCadastroBean.empresa.senhaUsuarioEmail}"
-								redisplay="true" />
+							<p:inputText
+								value="#{mantenedoraCadastroBean.empresa.senhaUsuarioEmail}" />
 						</p:panelGrid>
 						<p:panelGrid columns="2" layout="grid"
 							columnClasses="ui-grid-col-2, ui-grid-col-6"

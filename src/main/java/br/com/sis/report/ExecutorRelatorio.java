@@ -1,5 +1,6 @@
 package br.com.sis.report;
 
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,6 +62,10 @@ public class ExecutorRelatorio implements Work {
 					response.setHeader("Content-Disposition", "attachment; filename=\"" + this.nomeArquivoSaida + "\"");
 					exportador.exportReport();
 				} else {
+					File diretorio = new File(FacesUtil.localArquivos());
+					if(!diretorio.exists()) {
+						diretorio.mkdir();
+					}
 					JasperExportManager.exportReportToPdfFile(print, FacesUtil.localArquivos() + this.nomeArquivoSaida);
 					java.io.File file = new java.io.File(FacesUtil.localArquivos() + this.nomeArquivoSaida);
 					arquivoGerado = file.exists();

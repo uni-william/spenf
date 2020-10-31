@@ -15,6 +15,6 @@
 		password="spenf" 
 		factory="org.apache.naming.factory.BeanFactory"
 		type="com.mchange.v2.c3p0.ComboPooledDataSource"
-		jdbcUrl="jdbc:mysql://localhost:3306/spenf?useSSL=false&amp;useTimezone=true&amp;allowPublicKeyRetrieval=true" />		
+		jdbcUrl="jdbc:mysql://localhost:3306/spenf?useSSL=false&amp;useTimezone=true&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />		
 
 </Context>

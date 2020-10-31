@@ -35,6 +35,7 @@ public class EmailService implements Serializable {
 		email.setAuthenticator(
 				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
 		email.setSSLOnConnect(mantenedora.isSslOnConection());
+		email.setStartTLSEnabled(mantenedora.isTlsRequired());
 		try {
 			email.setFrom(mantenedora.getEmailEnvio());
 			email.setSubject(assunto);
@@ -55,6 +56,7 @@ public class EmailService implements Serializable {
 		email.setAuthenticator(
 				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
 		email.setSSLOnConnect(mantenedora.isSslOnConection());
+		email.setStartTLSEnabled(mantenedora.isTlsRequired());
 		try {
 			for (String contato : orcamento.getEmailsOrcamento()) {
 				email.addTo(contato);
@@ -76,7 +78,7 @@ public class EmailService implements Serializable {
 		EmailAttachment attachment = new EmailAttachment();
 		attachment.setPath(arquivo);
 		attachment.setDisposition(EmailAttachment.ATTACHMENT);
-	attachment.setDescription("Orçamento_" + orcamento.getIdFormatted() + ".pdf");
+	    attachment.setDescription("Orçamento_" + orcamento.getIdFormatted() + ".pdf");
 		attachment.setName("Orçamento_" + orcamento.getIdFormatted() + ".pdf");
 		// Create the email message
 		MultiPartEmail email = new MultiPartEmail();
@@ -84,7 +86,8 @@ public class EmailService implements Serializable {
 		email.setSmtpPort(mantenedora.getPorta());
 		email.setAuthenticator(
 				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
-		email.setSSLOnConnect(mantenedora.isSslOnConection());		
+		email.setSSLOnConnect(mantenedora.isSslOnConection());	
+		email.setStartTLSEnabled(mantenedora.isTlsRequired());
 		try {
 			for (String contato : orcamento.getEmailsOrcamento()) {
 				email.addTo(contato);
@@ -116,6 +119,7 @@ public class EmailService implements Serializable {
 		email.setAuthenticator(
 				new DefaultAuthenticator(mantenedora.getUsuarioEnviaEmail(), mantenedora.getSenhaUsuarioEmail()));
 		email.setSSLOnConnect(mantenedora.isSslOnConection());		
+		email.setStartTLSEnabled(mantenedora.isTlsRequired());
 		try {
 			email.addTo(emailDestino);
 			email.setFrom(mantenedora.getEmailEnvio());
