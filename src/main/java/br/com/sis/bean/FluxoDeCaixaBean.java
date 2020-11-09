@@ -90,10 +90,10 @@ public class FluxoDeCaixaBean implements Serializable {
 		orcamentos.forEach(orcamento -> {
 			FluxoDeCaixa fluxoDeCaixa = new FluxoDeCaixa();
 			fluxoDeCaixa.setData(orcamento.getDataEfetivaPagamento());
-			fluxoDeCaixa.setValor(orcamento.getValorOrcamento());
+			fluxoDeCaixa.setValor(orcamento.getTotalComDesconto());
 			fluxoDeCaixa.setTipo("R");
 			fluxoDeCaixa.setDescricao(orcamento.getCliente().getNomeFantasia() + " - Pedido - " + orcamento.getPedidoCliente());
-			totalReceita = totalReceita.add(orcamento.getValorOrcamento());
+			totalReceita = totalReceita.add(orcamento.getTotalComDesconto());
 			fluxoDeCaixaLista.add(fluxoDeCaixa);
 		});
 		despesas.forEach(despesa -> {

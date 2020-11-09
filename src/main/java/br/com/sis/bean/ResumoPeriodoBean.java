@@ -68,17 +68,22 @@ public class ResumoPeriodoBean implements Serializable {
 	public void consultar() {
 		totalOrcamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 1);
 		totalOrcamentos.setTotal(totalOrcamentos.getTotal() != null ? totalOrcamentos.getTotal() : BigDecimal.ZERO);
+		totalOrcamentos.setTotal(totalOrcamentos.getDesconto() != null ? totalOrcamentos.getTotal().subtract(totalOrcamentos.getDesconto()) : totalOrcamentos.getTotal());
 		
 		totalPedidos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 2);
 		totalPedidos.setTotal(totalPedidos.getTotal() != null ? totalPedidos.getTotal() : BigDecimal.ZERO);
+		totalPedidos.setTotal(totalPedidos.getDesconto() != null ? totalPedidos.getTotal().subtract(totalPedidos.getDesconto()) : totalPedidos.getTotal());
 		
 		totalNotas = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 3);
 		totalNotas.setTotal(totalNotas.getTotal() != null ? totalNotas.getTotal() : BigDecimal.ZERO);
+		totalNotas.setTotal(totalNotas.getDesconto() != null ? totalNotas.getTotal().subtract(totalNotas.getDesconto()) : totalNotas.getTotal());
 		
 		totalPrevisaoPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 4);
 		totalPrevisaoPagamentos.setTotal(totalPrevisaoPagamentos.getTotal() != null ? totalPrevisaoPagamentos.getTotal() : BigDecimal.ZERO);
+		totalPrevisaoPagamentos.setTotal(totalPrevisaoPagamentos.getDesconto() != null ? totalPrevisaoPagamentos.getTotal().subtract(totalPrevisaoPagamentos.getDesconto()) : totalPrevisaoPagamentos.getTotal());
 		
 		totalPagamentos = orcamentoRepository.somatorioTransacoes(mantenedora, dataInicio, dataFim, 5);
 		totalPagamentos.setTotal(totalPagamentos.getTotal() != null ? totalPagamentos.getTotal() : BigDecimal.ZERO);
+		totalPagamentos.setTotal(totalPagamentos.getDesconto() != null ? totalPagamentos.getTotal().subtract(totalPagamentos.getDesconto()) : totalPagamentos.getTotal());
 	}
 }

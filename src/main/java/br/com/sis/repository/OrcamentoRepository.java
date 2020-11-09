@@ -58,6 +58,7 @@ public class OrcamentoRepository implements Serializable {
 		Root<Orcamento> root = criteriaQuery.from(Orcamento.class);
 		criteriaQuery.select(builder.construct(ResumoPorPeriodo.class,
 				builder.sum(root.get("valorOrcamento")),
+				builder.sum(root.get("descontos")),
 				builder.count(root.get("id"))));
 		
 		List<Predicate> predicates = new ArrayList<>();

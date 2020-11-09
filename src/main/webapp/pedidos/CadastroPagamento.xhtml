@@ -95,8 +95,16 @@
 					</p:panelGrid>
 					<p:separator />
 					<p:panelGrid columns="2" layout="grid"
-						columnClasses="ui-grid-col-2, ui-grid-col-3"
+						columnClasses="ui-grid-col-2, ui-grid-col-2"
 						styleClass="panelgrid-noborder">
+						<p:outputLabel value="Total pedido" />
+						<p:outputLabel
+							value="#{pagamentoCadastroBean.orcamento.valorOrcamento}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+						<p:outputLabel value="Desconto(ISS/Outros)" for="desconto" />
+						<p:inputNumber value="#{pagamentoCadastroBean.desconto}" id="desconto"
+							decimalPlaces="2" decimalSeparator="," thousandSeparator="." />
 						<p:outputLabel value="Data do pagamento" for="datapagamento" />
 						<p:datePicker value="#{pagamentoCadastroBean.dataPagamento}"
 							id="datapagamento" required="true"

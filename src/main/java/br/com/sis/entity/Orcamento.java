@@ -86,6 +86,10 @@ public class Orcamento implements Serializable {
 	private LocalDate dataEmissaoNota;
 	private LocalDate dataPrevisaoPagamento;
 	private LocalDate dataEfetivaPagamento;
+	
+	@Column(precision = 10, scale = 2)
+	private BigDecimal descontos;
+	
 
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	List<ItemOrcamento> itensOrcamento = new ArrayList<ItemOrcamento>();
@@ -190,6 +194,11 @@ public class Orcamento implements Serializable {
 			return "CANCELADO";
 		else
 			return null;
+	}
+	
+	@Transient
+	public BigDecimal getTotalComDesconto() {
+		return this.descontos != null ? this.valorOrcamento.subtract(this.descontos) : this.valorOrcamento;
 	}
 
 }

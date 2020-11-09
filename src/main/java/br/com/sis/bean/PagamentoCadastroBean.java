@@ -1,6 +1,7 @@
 package br.com.sis.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class PagamentoCadastroBean implements Serializable {
 	@Getter
 	@Setter
 	private LocalDate dataPagamento;
+	
+	@Getter
+	@Setter
+	private BigDecimal desconto;
 
 	@Getter
 	private List<ItemOrcamento> itens;
@@ -48,6 +53,9 @@ public class PagamentoCadastroBean implements Serializable {
 			itens = this.orcamento.getItensOrcamento();
 			if (this.orcamento.getDataEfetivaPagamento() != null)
 				this.dataPagamento = this.orcamento.getDataEfetivaPagamento();
+			if (this.orcamento.getDescontos() != null) {
+				this.desconto = this.orcamento.getDescontos();
+			}
 		} else {
 			FacesUtil.redirecionarPagina("Erro.xhtml");
 		}
@@ -56,12 +64,14 @@ public class PagamentoCadastroBean implements Serializable {
 
 	public void salvarPedido() {
 		this.orcamento.setDataEfetivaPagamento(this.dataPagamento);
+		this.orcamento.setDescontos(this.desconto);
 		this.orcamento = orcamentoService.salvar(this.orcamento);
 		FacesUtil.addInfoMessage("Pagamento registrado com sucesso!");
 	}
 	
 	public void limparPagamento() {
 		this.orcamento.setDataEfetivaPagamento(null);
+		this.orcamento.setDescontos(null);
 		this.orcamento = orcamentoService.salvar(this.orcamento);
 		this.dataPagamento = null;
 		FacesUtil.addWarnMessage("Pagamento retirado!");

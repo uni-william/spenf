@@ -14,6 +14,7 @@ import lombok.Setter;
 public class ResumoPorPeriodo {
 
 	private BigDecimal total;
+	private BigDecimal desconto;
 	private Long quantidade;
 
 }
