@@ -75,8 +75,14 @@ public class PedidoCadastroBean implements Serializable {
 
 			if (this.orcamento.getDataEntregaPedido() != null)
 				this.dataEntrega = this.orcamento.getDataEntregaPedido();
-			else
-				this.dataEntrega = this.getDataPedido().plusDays(this.orcamento.getCliente().getPrazoEntrega());
+			else {
+				if (this.orcamento.getCliente().getPrazoEntrega() != null)
+					this.dataEntrega = this.getDataPedido().plusDays(this.orcamento.getCliente().getPrazoEntrega());
+				else {
+					FacesUtil.redirecionarPaginaComMensagem("orcamentos/CadastroOrcamento.xhtml?orcamento=" + this.orcamento.getId().toString(), "O cliente não possui prazo de entrega cadastrado, verifique seu cadastro e veja a guia informações adicionais");
+				}
+					
+			}
 		} else {
 			FacesUtil.redirecionarPagina("Erro.xhtml");
 		}
