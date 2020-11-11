@@ -77,11 +77,19 @@
 							converter="localDateConverter">
 						</h:outputText>
 					</p:column>
+					<p:column headerText="Data pagamento" width="8%">
+						<h:outputText value="#{despesa.dataPagamento}"
+							converter="localDateConverter">
+						</h:outputText>
+					</p:column>					
 					<p:column headerText="Valor" width="10%"
 						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{despesa.valor}">
 							<f:convertNumber type="currency" />
 						</h:outputText>
+					</p:column>
+					<p:column headerText="Status">
+						<h:outputText value="#{despesa.status}" />
 					</p:column>
 					<p:column width="8%" exportable="false">
 						<p:button icon="ui-icon-pencil" style="width: 30px"
@@ -98,7 +106,7 @@
 					</p:column>
 					<p:columnGroup type="footer">
 						<p:row>
-							<p:column colspan="3" footerText="Total"
+							<p:column colspan="5" footerText="Total"
 								style="text-align: right" />
 							<p:column style="text-align: right">
 								<f:facet name="footer">

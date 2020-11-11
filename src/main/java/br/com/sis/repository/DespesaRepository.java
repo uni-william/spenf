@@ -87,6 +87,12 @@ public class DespesaRepository implements Serializable {
 
 		if (filter.getDataFim() != null)
 			predicates.add(builder.lessThanOrEqualTo(root.get("data"), filter.getDataFim()));
+		
+		if (filter.getDataPagtoIni() != null)
+			predicates.add(builder.greaterThanOrEqualTo(root.get("dataPagamento"), filter.getDataPagtoIni()));
+
+		if (filter.getDataPagtoFim() != null)
+			predicates.add(builder.lessThanOrEqualTo(root.get("dataPagamento"), filter.getDataPagtoFim()));		
 
 		if (filter.getMantenedora() != null)
 			predicates.add(builder.equal(root.get("mantenedora"), filter.getMantenedora()));

@@ -82,8 +82,8 @@ public class FluxoDeCaixaBean implements Serializable {
 		
 		DespesaFilter despesaFilter = new DespesaFilter();
 		despesaFilter.setMantenedora(mantenedora);
-		despesaFilter.setDataIni(dataIni);
-		despesaFilter.setDataFim(dataFim);
+		despesaFilter.setDataPagtoIni(dataIni);
+		despesaFilter.setDataPagtoFim(dataFim);
 		List<Orcamento> orcamentos = orcamentoRepository.listAll(orcamentoFilter, "dataEfetivaPagamento");
 		List<Despesa> despesas = despesaRepository.listAll(despesaFilter);
 		fluxoDeCaixaLista.clear();

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -50,6 +51,8 @@ public class Despesa implements Serializable{
 	private String comprovante;
 	
 	private LocalDate data;
+	
+	private LocalDate dataPagamento;
 		
 	@ManyToOne
 	@JoinColumn(name = "mantenedora_id")
@@ -59,5 +62,19 @@ public class Despesa implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "tipo_despesa_id", nullable = false)	
 	private TipoDespesa tipoDespesa;
+	
+	@Transient
+	public String getStatus() {
+		if (this.getDataPagamento() != null)
+			return "Paga";
+		else {
+			if (this.getData().isAfter(LocalDate.now()))
+				return "A vencer";
+			else if (this.getData().isBefore(LocalDate.now()))
+				return "Vencida";
+			else
+				return "Vencedo hoje";
+		}
+	}
 
 }

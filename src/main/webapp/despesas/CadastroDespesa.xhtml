@@ -41,8 +41,7 @@
 					<p:selectOneMenu id="tipo"
 						value="#{despesaCadastroBean.despesa.tipoDespesa}">
 						<f:selectItems value="#{despesaCadastroBean.tipoDespesas}"
-							var="tipo" itemValue="#{tipo}"
-							itemLabel="#{tipo.descricao}" />
+							var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
 					</p:selectOneMenu>
 				</p:panelGrid>
 				<p:panelGrid columns="2" layout="grid"
@@ -68,6 +67,11 @@
 
 					<p:outputLabel value="Nota/Recibo" />
 					<p:inputText value="#{despesaCadastroBean.despesa.comprovante}" />
+
+					<p:outputLabel value="Data do pagamento" for="dataPagto" />
+					<p:datePicker value="#{despesaCadastroBean.despesa.dataPagamento}"
+						id="dataPagto" showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
+
 
 				</p:panelGrid>
 

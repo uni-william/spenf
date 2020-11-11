@@ -17,6 +17,8 @@ public class DespesaFilter {
 
 	private LocalDate dataIni;
 	private LocalDate dataFim;
+	private LocalDate dataPagtoIni;
+	private LocalDate dataPagtoFim;	
 	private String descricao;
 	private Empresa mantenedora;
 	
