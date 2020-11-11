@@ -22,6 +22,7 @@ import org.primefaces.model.StreamedContent;
 import br.com.sis.entity.ItemOrcamento;
 import br.com.sis.entity.Orcamento;
 import br.com.sis.repository.OrcamentoRepository;
+import br.com.sis.security.Seguranca;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -38,6 +39,9 @@ public class PedidoCadastroBean implements Serializable {
 
 	@Inject
 	private OrcamentoRepository orcamentoRepository;
+	
+	@Inject
+	private Seguranca seguranca;		
 
 	@Getter
 	@Setter
@@ -93,9 +97,24 @@ public class PedidoCadastroBean implements Serializable {
 		this.orcamento.setPedidoCliente(this.numeroPedido);
 		this.orcamento.setDataRecebimentoPedido(this.dataPedido);
 		this.orcamento.setDataEntregaPedido(this.dataEntrega);
-		this.orcamento = orcamentoService.salvar(this.orcamento);
+		this.orcamento = orcamentoService.salvar(this.orcamento);		
 		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
 	}
+	
+	public void limparPedido() {
+		this.orcamento.setPedidoCliente(null);
+		this.orcamento.setDataRecebimentoPedido(null);
+		this.orcamento.setDataEntregaPedido(null);
+		this.orcamento = orcamentoService.salvar(this.orcamento);
+		this.numeroPedido = null;
+		this.dataPedido = LocalDate.now();
+		this.dataEntrega = this.getDataPedido().plusDays(this.orcamento.getCliente().getPrazoEntrega());		
+		FacesUtil.addWarnMessage("Pedido retirado do orçamento!");
+	}	
+	
+	public boolean isPodeLimparPedido() {
+		return this.orcamento.getPedidoCliente() != null && this.orcamento.getNumeroNfse() == null && seguranca.isPermiteLimparPedido();
+	}	
 
 	public boolean isTemArquivo() {
 		return this.orcamento.getNomeArquivo() != null;

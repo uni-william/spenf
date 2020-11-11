@@ -123,6 +123,11 @@
 						<f:param name="orcamento"
 							value="#{pedidoCadastroBean.orcamento.id}" />
 					</p:button>
+					<p:separator />
+					<p:commandButton value="Limpar pedido" icon="ui-icon-closethick"
+						oncomplete="PF('confirmacao').show(); return false;"
+						process="@this" update="conf"
+						disabled="#{!pedidoCadastroBean.podeLimparPedido}" />					
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Voltar para o orçamento"
@@ -136,6 +141,16 @@
 					</p:button>
 				</p:toolbarGroup>
 			</p:toolbar>
+			
+			<p:confirmDialog header="Limpeza de dados do pedido"
+				message="Confirma limpar dados do pedido?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{pedidoCadastroBean.limparPedido}" />
+			</p:confirmDialog>			
 		</h:form>
 
 	</ui:define>

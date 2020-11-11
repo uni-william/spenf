@@ -20,6 +20,8 @@ public enum Funcionalidade {
 	NOTA_CAD("Pedido - Acesso dados da nota fiscal do pedido"),
 	PAGAMENTO_CAD("Pedido - Acesso dados de pagamento do pedido"),
 	PAGAMENTO_CLEAR("Pedido - Permissão para limpar pagamento realizado"),
+	NOTA_CLEAR("Pedido - Permissão para limpar dados da nota fiscal"),
+	PEDIDO_CLEAR("Pedido - Permissão para limpar dados do pedido"),
 	RESUMO_PERIODO("Pedido - Resumo por período"),
 	PREVISAO_PAGAMENTO("Pedido - Previsão de pagamento"),
 	PERFIL_VIEW("Perfil de acesso - Visualizar"),

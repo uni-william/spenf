@@ -93,25 +93,39 @@
 			</div>
 			<p:toolbar>
 				<p:toolbarGroup>
-					<p:commandButton value="Salvar dados"
-						icon="ui-icon-check" update="@form"
-						action="#{notaCadastroBean.salvarPedido}"
+					<p:commandButton value="Salvar dados" icon="ui-icon-check"
+						update="@form" action="#{notaCadastroBean.salvarPedido}"
 						disabled="#{notaCadastroBean.orcamento.dataEfetivaPagamento != null}" />
 					<p:button value="Confirmar pagamento " icon="ui-icon-calculator"
-						outcome="/pedidos/CadastroPagamento" disabled="#{notaCadastroBean.orcamento.dataEmissaoNota == null}">
+						outcome="/pedidos/CadastroPagamento"
+						disabled="#{notaCadastroBean.orcamento.dataEmissaoNota == null}">
 						<f:param name="orcamento" value="#{notaCadastroBean.orcamento.id}" />
-					</p:button>						
+					</p:button>
+					<p:separator />
+					<p:commandButton value="Limpar nota" icon="ui-icon-closethick"
+						oncomplete="PF('confirmacao').show(); return false;"
+						process="@this" update="conf"
+						disabled="#{!notaCadastroBean.podeLimparNota}" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:button value="Voltar para o pedido" icon="ui-icon-arrowreturn-1-w"
-						outcome="/pedidos/CadastroPedido">
+					<p:button value="Voltar para o pedido"
+						icon="ui-icon-arrowreturn-1-w" outcome="/pedidos/CadastroPedido">
 						<f:param name="orcamento" value="#{notaCadastroBean.orcamento.id}" />
 					</p:button>
 					<p:button value="Pesquisa de pedidos" icon="ui-icon-search"
 						outcome="/pedidos/PesquisaPedidos">
-					</p:button>					
+					</p:button>
 				</p:toolbarGroup>
 			</p:toolbar>
+			<p:confirmDialog header="Limpeza de dados da nota"
+				message="Confirma limpar dados da nota fiscal?"
+				widgetVar="confirmacao" id="conf">
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmacao').hide()" process="@this"
+					action="#{notaCadastroBean.limparNota()}" />
+			</p:confirmDialog>
 
 		</h:form>
 

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.com.sis.entity.ItemOrcamento;
 import br.com.sis.entity.Orcamento;
+import br.com.sis.security.Seguranca;
 import br.com.sis.service.OrcamentoService;
 import br.com.sis.util.jsf.FacesUtil;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class NotaCadastroBean implements Serializable {
 
 	@Inject
 	private OrcamentoService orcamentoService;
+	
+
+	@Inject
+	private Seguranca seguranca;	
 
 	@Getter
 	@Setter
@@ -50,6 +55,7 @@ public class NotaCadastroBean implements Serializable {
 
 	@Getter
 	private List<ItemOrcamento> itens;
+		
 
 	public void inicializar() {
 		if (this.orcamento != null) {
@@ -83,5 +89,21 @@ public class NotaCadastroBean implements Serializable {
 		this.orcamento = orcamentoService.salvar(this.orcamento);
 		FacesUtil.addInfoMessage("Nota fiscal salva com sucesso!");
 	}
+	
+	public boolean isPodeLimparNota() {
+		return this.orcamento.getNumeroNfse() != null && this.orcamento.getDataEfetivaPagamento() == null && seguranca.isPermiteLimparNota();
+	}
+	
+	public void limparNota() {
+		this.numeroNota = null;
+		this.serieNota = null;
+		this.orcamento.setNumeroNfse(null);
+		this.orcamento.setDataEmissaoNota(null);
+		this.orcamento.setDataPrevisaoPagamento(null);
+		this.orcamento.setSerieNfse(null);
+		this.orcamento = orcamentoService.salvar(this.orcamento);
+		
+		FacesUtil.addWarnMessage("Nota fiscal retirada!");
+	}	
 
 }

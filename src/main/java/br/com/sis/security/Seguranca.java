@@ -97,5 +97,13 @@ public class Seguranca {
 		return externalContext.isUserInRole(Funcionalidade.PAGAMENTO_CLEAR.toString());
 	}
 	
+	public boolean isPermiteLimparNota() {
+		return externalContext.isUserInRole(Funcionalidade.NOTA_CLEAR.toString());
+	}	
+	
+	public boolean isPermiteLimparPedido() {
+		return externalContext.isUserInRole(Funcionalidade.PEDIDO_CLEAR.toString());
+	}	
+	
 
 }
