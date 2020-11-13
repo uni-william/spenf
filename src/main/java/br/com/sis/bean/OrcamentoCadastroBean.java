@@ -123,7 +123,7 @@ public class OrcamentoCadastroBean implements Serializable {
 		filterCliente.setTipoEmpresa(TipoEmpresa.CLIENTE);
 		filterCliente.setMantenedora(orcamento.getMantenedora());
 		clientes = empresaRepository.listAll(filterCliente);
-		if (clientes.size() > 0)
+		if (clientes.size() > 0 && this.orcamento.getId() == null)
 			orcamento.setCliente(clientes.get(0));
 	}
 
