@@ -43,7 +43,9 @@ public class FluxoDeCaixaBean implements Serializable {
 	private Empresa mantenedora;
 	
 	@Getter
-	private List<FluxoDeCaixa> fluxoDeCaixaLista = new ArrayList<FluxoDeCaixa>();  
+	private List<FluxoDeCaixa> fluxoReceitas = new ArrayList<FluxoDeCaixa>();  
+	@Getter
+	private List<FluxoDeCaixa> fluxoDespesas = new ArrayList<FluxoDeCaixa>();	
 
 	@Getter
 	@Setter
@@ -86,7 +88,8 @@ public class FluxoDeCaixaBean implements Serializable {
 		despesaFilter.setDataPagtoFim(dataFim);
 		List<Orcamento> orcamentos = orcamentoRepository.listAll(orcamentoFilter, "dataEfetivaPagamento");
 		List<Despesa> despesas = despesaRepository.listAll(despesaFilter);
-		fluxoDeCaixaLista.clear();
+		fluxoReceitas.clear();
+		fluxoDespesas.clear();
 		orcamentos.forEach(orcamento -> {
 			FluxoDeCaixa fluxoDeCaixa = new FluxoDeCaixa();
 			fluxoDeCaixa.setData(orcamento.getDataEfetivaPagamento());
@@ -94,7 +97,7 @@ public class FluxoDeCaixaBean implements Serializable {
 			fluxoDeCaixa.setTipo("R");
 			fluxoDeCaixa.setDescricao(orcamento.getCliente().getNomeFantasia() + " - Pedido - " + orcamento.getPedidoCliente());
 			totalReceita = totalReceita.add(orcamento.getTotalComDesconto());
-			fluxoDeCaixaLista.add(fluxoDeCaixa);
+			fluxoReceitas.add(fluxoDeCaixa);
 		});
 		despesas.forEach(despesa -> {
 			FluxoDeCaixa fluxoDeCaixa = new FluxoDeCaixa();
@@ -103,7 +106,7 @@ public class FluxoDeCaixaBean implements Serializable {
 			fluxoDeCaixa.setTipo("D");
 			fluxoDeCaixa.setDescricao(despesa.getDescricao());
 			totalDespesa = totalDespesa.add(despesa.getValor());
-			fluxoDeCaixaLista.add(fluxoDeCaixa);			
+			fluxoDespesas.add(fluxoDeCaixa);			
 		});
 	}
 }

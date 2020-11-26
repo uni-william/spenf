@@ -34,50 +34,91 @@
 					<p:datePicker value="#{fluxoDeCaixaBean.dataFim}" id="dataFim"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 				</p:panelGrid>
-				<p:dataTable value="#{fluxoDeCaixaBean.fluxoDeCaixaLista}"
-					var="fluxo" style="margin-top: 20px" reflow="true" rows="10"
-					rowKey="#{orcamento.id}" paginatorAlwaysVisible="true"
-					emptyMessage="Sem registro de dados" id="table" paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-					paginatorPosition="bottom" sortBy="#{fluxo.data}">
-					<f:facet name="{Exporters}">
-						<div style="float: right; padding-top: 5px;">
-							<h:commandLink
-								rendered="#{fluxoDeCaixaBean.fluxoDeCaixaLista.size() > 0}"
-								title="Exportar para excel">
-								<p:graphicImage library="images" name="excel.png" width="24" />
-								<p:dataExporter type="xls" target="table" fileName="fluxo" />
-							</h:commandLink>
-						</div>
-					</f:facet>
-					<p:column headerText="Descrição">
-						<h:outputText value="#{fluxo.descricao}"
-							style="color: #{fluxo.cor}" />
-					</p:column>
-					<p:column headerText="Data" width="8%">
-						<h:outputText value="#{fluxo.data}" converter="localDateConverter"
-							style="color: #{fluxo.cor}" />
-					</p:column>
-					<p:column headerText="Valor" width="8%"
-						styleClass="colunaAlinhadaEsquerda">
-						<h:outputText value="#{fluxo.valor}" style="color: #{fluxo.cor}">
-							<f:convertNumber type="currency" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-6, ui-grid-col-6"
+					styleClass="panelgrid-noborder" style="margin-top: 10px;">
+					<p:dataTable value="#{fluxoDeCaixaBean.fluxoReceitas}" var="receita"
+						reflow="true" rows="10"
+						paginatorAlwaysVisible="true" emptyMessage="Sem registro de dados"
+						id="tableR" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+						paginatorPosition="bottom" sortBy="#{receita.data}">
+						<f:facet name="header">Receitas</f:facet>
+						<f:facet name="{Exporters}">
+							<div style="float: right; padding-top: 5px;">
+								<h:commandLink
+									rendered="#{fluxoDeCaixaBean.fluxoReceitas.size() > 0}"
+									title="Exportar para excel">
+									<p:graphicImage library="images" name="excel.png" width="24" />
+									<p:dataExporter type="xls" target="tableR" fileName="receita" />
+								</h:commandLink>
+							</div>
+						</f:facet>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{receita.descricao}"
+								style="color: #{receita.cor}" />
+						</p:column>
+						<p:column headerText="Data" width="12%">
+							<h:outputText value="#{receita.data}"
+								converter="localDateConverter" style="color: #{receita.cor}" />
+						</p:column>
+						<p:column headerText="Valor" width="12%"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{receita.valor}" style="color: #{receita.cor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>					
+					<p:dataTable value="#{fluxoDeCaixaBean.fluxoDespesas}" var="despesa"
+						reflow="true" rows="10"
+						paginatorAlwaysVisible="true" emptyMessage="Sem registro de dados"
+						id="tableD" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+						paginatorPosition="bottom" sortBy="#{despesa.data}">
+						<f:facet name="header">Despesas</f:facet>
+						<f:facet name="{Exporters}">
+							<div style="float: right; padding-top: 5px;">
+								<h:commandLink
+									rendered="#{fluxoDeCaixaBean.fluxoDespesas.size() > 0}"
+									title="Exportar para excel">
+									<p:graphicImage library="images" name="excel.png" width="24" />
+									<p:dataExporter type="xls" target="tableD" fileName="despesa" />
+								</h:commandLink>
+							</div>
+						</f:facet>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{despesa.descricao}"
+								style="color: #{despesa.cor}" />
+						</p:column>
+						<p:column headerText="Data" width="12%">
+							<h:outputText value="#{despesa.data}"
+								converter="localDateConverter" style="color: #{despesa.cor}" />
+						</p:column>
+						<p:column headerText="Valor" width="12%"
+							styleClass="colunaAlinhadaEsquerda">
+							<h:outputText value="#{despesa.valor}" style="color: #{despesa.cor}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>					
+
+				</p:panelGrid>
 
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 10px;">
 					<p:outputLabel value="Total de receita" style="font-weight: bold;" />
-					<p:outputLabel value="#{fluxoDeCaixaBean.totalReceita}" style="font-weight: bold; color: blue;">
+					<p:outputLabel value="#{fluxoDeCaixaBean.totalReceita}"
+						style="font-weight: bold; color: blue;">
 						<f:convertNumber type="currency" />
 					</p:outputLabel>
 					<p:outputLabel value="Total de despesa" style="font-weight: bold;" />
-					<p:outputLabel value="#{fluxoDeCaixaBean.totalDespesa}" style="font-weight: bold; color: red;">
+					<p:outputLabel value="#{fluxoDeCaixaBean.totalDespesa}"
+						style="font-weight: bold; color: red;">
 						<f:convertNumber type="currency" />
-					</p:outputLabel>					
+					</p:outputLabel>
 				</p:panelGrid>
 
 			</div>
