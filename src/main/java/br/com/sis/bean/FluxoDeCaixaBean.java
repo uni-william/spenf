@@ -95,7 +95,7 @@ public class FluxoDeCaixaBean implements Serializable {
 			fluxoDeCaixa.setData(orcamento.getDataEfetivaPagamento());
 			fluxoDeCaixa.setValor(orcamento.getTotalComDesconto());
 			fluxoDeCaixa.setTipo("R");
-			fluxoDeCaixa.setDescricao(orcamento.getCliente().getNomeFantasia() + " - Pedido - " + orcamento.getPedidoCliente());
+			fluxoDeCaixa.setDescricao("Pedido - " + orcamento.getPedidoCliente());
 			totalReceita = totalReceita.add(orcamento.getTotalComDesconto());
 			fluxoReceitas.add(fluxoDeCaixa);
 		});

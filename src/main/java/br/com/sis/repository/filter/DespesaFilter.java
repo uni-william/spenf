@@ -21,5 +21,6 @@ public class DespesaFilter {
 	private LocalDate dataPagtoFim;	
 	private String descricao;
 	private Empresa mantenedora;
+	private int tipos = 0;
 	
 }

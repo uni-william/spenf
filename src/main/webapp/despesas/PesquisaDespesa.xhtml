@@ -34,18 +34,31 @@
 					<p:outputLabel value="Descrição" />
 					<p:inputText value="#{despesaPesquisaBean.filter.descricao}" />
 				</p:panelGrid>
-				
+
 				<p:panelGrid columns="2" layout="grid"
 					columnClasses="ui-grid-col-2, ui-grid-col-3"
 					styleClass="panelgrid-noborder" style="margin-top: 2px;">
 					<p:outputLabel value="Data início" />
-					<p:datePicker
-						value="#{despesaPesquisaBean.filter.dataIni}"
+					<p:datePicker value="#{despesaPesquisaBean.filter.dataIni}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
 					<p:outputLabel value="Data fim" />
 					<p:datePicker value="#{despesaPesquisaBean.filter.dataFim}"
 						showIcon="true" pattern="dd/MM/yyyy" locale="pt" />
-				</p:panelGrid>				
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="panelgrid-noborder">
+					<p:outputLabel value="Status" for="status" />
+					<p:selectOneRadio id="status"
+						value="#{despesaPesquisaBean.filter.tipos}">
+						<f:selectItem itemLabel="Todas" itemValue="0" />
+						<f:selectItem itemLabel="Vencidas" itemValue="1" />
+						<f:selectItem itemLabel="A vencer/vencendo" itemValue="2" />
+						<f:selectItem itemLabel="Pagas" itemValue="3" />
+					</p:selectOneRadio>
+
+				</p:panelGrid>
 
 				<p:dataTable value="#{despesaPesquisaBean.despesas}" var="despesa"
 					style="margin-top: 20px" reflow="true"
@@ -64,14 +77,14 @@
 								<p:dataExporter type="xls" target="table" fileName="pedidos" />
 							</h:commandLink>
 						</div>
-					</f:facet>					
+					</f:facet>
 					<p:column headerText="Descrição">
 						<h:outputText value="#{despesa.descricao}" />
 					</p:column>
-					
+
 					<p:column headerText="Tipo despesa" width="25%">
 						<h:outputText value="#{despesa.tipoDespesa.descricao}" />
-					</p:column>					
+					</p:column>
 					<p:column headerText="Data" width="8%">
 						<h:outputText value="#{despesa.data}"
 							converter="localDateConverter">
@@ -81,7 +94,7 @@
 						<h:outputText value="#{despesa.dataPagamento}"
 							converter="localDateConverter">
 						</h:outputText>
-					</p:column>					
+					</p:column>
 					<p:column headerText="Valor" width="10%"
 						styleClass="colunaAlinhadaEsquerda">
 						<h:outputText value="#{despesa.valor}">
@@ -116,7 +129,7 @@
 									</h:outputText>
 								</f:facet>
 							</p:column>
-							<p:column colspan="1" ></p:column>
+							<p:column colspan="1"></p:column>
 						</p:row>
 					</p:columnGroup>
 				</p:dataTable>

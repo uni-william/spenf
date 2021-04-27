@@ -1,6 +1,7 @@
 package br.com.sis.repository;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class DespesaRepository implements Serializable {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Despesa> criteriaQuery = builder.createQuery(Despesa.class);
 		Root<Despesa> root = criteriaQuery.from(Despesa.class);
+		root.fetch("tipoDespesa", JoinType.INNER);
+		root.fetch("mantenedora", JoinType.INNER);
 		criteriaQuery.select(root);
 		criteriaQuery.where(criarRestricoes(filter, builder, root));
 		TypedQuery<Despesa> query = manager.createQuery(criteriaQuery);
@@ -96,6 +99,17 @@ public class DespesaRepository implements Serializable {
 
 		if (filter.getMantenedora() != null)
 			predicates.add(builder.equal(root.get("mantenedora"), filter.getMantenedora()));
+		
+		if (filter.getTipos() == 3)
+			predicates.add(builder.isNotNull(root.get("dataPagamento")));
+		else if (filter.getTipos() == 1 || filter.getTipos() == 2) {
+			predicates.add(builder.isNull(root.get("dataPagamento")));
+			LocalDate data = LocalDate.now();
+			if (filter.getTipos() == 1)
+				predicates.add(builder.lessThan(root.get("data"), data));
+			else
+				predicates.add(builder.greaterThanOrEqualTo(root.get("data"), data));
+		}
 
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
