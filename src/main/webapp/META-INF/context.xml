@@ -8,8 +8,8 @@
 	<Resource 
 		auth="Container"
 		driverClass="com.mysql.cj.jdbc.Driver"
-		minPoolSize="10"
-		maxPoolSize="100"
+		minPoolSize="3"
+		maxPoolSize="10"
 		name="jdbc/spenfBD"
 		user="spenf_root"
 		password="spenf" 
